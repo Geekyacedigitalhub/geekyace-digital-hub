@@ -1,12 +1,44 @@
+import {
+  Mail,
+  Phone,
+  Globe,
+  Clock,
+  ArrowRight,
+} from "lucide-react";
+
+const contactInfo = [
+  {
+    icon: Mail,
+    title: "Email",
+    value: "hello@geekyacedigitalhub.com",
+  },
+  {
+    icon: Phone,
+    title: "Phone",
+    value: "+234 8028793121",
+  },
+  {
+    icon: Globe,
+    title: "Location",
+    value: "Worldwide (Remote Services)",
+  },
+  {
+    icon: Clock,
+    title: "Response Time",
+    value: "Within 24 Hours",
+  },
+];
+
 export default function Contact() {
   return (
     <section
       id="contact"
       className="py-24 bg-gradient-to-b from-green-50 to-white"
     >
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-screen-xl mx-auto px-8">
 
         {/* Heading */}
+
         <div className="text-center mb-16">
 
           <span className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold">
@@ -19,17 +51,17 @@ export default function Contact() {
 
           <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
             Have a project in mind? We'd love to hear about it.
-            Let's discuss how Geekyace Digital Hub can help bring
-            your ideas to life.
+            Let's discuss how Geekyace Digital Hub can help
+            turn your ideas into reality.
           </p>
 
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-12">
 
           {/* Contact Form */}
 
-          <div className="bg-white rounded-3xl shadow-xl p-10">
+          <div className="bg-white rounded-3xl shadow-xl p-10 border border-gray-200">
 
             <h3 className="text-3xl font-bold mb-8">
               Send Us a Message
@@ -40,39 +72,40 @@ export default function Contact() {
               <input
                 type="text"
                 placeholder="Full Name"
-                className="w-full border border-gray-300 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full rounded-xl border border-gray-300 px-5 py-4 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition"
               />
 
               <input
                 type="email"
                 placeholder="Email Address"
-                className="w-full border border-gray-300 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full rounded-xl border border-gray-300 px-5 py-4 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition"
               />
 
               <input
                 type="tel"
                 placeholder="Phone Number"
-                className="w-full border border-gray-300 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full rounded-xl border border-gray-300 px-5 py-4 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition"
               />
 
               <textarea
                 rows={6}
                 placeholder="Tell us about your project..."
-                className="w-full border border-gray-300 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full rounded-xl border border-gray-300 px-5 py-4 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition resize-none"
               />
 
               <button
                 type="submit"
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 rounded-xl transition"
+                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 rounded-xl flex justify-center items-center gap-2 transition"
               >
                 Send Message
+                <ArrowRight className="w-5 h-5" />
               </button>
 
             </form>
 
           </div>
 
-          {/* Contact Information */}
+          {/* Contact Info */}
 
           <div>
 
@@ -80,47 +113,41 @@ export default function Contact() {
               Contact Information
             </h3>
 
-            <div className="space-y-8">
+            <div className="space-y-6">
 
-              <div className="bg-white rounded-2xl shadow p-6">
-                <h4 className="font-bold text-xl mb-2">
-                  📧 Email
-                </h4>
+              {contactInfo.map((item) => {
+                const Icon = item.icon;
 
-                <p className="text-gray-600">
-                  hello@geekyacedigitalhub.com
-                </p>
-              </div>
+                return (
+                  <div
+                    key={item.title}
+                    className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition p-6"
+                  >
+                    <div className="flex items-center gap-4">
 
-              <div className="bg-white rounded-2xl shadow p-6">
-                <h4 className="font-bold text-xl mb-2">
-                  📱 Phone
-                </h4>
+                      <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
 
-                <p className="text-gray-600">
-                  +234 8028793121
-                </p>
-              </div>
+                        <Icon className="w-6 h-6 text-green-600" />
 
-              <div className="bg-white rounded-2xl shadow p-6">
-                <h4 className="font-bold text-xl mb-2">
-                  🌍 Location
-                </h4>
+                      </div>
 
-                <p className="text-gray-600">
-                  Worldwide (Remote Services)
-                </p>
-              </div>
+                      <div>
 
-              <div className="bg-white rounded-2xl shadow p-6">
-                <h4 className="font-bold text-xl mb-2">
-                  ⏰ Response Time
-                </h4>
+                        <h4 className="font-bold text-lg">
+                          {item.title}
+                        </h4>
 
-                <p className="text-gray-600">
-                  We usually respond within 24 hours.
-                </p>
-              </div>
+                        <p className="text-gray-600">
+                          {item.value}
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                );
+              })}
 
             </div>
 
