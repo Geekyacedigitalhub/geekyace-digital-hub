@@ -18,7 +18,7 @@ export const portfolio: Project[] = [
     description:
       "An AI-powered assistant that automates customer support, appointment booking, lead qualification, and business workflows.",
     tech: ["Next.js", "OpenAI", "Automation"],
-    image: "/images/portfolio/ai-business.jpg",
+    image: "/images/showcase/ai/document-ai-01.webp",
   },
 
   {
@@ -29,7 +29,7 @@ export const portfolio: Project[] = [
     description:
       "A modern corporate website built for performance, SEO, responsiveness, and customer engagement.",
     tech: ["Next.js", "Tailwind CSS", "SEO"],
-    image: "/images/portfolio/corporate-website.jpg",
+    image: "/images/showcase/websites/construction-01.webp",
   },
 
   {
@@ -40,7 +40,7 @@ export const portfolio: Project[] = [
     description:
       "An all-in-one business platform for CRM, HR, inventory, invoicing, analytics, and workflow automation.",
     tech: ["Dashboard", "Database", "Cloud"],
-    image: "/images/portfolio/business-system.jpg",
+    image: "/images/showcase/automation/crm-01.webp",
   },
 
   {
@@ -51,7 +51,7 @@ export const portfolio: Project[] = [
     description:
       "Cross-platform mobile applications that connect businesses with customers anytime and anywhere.",
     tech: ["React Native", "Android", "iOS"],
-    image: "/images/portfolio/mobile-app.jpg",
+    image: "/images/showcase/mobile/church-app-01.webp",
   },
 
   {
@@ -62,7 +62,7 @@ export const portfolio: Project[] = [
     description:
       "Professional logo design, branding systems, marketing materials, and social media assets.",
     tech: ["Branding", "Adobe", "Creative"],
-    image: "/images/portfolio/brand-identity.jpg",
+    image: "/images/showcase/branding/coffee-brand.webp",
   },
 
   {
@@ -73,6 +73,6 @@ export const portfolio: Project[] = [
     description:
       "Professional 2D and 3D drafting services for engineering, construction, and architectural projects.",
     tech: ["AutoCAD", "2D", "3D"],
-    image: "/images/portfolio/cad-design.jpg",
+    image: "/images/showcase/websites/construction-01.webp",
   },
 ];

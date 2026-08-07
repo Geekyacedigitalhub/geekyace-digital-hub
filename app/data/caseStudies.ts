@@ -21,9 +21,9 @@ export const caseStudies = [
     ],
 
     gallery: [
-      "/images/portfolio/ai-business.jpg",
-      "/images/portfolio/ai-business.jpg",
-      "/images/portfolio/ai-business.jpg",
+      "/images/showcase/ai/document-ai-01.webp",
+      "/images/showcase/ai/hr-ai-01.webp",
+      "/images/showcase/ai/support-ai-01.webp",
     ],
   },
 
@@ -36,7 +36,7 @@ export const caseStudies = [
       "A high-performance corporate website designed to strengthen the client's online presence and generate new business opportunities.",
 
     challenge:
-      "The client's previous website was outdated, slow, and difficult to manage, resulting in poor user experience and low search visibility.",
+      "The client's previous website was outdated, slow, and difficult to manage.",
 
     solution:
       "We redesigned the website with a modern interface, improved navigation, responsive layouts, and SEO best practices.",
@@ -49,11 +49,9 @@ export const caseStudies = [
     ],
 
     gallery: [
-      "/images/portfolio/corporate-website.jpg",
-      "/images/portfolio/corporate-website.jpg",
-      "/images/portfolio/corporate-website.jpg",
+      "/images/showcase/websites/construction-01.webp",
+      "/images/showcase/websites/medical-01.webp",
+      "/images/showcase/websites/restaurant-01.webp",
     ],
   },
-
-  // We'll continue adding the remaining projects
 ];
