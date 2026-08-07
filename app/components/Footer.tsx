@@ -1,111 +1,165 @@
 import Image from "next/image";
-import {
-  Mail,
-  Phone,
-  Globe,
-  ArrowUp,
-} from "lucide-react";
+import Link from "next/link";
+
+import Container from "./ui/Container";
+
+const services = [
+  { name: "Website Development", href: "/services" },
+  { name: "Mobile Applications", href: "/services" },
+  { name: "AI Solutions", href: "/services" },
+  { name: "Business Automation", href: "/services" },
+];
+
+const company = [
+  { name: "About Us", href: "/about" },
+  { name: "Solutions", href: "/solutions" },
+  { name: "Showcase", href: "/showcase" },
+  { name: "Contact", href: "/contact" },
+];
+
+const resources = [
+  { name: "Resources", href: "/resources" },
+  { name: "Privacy Policy", href: "/privacy" },
+  { name: "Terms of Service", href: "/terms" },
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 text-white mt-24">
-      <div className="max-w-screen-xl mx-auto px-8 py-20">
+    <footer className="bg-slate-950 text-gray-300">
 
-        <div className="grid md:grid-cols-4 gap-12">
+      <Container>
 
-          {/* Company */}
+        <div className="grid gap-16 py-20 md:grid-cols-2 lg:grid-cols-4">
+
+          {/* Brand */}
+
           <div>
+
             <Image
               src="/images/logo.png"
               alt="Geekyace Digital Hub"
-              width={220}
-              height={60}
-              className="bg-white rounded-lg p-2 w-auto h-20 mb-6"
-              priority
+              width={180}
+              height={50}
+              className="h-12 w-auto brightness-0 invert"
             />
 
-            <p className="text-gray-400 leading-8">
-              Building smart digital solutions through website development,
-              AI automation, branding, graphic design and CAD drafting.
+            <p className="mt-6 leading-8 text-gray-400">
+              Geekyace Digital Hub builds websites, mobile apps,
+              AI solutions, automation systems and modern digital
+              experiences that help businesses grow.
             </p>
+
           </div>
 
           {/* Services */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">Services</h3>
 
-            <ul className="space-y-4 text-gray-400">
-              <li>Website Development</li>
-              <li>AI Solutions</li>
-              <li>Business Automation</li>
-              <li>Graphic Design</li>
-              <li>CAD Drafting</li>
+          <div>
+
+            <h3 className="mb-6 text-lg font-semibold text-white">
+              Services
+            </h3>
+
+            <ul className="space-y-4">
+
+              {services.map((item) => (
+
+                <li key={item.name}>
+
+                  <Link
+                    href={item.href}
+                    className="transition hover:text-green-400"
+                  >
+                    {item.name}
+                  </Link>
+
+                </li>
+
+              ))}
+
             </ul>
+
           </div>
 
           {/* Company */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">Company</h3>
 
-            <ul className="space-y-4 text-gray-400">
-              <li>About Us</li>
-              <li>Portfolio</li>
-              <li>Contact</li>
-              <li>Privacy Policy</li>
+          <div>
+
+            <h3 className="mb-6 text-lg font-semibold text-white">
+              Company
+            </h3>
+
+            <ul className="space-y-4">
+
+              {company.map((item) => (
+
+                <li key={item.name}>
+
+                  <Link
+                    href={item.href}
+                    className="transition hover:text-green-400"
+                  >
+                    {item.name}
+                  </Link>
+
+                </li>
+
+              ))}
+
             </ul>
+
           </div>
 
           {/* Contact */}
+
           <div>
-            <h3 className="text-xl font-bold mb-6">
+
+            <h3 className="mb-6 text-lg font-semibold text-white">
               Contact
             </h3>
 
-            <div className="space-y-5">
+            <ul className="space-y-4 text-gray-400">
 
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-green-500" />
-                <span className="text-gray-400">
-                  hello@geekyacedigitalhub.com
-                </span>
-              </div>
+              <li>📧 geekyacedigital@gmail.com</li>
 
-              <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-green-500" />
-                <span className="text-gray-400">
-                  +234 8028793121
-                </span>
-              </div>
+              <li>🌍 Philippines</li>
 
-              <div className="flex items-center gap-3">
-                <Globe className="w-5 h-5 text-green-500" />
-                <span className="text-gray-400">
-                  Worldwide
-                </span>
-              </div>
+              <li>💼 Geekyace Digital Hub</li>
 
-            </div>
+            </ul>
+
           </div>
 
         </div>
 
-        <div className="border-t border-slate-800 mt-16 pt-8 flex justify-between items-center">
+        {/* Bottom Bar */}
 
-          <p className="text-gray-500">
-            © 2026 Geekyace Digital Hub. All Rights Reserved.
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-800 py-8 md:flex-row">
+
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} Geekyace Digital Hub.
+            All rights reserved.
           </p>
 
-          <a
-            href="#"
-            className="flex items-center gap-2 text-green-400 hover:text-green-300"
-          >
-            Back to Top
-            <ArrowUp className="w-5 h-5" />
-          </a>
+          <div className="flex flex-wrap items-center gap-6 text-sm">
+
+            {resources.map((item) => (
+
+              <Link
+                key={item.name}
+                href={item.href}
+                className="transition hover:text-green-400"
+              >
+                {item.name}
+              </Link>
+
+            ))}
+
+          </div>
 
         </div>
 
-      </div>
+      </Container>
+
     </footer>
   );
 }

@@ -1,25 +1,25 @@
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Services from "./components/Services";
-import Portfolio from "./components/Portfolio";
-import About from "./components/About";
-import Footer from "./components/Footer";
-import Contact from "./components/Contact";
+import Hero from "@/app/components/home/Hero";
+import TrustedCompanies from "@/app/components/home/TrustedCompanies";
+import Services from "@/app/components/home/Services";
+import WhyChooseUs from "@/app/components/home/WhyChooseUs";
+import Process from "@/app/components/home/Process";
+import TechStack from "@/app/components/home/TechStack";
+import FeaturedCaseStudies from "@/app/components/home/FeaturedCaseStudies";
+import Testimonials from "@/app/components/home/Testimonials";
+import FinalCTA from "@/app/components/home/FinalCTA";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
-      <main className="max-w-6xl mx-auto px-8 py-10">
-
-       <Header />
-<Hero />
-<Services />
-<Portfolio />
-<About />
-<Contact />
-<Footer />
-
-      </main>
-    </div>
+    <main>
+      <Hero />
+      <TrustedCompanies />
+      <Services />
+      <WhyChooseUs />
+      <Process />
+      <TechStack />
+      <FeaturedCaseStudies />
+      <Testimonials />
+      <FinalCTA />
+    </main>
   );
 }

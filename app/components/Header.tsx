@@ -1,70 +1,173 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
+
+const navigation = [
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services" },
+  { name: "Solutions", href: "/solutions" },
+  { name: "Showcase", href: "/showcase" },
+  { name: "About", href: "/about" },
+  { name: "Resources", href: "/resources" },
+  { name: "Contact", href: "/contact" },
+];
 
 export default function Header() {
+  const pathname = usePathname();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "border-b border-gray-200 bg-white/80 shadow-lg backdrop-blur-xl"
+          : "bg-white/60 backdrop-blur-md"
+      }`}
+    >
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
 
         {/* Logo */}
-        <a href="/">
+
+        <Link href="/" className="flex items-center">
+
           <Image
-  src="/images/logo.png"
-  alt="Geekyace Digital Hub Logo"
-  width={320}
-  height={80}
-  priority
-  style={{ width: "auto", height: "60px" }}
-/>
-        </a>
+            src="/images/logo.png"
+            alt="Geekyace Digital Hub"
+            width={180}
+            height={50}
+            className="h-11 w-auto"
+            priority
+          />
 
-        {/* Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        </Link>
 
-          <a
-            href="#"
-            className="text-gray-700 hover:text-green-500 transition"
+        {/* Desktop Navigation */}
+
+        <nav className="hidden items-center gap-8 lg:flex">
+
+          {navigation.map((item) => {
+
+            const active =
+              pathname === item.href ||
+              (item.href !== "/" &&
+                pathname.startsWith(item.href));
+
+            return (
+
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`relative text-sm font-medium transition-all duration-300 ${
+                  active
+                    ? "text-green-600"
+                    : "text-gray-700 hover:text-green-600"
+                }`}
+              >
+
+                {item.name}
+
+                <span
+                  className={`absolute -bottom-2 left-0 h-[2px] rounded-full bg-green-600 transition-all duration-300 ${
+                    active
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
+                  }`}
+                />
+
+              </Link>
+
+            );
+
+          })}
+
+          <Link
+            href="/contact"
+            className="rounded-xl bg-green-600 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-xl"
           >
-            Home
-          </a>
-
-          <a
-            href="#services"
-            className="text-gray-700 hover:text-green-500 transition"
-          >
-            Services
-          </a>
-
-          <a
-            href="#portfolio"
-            className="text-gray-700 hover:text-green-500 transition"
-          >
-            Portfolio
-          </a>
-
-          <a
-            href="#about"
-            className="text-gray-700 hover:text-green-500 transition"
-          >
-            About
-          </a>
-
-          <a
-            href="#contact"
-            className="text-gray-700 hover:text-green-500 transition"
-          >
-            Contact
-          </a>
-
-          <a
-            href="#contact"
-            className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full transition"
-          >
-            Get Started
-          </a>
+            Start Project
+          </Link>
 
         </nav>
 
+        {/* Mobile Button */}
+
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="rounded-xl p-2 transition hover:bg-gray-100 lg:hidden"
+        >
+          {menuOpen ? (
+            <X size={28} />
+          ) : (
+            <Menu size={28} />
+          )}
+        </button>
+
       </div>
+
+      {/* Mobile Menu */}
+
+      {menuOpen && (
+
+        <div className="border-t border-gray-200 bg-white lg:hidden">
+
+          <nav className="flex flex-col gap-2 p-6">
+
+            {navigation.map((item) => {
+
+              const active =
+                pathname === item.href ||
+                (item.href !== "/" &&
+                  pathname.startsWith(item.href));
+
+              return (
+
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`rounded-xl px-4 py-3 transition ${
+                    active
+                      ? "bg-green-100 font-semibold text-green-700"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+
+              );
+
+            })}
+
+            <Link
+              href="/contact"
+              onClick={() => setMenuOpen(false)}
+              className="mt-4 rounded-xl bg-green-600 py-3 text-center font-semibold text-white transition hover:bg-green-700"
+            >
+              Start Project
+            </Link>
+
+          </nav>
+
+        </div>
+
+      )}
+
     </header>
   );
 }
