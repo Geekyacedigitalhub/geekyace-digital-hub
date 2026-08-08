@@ -12,9 +12,9 @@ export const websites: Project[] = [
     year: "2026",
     duration: "4 Weeks",
     featured: true,
-    image: "/images/showcase/websites/restaurant-01.webp",
+    image: "/images/showcase/websites/Restaurant-01.webp",
     gallery: [
-      "/images/showcase/websites/restaurant-01.webp",
+      "/images/showcase/websites/Restaurant-01.webp",
       "/images/showcase/websites/restaurant-02.webp",
       "/images/showcase/websites/restaurant-03.webp",
     ],
