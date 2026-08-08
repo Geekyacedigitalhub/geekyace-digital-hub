@@ -15,8 +15,6 @@ export const websites: Project[] = [
     image: "/images/showcase/websites/Restaurant-01.webp",
     gallery: [
       "/images/showcase/websites/Restaurant-01.webp",
-      "/images/showcase/websites/restaurant-02.webp",
-      "/images/showcase/websites/restaurant-03.webp",
     ],
     shortDescription:
       "Modern restaurant website with reservations, digital menu and online ordering.",
@@ -49,7 +47,6 @@ export const websites: Project[] = [
     image: "/images/showcase/websites/medical-01.webp",
     gallery: [
       "/images/showcase/websites/medical-01.webp",
-      "/images/showcase/websites/medical-02.webp",
     ],
     shortDescription:
       "Healthcare portal with appointment booking and patient dashboard.",
@@ -82,7 +79,6 @@ export const websites: Project[] = [
     image: "/images/showcase/websites/real-estate-01.webp",
     gallery: [
       "/images/showcase/websites/real-estate-01.webp",
-      "/images/showcase/websites/real-estate-02.webp",
     ],
     shortDescription:
       "Luxury real estate platform with advanced property search.",
