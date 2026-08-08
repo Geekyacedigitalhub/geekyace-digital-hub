@@ -21,13 +21,11 @@ export default function FeaturedProjects() {
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
+      const searchTerm = search.toLowerCase();
+
       const matchesSearch =
-        project.title
-          .toLowerCase()
-          .includes(search.toLowerCase()) ||
-        project.shortDescription
-          .toLowerCase()
-          .includes(search.toLowerCase());
+        project.title.toLowerCase().includes(searchTerm) ||
+        project.shortDescription.toLowerCase().includes(searchTerm);
 
       const matchesCategory =
         !category || project.category === category;
@@ -45,12 +43,7 @@ export default function FeaturedProjects() {
         matchesService
       );
     });
-  }, [
-    search,
-    category,
-    industry,
-    service,
-  ]);
+  }, [search, category, industry, service]);
 
   function resetFilters() {
     setSearch("");
@@ -60,12 +53,10 @@ export default function FeaturedProjects() {
   }
 
   return (
-    <section className="bg-gray-50 py-24">
-
+    <section className="py-20 lg:py-28">
       <Container>
-
+        {/* Heading */}
         <div className="mx-auto mb-16 max-w-3xl text-center">
-
           <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
             Digital Showcase
           </span>
@@ -79,9 +70,9 @@ export default function FeaturedProjects() {
             mobile applications, AI, automation,
             branding and creative solutions.
           </p>
-
         </div>
 
+        {/* Filters */}
         <ShowcaseFilters
           search={search}
           setSearch={setSearch}
@@ -97,19 +88,17 @@ export default function FeaturedProjects() {
           onReset={resetFilters}
         />
 
+        {/* Results Count */}
         <div className="mb-10 flex items-center justify-between">
-
           <h3 className="text-2xl font-bold text-gray-900">
             {filteredProjects.length} Project
             {filteredProjects.length !== 1 && "s"} Found
           </h3>
-
         </div>
 
+        {/* Projects */}
         {filteredProjects.length === 0 ? (
-
           <div className="rounded-3xl border border-dashed border-gray-300 bg-white py-24 text-center">
-
             <h3 className="text-3xl font-bold text-gray-900">
               No projects found
             </h3>
@@ -117,28 +106,19 @@ export default function FeaturedProjects() {
             <p className="mt-4 text-gray-600">
               Try changing your search or filters.
             </p>
-
           </div>
-
         ) : (
-
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-
-            {filteredProjects.map((project) => (
-
+            {filteredProjects.map((project, index) => (
               <ProjectCard
                 key={project.id}
                 project={project}
+                priority={index < 3}
               />
-
             ))}
-
           </div>
-
         )}
-
       </Container>
-
     </section>
   );
 }
