@@ -1,86 +1,87 @@
+"use client";
+
+import { motion } from "framer-motion";
 import {
-  Globe,
-  Bot,
-  Smartphone,
-  Palette,
-  Database,
-  Cloud,
-  ShieldCheck,
-  Workflow,
+  Building2,
+  HeartPulse,
+  GraduationCap,
+  Landmark,
+  Scale,
+  Utensils,
 } from "lucide-react";
 
-const technologies = [
+const industries = [
   {
-    icon: Globe,
-    title: "Website Development",
+    name: "Healthcare",
+    icon: HeartPulse,
   },
   {
-    icon: Bot,
-    title: "AI Solutions",
+    name: "Education",
+    icon: GraduationCap,
   },
   {
-    icon: Workflow,
-    title: "Business Automation",
+    name: "Finance",
+    icon: Landmark,
   },
   {
-    icon: Smartphone,
-    title: "Mobile Apps",
+    name: "Real Estate",
+    icon: Building2,
   },
   {
-    icon: Palette,
-    title: "UI / UX Design",
+    name: "Legal",
+    icon: Scale,
   },
   {
-    icon: Database,
-    title: "Database Systems",
-  },
-  {
-    icon: Cloud,
-    title: "Cloud Services",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Cyber Security",
+    name: "Hospitality",
+    icon: Utensils,
   },
 ];
 
 export default function TrustedCompanies() {
   return (
-    <section className="border-y border-slate-800 bg-slate-950 py-16">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-blue-400">
-            OUR EXPERTISE
+    <section className="border-b border-slate-200 bg-white py-14 sm:py-16">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-600">
+            Trusted Across Industries
           </p>
 
-          <h2 className="mt-4 text-3xl font-bold text-white">
-            Building Modern Digital Experiences
+          <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+            Digital Solutions Built for Modern Businesses
           </h2>
 
-          <p className="mx-auto mt-4 max-w-3xl text-slate-400">
-            We combine innovative technologies, intelligent automation,
-            and creative design to help businesses grow faster,
-            operate smarter, and deliver exceptional customer experiences.
+          <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
+            We create reliable digital experiences and business systems for
+            organizations across different industries.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {technologies.map((item) => {
-            const Icon = item.icon;
+        {/* Industry cards */}
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {industries.map((industry, index) => {
+            const Icon = industry.icon;
 
             return (
-              <div
-                key={item.title}
-                className="group rounded-2xl border border-slate-800 bg-slate-900/50 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-blue-500/40 hover:bg-slate-900"
+              <motion.div
+                key={industry.name}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.05,
+                }}
+                className="group flex min-h-[120px] flex-col items-center justify-center rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-6 text-center transition-all duration-200 hover:-translate-y-1 hover:border-green-200 hover:bg-green-50 hover:shadow-md"
               >
-                <div className="mb-5 inline-flex rounded-xl bg-blue-500/10 p-3 transition group-hover:bg-blue-500/20">
-                  <Icon className="h-6 w-6 text-blue-400" />
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-slate-500 shadow-sm transition-colors duration-200 group-hover:bg-green-100 group-hover:text-green-600">
+                  <Icon className="h-5 w-5" />
                 </div>
 
-                <h3 className="font-semibold text-white">
-                  {item.title}
-                </h3>
-              </div>
+                <p className="mt-4 text-sm font-semibold text-slate-700 transition-colors group-hover:text-green-700">
+                  {industry.name}
+                </p>
+              </motion.div>
             );
           })}
         </div>

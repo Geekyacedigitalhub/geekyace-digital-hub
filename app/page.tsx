@@ -6,63 +6,49 @@ import TrustedCompanies from "@/app/components/home/TrustedCompanies";
 const Services = dynamic(
   () => import("@/app/components/home/Services"),
   {
-    loading: () => (
-      <section className="h-96 animate-pulse bg-white" />
-    ),
+    loading: () => null,
   }
 );
 
 const WhyChooseUs = dynamic(
   () => import("@/app/components/home/WhyChooseUs"),
   {
-    loading: () => (
-      <section className="h-96 animate-pulse bg-slate-50" />
-    ),
+    loading: () => null,
   }
 );
 
 const Process = dynamic(
   () => import("@/app/components/home/Process"),
   {
-    loading: () => (
-      <section className="h-96 animate-pulse bg-white" />
-    ),
+    loading: () => null,
   }
 );
 
 const TechStack = dynamic(
   () => import("@/app/components/home/TechStack"),
   {
-    loading: () => (
-      <section className="h-80 animate-pulse bg-slate-50" />
-    ),
+    loading: () => null,
   }
 );
 
 const FeaturedCaseStudies = dynamic(
   () => import("@/app/components/home/FeaturedCaseStudies"),
   {
-    loading: () => (
-      <section className="h-[700px] animate-pulse bg-white" />
-    ),
+    loading: () => null,
   }
 );
 
 const Testimonials = dynamic(
   () => import("@/app/components/home/Testimonials"),
   {
-    loading: () => (
-      <section className="h-80 animate-pulse bg-slate-50" />
-    ),
+    loading: () => null,
   }
 );
 
 const FinalCTA = dynamic(
   () => import("@/app/components/home/FinalCTA"),
   {
-    loading: () => (
-      <section className="h-72 animate-pulse bg-green-50" />
-    ),
+    loading: () => null,
   }
 );
 

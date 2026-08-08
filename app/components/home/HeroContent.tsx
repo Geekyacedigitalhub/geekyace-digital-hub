@@ -1,101 +1,105 @@
-"use client";
-
 import Link from "next/link";
-import { ArrowRight, Play, Sparkles, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Play,
+  Sparkles,
+} from "lucide-react";
 
 export default function HeroContent() {
   return (
-    <div className="flex flex-col justify-center">
+    <div className="relative z-10">
       {/* Badge */}
-      <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2">
-        <Sparkles className="h-4 w-4 text-blue-400" />
-        <span className="text-sm font-medium text-blue-400">
-          Trusted Digital Innovation Partner
-        </span>
+      <div className="inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-400/10 px-4 py-2 text-sm font-semibold text-green-300">
+        <Sparkles className="h-4 w-4" />
+        Trusted Digital Innovation Partner
       </div>
 
       {/* Heading */}
-      <h1 className="max-w-3xl text-5xl font-extrabold leading-tight tracking-tight text-white lg:text-6xl">
+      <h1 className="mt-7 max-w-4xl text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
         Build Powerful
-        <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent">
+        <span className="block bg-gradient-to-r from-green-300 via-emerald-400 to-green-500 bg-clip-text text-transparent">
           Digital Solutions
         </span>
         For Modern Businesses
       </h1>
 
       {/* Description */}
-      <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-300">
+      <p className="mt-7 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
         Geekyace Digital Hub helps startups, entrepreneurs, and growing
-        businesses create modern websites, AI-powered solutions, mobile
-        applications, and business automation systems that drive measurable
-        growth.
+        businesses build modern websites, AI-powered solutions, mobile
+        applications, and business automation systems that help them grow.
       </p>
 
       {/* CTA Buttons */}
-      <div className="mt-10 flex flex-wrap gap-4">
+      <div className="mt-9 flex flex-wrap gap-4">
         <Link
           href="/contact"
-          className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-blue-500"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-500 px-6 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-green-500/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-green-400 hover:shadow-xl hover:shadow-green-500/25"
         >
           Start Your Project
-          <ArrowRight className="h-5 w-5" />
+          <ArrowRight className="h-4 w-4" />
         </Link>
 
         <Link
-          href="/portfolio"
-          className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-6 py-3 font-semibold text-slate-200 transition-all duration-300 hover:border-slate-500"
+          href="/showcase"
+          className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-white/5 px-6 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition-all duration-200 hover:border-green-400/40 hover:bg-white/10"
         >
-          <Play className="h-5 w-5" />
-          View Portfolio
+          <Play className="h-4 w-4 fill-current" />
+          View Our Work
         </Link>
       </div>
 
-      {/* Trust Features */}
-      <div className="mt-12 grid gap-4 sm:grid-cols-2">
-        <div className="flex items-center gap-3">
-          <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-          <span className="text-slate-300">
-            Custom Software Development
-          </span>
+      {/* Trust features */}
+      <div className="mt-10 grid max-w-2xl gap-x-8 gap-y-4 sm:grid-cols-2">
+        <div className="flex items-center gap-3 text-sm text-slate-300">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-green-400" />
+          Custom Software Development
         </div>
 
-        <div className="flex items-center gap-3">
-          <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-          <span className="text-slate-300">
-            AI Automation Solutions
-          </span>
+        <div className="flex items-center gap-3 text-sm text-slate-300">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-green-400" />
+          AI Automation Solutions
         </div>
 
-        <div className="flex items-center gap-3">
-          <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-          <span className="text-slate-300">
-            Mobile App Development
-          </span>
+        <div className="flex items-center gap-3 text-sm text-slate-300">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-green-400" />
+          Mobile App Development
         </div>
 
-        <div className="flex items-center gap-3">
-          <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-          <span className="text-slate-300">
-            Ongoing Technical Support
-          </span>
+        <div className="flex items-center gap-3 text-sm text-slate-300">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-green-400" />
+          Ongoing Technical Support
         </div>
       </div>
 
-      {/* Bottom Stats */}
-      <div className="mt-14 flex flex-wrap gap-10">
+      {/* Stats */}
+      <div className="mt-12 flex flex-wrap gap-x-10 gap-y-6 border-t border-slate-800 pt-7">
         <div>
-          <h2 className="text-3xl font-bold text-white">50+</h2>
-          <p className="text-slate-400">Successful Projects</p>
+          <p className="text-2xl font-extrabold text-white sm:text-3xl">
+            50+
+          </p>
+          <p className="mt-1 text-sm text-slate-400">
+            Successful Projects
+          </p>
         </div>
 
         <div>
-          <h2 className="text-3xl font-bold text-white">10+</h2>
-          <p className="text-slate-400">Industries Served</p>
+          <p className="text-2xl font-extrabold text-white sm:text-3xl">
+            10+
+          </p>
+          <p className="mt-1 text-sm text-slate-400">
+            Industries Served
+          </p>
         </div>
 
         <div>
-          <h2 className="text-3xl font-bold text-white">24/7</h2>
-          <p className="text-slate-400">Customer Support</p>
+          <p className="text-2xl font-extrabold text-white sm:text-3xl">
+            24/7
+          </p>
+          <p className="mt-1 text-sm text-slate-400">
+            Customer Support
+          </p>
         </div>
       </div>
     </div>
