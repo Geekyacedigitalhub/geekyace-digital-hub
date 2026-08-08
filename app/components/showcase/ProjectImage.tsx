@@ -6,11 +6,13 @@ import { ImageIcon } from "lucide-react";
 interface ProjectImageProps {
   src?: string;
   alt: string;
+  priority?: boolean;
 }
 
 export default function ProjectImage({
   src,
   alt,
+  priority = false,
 }: ProjectImageProps) {
   if (!src) {
     return (
@@ -28,9 +30,9 @@ export default function ProjectImage({
       src={src}
       alt={alt}
       fill
-      sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-      quality={70}
-      loading="lazy"
+      priority={priority}
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      quality={75}
       placeholder="empty"
       className="object-cover transition-transform duration-500 group-hover:scale-105"
     />
