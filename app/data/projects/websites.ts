@@ -12,11 +12,11 @@ export const websites: Project[] = [
     year: "2026",
     duration: "4 Weeks",
     featured: true,
-    image: "/images/showcase/websites/restaurant-01.jpg",
+    image: "/images/showcase/websites/restaurant-01.webp",
     gallery: [
-      "/images/showcase/websites/restaurant-01.jpg",
-      "/images/showcase/websites/restaurant-02.jpg",
-      "/images/showcase/websites/restaurant-03.jpg",
+      "/images/showcase/websites/restaurant-01.webp",
+      "/images/showcase/websites/restaurant-02.webp",
+      "/images/showcase/websites/restaurant-03.webp",
     ],
     shortDescription:
       "Modern restaurant website with reservations, digital menu and online ordering.",
@@ -46,10 +46,10 @@ export const websites: Project[] = [
     year: "2026",
     duration: "6 Weeks",
     featured: true,
-    image: "/images/showcase/websites/medical-01.jpg",
+    image: "/images/showcase/websites/medical-01.webp",
     gallery: [
-      "/images/showcase/websites/medical-01.jpg",
-      "/images/showcase/websites/medical-02.jpg",
+      "/images/showcase/websites/medical-01.webp",
+      "/images/showcase/websites/medical-02.webp",
     ],
     shortDescription:
       "Healthcare portal with appointment booking and patient dashboard.",
@@ -79,10 +79,10 @@ export const websites: Project[] = [
     year: "2026",
     duration: "5 Weeks",
     featured: true,
-    image: "/images/showcase/websites/real-estate-01.jpg",
+    image: "/images/showcase/websites/real-estate-01.webp",
     gallery: [
-      "/images/showcase/websites/real-estate-01.jpg",
-      "/images/showcase/websites/real-estate-02.jpg",
+      "/images/showcase/websites/real-estate-01.webp",
+      "/images/showcase/websites/real-estate-02.webp",
     ],
     shortDescription:
       "Luxury real estate platform with advanced property search.",
@@ -112,9 +112,9 @@ export const websites: Project[] = [
     year: "2026",
     duration: "5 Weeks",
     featured: true,
-    image: "/images/showcase/websites/school-01.jpg",
+    image: "/images/showcase/websites/school-01.webp",
     gallery: [
-      "/images/showcase/websites/school-01.jpg",
+      "/images/showcase/websites/school-01.webp",
     ],
     shortDescription:
       "Modern school website with admissions and student portal.",
@@ -144,9 +144,9 @@ export const websites: Project[] = [
     year: "2026",
     duration: "6 Weeks",
     featured: true,
-    image: "/images/showcase/websites/hotel-01.jpg",
+    image: "/images/showcase/websites/hotel-01.webp",
     gallery: [
-      "/images/showcase/websites/hotel-01.jpg",
+      "/images/showcase/websites/hotel-01.webp",
     ],
     shortDescription:
       "Hotel booking website with online reservations and payment.",
@@ -176,9 +176,9 @@ export const websites: Project[] = [
     year: "2026",
     duration: "4 Weeks",
     featured: false,
-    image: "/images/showcase/websites/construction-01.jpg",
+    image: "/images/showcase/websites/construction-01.webp",
     gallery: [
-      "/images/showcase/websites/construction-01.jpg",
+      "/images/showcase/websites/construction-01.webp",
     ],
     shortDescription:
       "Construction company website showcasing projects and services.",
@@ -207,9 +207,9 @@ export const websites: Project[] = [
     year: "2026",
     duration: "3 Weeks",
     featured: false,
-    image: "/images/showcase/websites/church-01.jpg",
+    image: "/images/showcase/websites/church-01.webp",
     gallery: [
-      "/images/showcase/websites/church-01.jpg",
+      "/images/showcase/websites/church-01.webp",
     ],
     shortDescription:
       "Church website with events, sermons and online giving.",
@@ -238,9 +238,9 @@ export const websites: Project[] = [
     year: "2026",
     duration: "5 Weeks",
     featured: false,
-    image: "/images/showcase/websites/law-01.jpg",
+    image: "/images/showcase/websites/law-01.webp",
     gallery: [
-      "/images/showcase/websites/law-01.jpg",
+      "/images/showcase/websites/law-01.webp",
     ],
     shortDescription:
       "Professional legal website with consultation booking.",
@@ -269,9 +269,9 @@ export const websites: Project[] = [
     year: "2026",
     duration: "4 Weeks",
     featured: false,
-    image: "/images/showcase/websites/accounting-01.jpg",
+    image: "/images/showcase/websites/accounting-01.webp",
     gallery: [
-      "/images/showcase/websites/accounting-01.jpg",
+      "/images/showcase/websites/accounting-01.webp",
     ],
     shortDescription:
       "Accounting firm website with secure document uploads.",
@@ -300,9 +300,9 @@ export const websites: Project[] = [
     year: "2026",
     duration: "4 Weeks",
     featured: false,
-    image: "/images/showcase/websites/ngo-01.jpg",
+    image: "/images/showcase/websites/ngo-01.webp",
     gallery: [
-      "/images/showcase/websites/ngo-01.jpg",
+      "/images/showcase/websites/ngo-01.webp",
     ],
     shortDescription:
       "Non-profit website with donations and volunteer management.",

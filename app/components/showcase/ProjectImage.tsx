@@ -14,12 +14,8 @@ export default function ProjectImage({
 }: ProjectImageProps) {
   if (!src) {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center bg-slate-100 text-center">
-        <ImageIcon
-          size={56}
-          className="text-slate-400"
-        />
-
+      <div className="flex h-full min-h-[256px] flex-col items-center justify-center bg-slate-100 text-slate-500">
+        <ImageIcon className="h-12 w-12" />
         <p className="mt-4 font-medium text-slate-600">
           Project Preview Coming Soon
         </p>
@@ -32,11 +28,12 @@ export default function ProjectImage({
       src={src}
       alt={alt}
       fill
-      className="object-cover transition-transform duration-500 group-hover:scale-105"
+      quality={75}
+      loading="lazy"
       sizes="(max-width: 768px) 100vw,
              (max-width: 1200px) 50vw,
              33vw"
-      priority={false}
+      className="object-cover transition-transform duration-700 group-hover:scale-110"
     />
   );
 }
