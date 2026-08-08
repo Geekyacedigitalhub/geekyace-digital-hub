@@ -10,11 +10,11 @@ export default function FeaturedCaseStudies() {
   const featuredProjects = getFeaturedProjects(3);
 
   return (
-    <section className="bg-slate-50 py-24 sm:py-28">
+    <section className="py-20 sm:py-24 lg:py-28">
       <Container>
         {/* Section Heading */}
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-bold text-green-700">
+          <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
             Featured Work
           </span>
 
@@ -31,10 +31,11 @@ export default function FeaturedCaseStudies() {
         {/* Featured Projects */}
         {featuredProjects.length > 0 ? (
           <div className="mt-16 grid gap-8 lg:grid-cols-3">
-            {featuredProjects.map((project) => (
+            {featuredProjects.map((project, index) => (
               <ProjectCard
                 key={project.id}
                 project={project}
+                priority={index === 0}
               />
             ))}
           </div>
