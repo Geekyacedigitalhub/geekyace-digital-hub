@@ -6,12 +6,16 @@ import FeaturedProjects from "@/app/components/showcase/FeaturedProjects";
 export default function ShowcasePage() {
   return (
     <main>
+      {/* Showcase Hero */}
       <ShowcaseHero />
 
+      {/* Showcase Statistics */}
       <ShowcaseStats />
 
+      {/* Featured Case Study */}
       <FeaturedCaseStudy />
 
+      {/* Featured Projects */}
       <FeaturedProjects />
     </main>
   );
