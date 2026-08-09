@@ -32,6 +32,10 @@ const links = [
     name: "Contact",
     href: "/contact",
   },
+  {
+    name: "Dashboard",
+    href: "/dashboard/team-work-hub",
+  },
 ];
 
 export default function Navbar() {
@@ -43,7 +47,10 @@ export default function Navbar() {
       return pathname === "/";
     }
 
-    return pathname === href || pathname.startsWith(`${href}/`);
+    return (
+      pathname === href ||
+      pathname.startsWith(`${href}/`)
+    );
   };
 
   const closeMenu = () => {
@@ -51,13 +58,16 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-md">
-      <nav
-        className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8"
-        aria-label="Main navigation"
-      >
+    <header className="border-b border-slate-200 bg-white">
+      <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
+
         {/* Logo */}
-        <Logo />
+        <div
+          onClick={closeMenu}
+          className="shrink-0"
+        >
+          <Logo />
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 lg:flex">
@@ -78,7 +88,9 @@ export default function Navbar() {
 
                 <span
                   className={`absolute bottom-0 left-0 h-0.5 rounded-full bg-green-500 transition-all duration-200 ${
-                    active ? "w-full" : "w-0 group-hover:w-full"
+                    active
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
                   }`}
                 />
               </Link>
@@ -92,6 +104,7 @@ export default function Navbar() {
           className="hidden items-center gap-2 rounded-xl bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg lg:inline-flex"
         >
           Start Project
+
           <ArrowRight
             className="h-4 w-4"
             aria-hidden="true"
@@ -107,7 +120,9 @@ export default function Navbar() {
               : "Open navigation menu"
           }
           aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((open) => !open)}
+          onClick={() =>
+            setMenuOpen((open) => !open)
+          }
           className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-800 transition hover:border-green-200 hover:bg-green-50 hover:text-green-600 lg:hidden"
         >
           {menuOpen ? (
@@ -155,6 +170,7 @@ export default function Navbar() {
                 className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-green-700"
               >
                 Start Project
+
                 <ArrowRight
                   className="h-4 w-4"
                   aria-hidden="true"
