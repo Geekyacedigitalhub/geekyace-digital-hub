@@ -1,6 +1,5 @@
 import AboutHero from "./AboutHero";
 import OurStory from "./OurStory";
-import MissionVision from "./MissionVision";
 import CoreValues from "./CoreValues";
 import Achievements from "./Achievements";
 import Technologies from "./Technologies";
@@ -12,7 +11,6 @@ export default function About() {
     <>
       <AboutHero />
       <OurStory />
-      <MissionVision />
       <CoreValues />
       <Achievements />
       <Technologies />

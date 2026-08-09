@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 import Card from "../ui/Card";
 import Badge from "../ui/Badge";
 import Button from "../Button";
@@ -20,23 +18,14 @@ export default function PortfolioCard({
   title,
   category,
   description,
-  image,
   technologies,
 }: PortfolioCardProps) {
   const visibleTechnologies = technologies.slice(0, 4);
-  const remainingCount = technologies.length - visibleTechnologies.length;
+  const remainingCount =
+    technologies.length - visibleTechnologies.length;
 
   return (
-    <Card className="group overflow-hidden rounded-3xl border border-slate-200 bg-white p-0 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-green-500 hover:shadow-xl">
-      <div className="relative h-64 w-full overflow-hidden bg-slate-100">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      </div>
-
+    <Card className="overflow-hidden">
       <div className="space-y-5 p-8">
         <Badge>{category}</Badge>
 
@@ -66,7 +55,7 @@ export default function PortfolioCard({
         </div>
 
         <div className="pt-2">
-          <Button href={`/portfolio/${slug}`}>
+          <Button href={`/showcase/${slug}`}>
             View Portfolio
           </Button>
         </div>

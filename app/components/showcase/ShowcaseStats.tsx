@@ -43,12 +43,11 @@ const stats = [
 
 export default function ShowcaseStats() {
   return (
-    <section className="bg-slate-50 py-24">
+    <section className="relative overflow-hidden bg-slate-50 py-24">
       <Container>
         <SectionHeading
-          badge="SHOWCASE STATISTICS"
-          title="Delivering Results Across Every Project"
-          description="Every project represents our commitment to building secure, scalable, and high-performing digital solutions."
+          title="Our Capabilities"
+          description="A growing portfolio of digital solutions, technologies, and services built to help businesses grow."
         />
 
         <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-4">

@@ -17,78 +17,116 @@ export default function ProjectCard({
   project,
   priority = false,
 }: ProjectCardProps) {
-  return (
-    <article className="group overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-      {/* Image */}
-      <div className="relative h-64 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-        <ProjectImage
-          src={project.image}
-          alt={project.title}
-          priority={priority}
-        />
+  const technologies = project.technologies.slice(0, 4);
+  const remainingTechnologies =
+    project.technologies.length - technologies.length;
 
-        <div className="absolute left-5 top-5">
-          <span className="rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-gray-800 backdrop-blur">
-            {project.category}
-          </span>
+  return (
+    <article className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-green-500 hover:shadow-2xl">
+      {/* Image */}
+      <Link
+        href={`/showcase/${project.slug}`}
+        className="block"
+        aria-label={`View ${project.title} case study`}
+      >
+        <div className="relative h-64 overflow-hidden bg-slate-100 sm:h-72">
+          <ProjectImage
+            src={project.image}
+            alt={project.title}
+            priority={priority}
+          />
+
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/30 to-transparent" />
+
+          <div className="absolute left-5 top-5">
+            <span className="rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-slate-800 shadow-sm backdrop-blur">
+              {project.category}
+            </span>
+          </div>
         </div>
-      </div>
+      </Link>
 
       {/* Content */}
-      <div className="p-8">
+      <div className="p-7 sm:p-8">
         {/* Industry & Service */}
         <div className="flex flex-wrap gap-2">
           <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
             {project.industry}
           </span>
 
-          <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
             {project.service}
           </span>
         </div>
 
         {/* Title */}
-        <h3 className="mt-6 text-2xl font-bold text-gray-900 transition group-hover:text-green-700">
-          {project.title}
-        </h3>
+        <Link href={`/showcase/${project.slug}`}>
+          <h3 className="mt-6 text-2xl font-bold text-slate-900 transition-colors duration-200 group-hover:text-green-700">
+            {project.title}
+          </h3>
+        </Link>
 
         {/* Description */}
-        <p className="mt-4 leading-8 text-gray-600">
+        <p className="mt-4 leading-8 text-slate-600">
           {project.shortDescription}
         </p>
 
         {/* Technologies */}
         <div className="mt-6 flex flex-wrap gap-2">
-          {project.technologies.slice(0, 4).map((tech) => (
+          {technologies.map((tech) => (
             <span
               key={tech}
-              className="rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium text-gray-700"
+              className="rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700"
             >
               {tech}
             </span>
           ))}
+
+          {remainingTechnologies > 0 && (
+            <span className="rounded-lg bg-green-50 px-3 py-2 text-sm font-semibold text-green-700">
+              +{remainingTechnologies}
+            </span>
+          )}
         </div>
 
         {/* Footer */}
-        <div className="mt-8 flex items-center justify-between border-t border-gray-100 pt-6">
-          <div className="space-y-2 text-sm text-gray-500">
+        <div className="mt-8 flex items-end justify-between gap-4 border-t border-slate-100 pt-6">
+          <div className="space-y-2 text-sm text-slate-500">
             <div className="flex items-center gap-2">
-              <Calendar size={16} />
+              <Calendar
+                size={16}
+                className="text-green-600"
+                aria-hidden="true"
+              />
               <span>{project.year}</span>
             </div>
 
             <div className="flex items-center gap-2">
-              <Layers3 size={16} />
+              <Layers3
+                size={16}
+                className="text-green-600"
+                aria-hidden="true"
+              />
               <span>{project.duration}</span>
             </div>
           </div>
 
           <Link
             href={`/showcase/${project.slug}`}
-            className="inline-flex items-center gap-2 font-semibold text-green-600 transition-all duration-300 hover:gap-3 hover:text-green-700"
+            className="inline-flex shrink-0 items-center gap-2 font-semibold text-green-600 transition-all duration-300 hover:gap-3 hover:text-green-700"
           >
-            View Case Study
-            <ArrowRight size={18} />
+            <span className="hidden sm:inline">
+              View Case Study
+            </span>
+
+            <span className="sm:hidden">
+              View
+            </span>
+
+            <ArrowRight
+              size={18}
+              aria-hidden="true"
+            />
           </Link>
         </div>
       </div>

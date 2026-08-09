@@ -7,7 +7,7 @@ export const services = [
   "CAD Drafting",
   "Multiple Services",
   "Other",
-];
+] as const;
 
 export const budgets = [
   "Under $500",
@@ -16,7 +16,7 @@ export const budgets = [
   "$5,000 - $10,000",
   "Above $10,000",
   "Let's Discuss",
-];
+] as const;
 
 export const timelines = [
   "ASAP",
@@ -24,11 +24,11 @@ export const timelines = [
   "Within 1 Month",
   "2–3 Months",
   "Flexible",
-];
+] as const;
 
 export const contactMethods = [
   "Email",
   "Phone",
   "WhatsApp",
   "Google Meet",
-];
+] as const;

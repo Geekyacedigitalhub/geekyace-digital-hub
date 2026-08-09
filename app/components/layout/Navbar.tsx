@@ -51,10 +51,10 @@ export default function Navbar() {
   };
 
   return (
-    <header className="relative z-50 w-full border-b border-slate-100 bg-white">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-md">
       <nav
+        className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8"
         aria-label="Main navigation"
-        className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-5 sm:px-6 lg:px-8"
       >
         {/* Logo */}
         <Logo />
@@ -92,23 +92,34 @@ export default function Navbar() {
           className="hidden items-center gap-2 rounded-xl bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg lg:inline-flex"
         >
           Start Project
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          <ArrowRight
+            className="h-4 w-4"
+            aria-hidden="true"
+          />
         </Link>
 
         {/* Mobile Menu Button */}
         <button
           type="button"
           aria-label={
-            menuOpen ? "Close navigation menu" : "Open navigation menu"
+            menuOpen
+              ? "Close navigation menu"
+              : "Open navigation menu"
           }
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((open) => !open)}
           className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-800 transition hover:border-green-200 hover:bg-green-50 hover:text-green-600 lg:hidden"
         >
           {menuOpen ? (
-            <X className="h-6 w-6" aria-hidden="true" />
+            <X
+              className="h-6 w-6"
+              aria-hidden="true"
+            />
           ) : (
-            <Menu className="h-6 w-6" aria-hidden="true" />
+            <Menu
+              className="h-6 w-6"
+              aria-hidden="true"
+            />
           )}
         </button>
       </nav>
@@ -144,7 +155,10 @@ export default function Navbar() {
                 className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-green-700"
               >
                 Start Project
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <ArrowRight
+                  className="h-4 w-4"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
           </div>

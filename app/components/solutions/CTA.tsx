@@ -5,29 +5,40 @@ import Container from "../ui/Container";
 
 export default function CTA() {
   return (
-    <section className="relative overflow-hidden bg-green-700 py-24 text-white">
+    <section className="relative overflow-hidden bg-green-700 py-20 text-white md:py-24">
       {/* Background Glow */}
-      <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
-      <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-emerald-400/20 blur-3xl" />
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-400/30 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div
+        className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 -translate-x-1/3 translate-y-1/3 rounded-full bg-green-900/30 blur-3xl"
+        aria-hidden="true"
+      />
 
       <Container>
         <div className="relative mx-auto max-w-4xl text-center">
+          {/* Badge */}
           <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm font-semibold backdrop-blur-md">
             Let's Build Your Solution
           </span>
 
-          <h2 className="mt-8 text-5xl font-extrabold leading-tight md:text-6xl">
+          {/* Heading */}
+          <h2 className="mt-8 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
             Ready to Transform Your Business?
           </h2>
 
-          <p className="mx-auto mt-8 max-w-3xl text-xl leading-9 text-green-100">
-            Whether you need an AI solution, business automation,
-            website, mobile application, or complete digital
-            transformation, Geekyace Digital Hub is ready to help
-            you achieve your goals.
+          {/* Description */}
+          <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-green-50 md:text-xl md:leading-9">
+            Whether you need an AI solution, business automation, website,
+            mobile application, or complete digital transformation, Geekyace
+            Digital Hub is ready to help turn your ideas into a reliable
+            digital solution.
           </p>
 
-          <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          {/* Buttons */}
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button
               href="/contact"
               variant="secondary"
@@ -45,6 +56,11 @@ export default function CTA() {
               View Case Studies
             </Button>
           </div>
+
+          {/* Trust Message */}
+          <p className="mt-8 text-sm font-medium text-green-100">
+            Let's discuss your goals, requirements, timeline, and budget.
+          </p>
         </div>
       </Container>
     </section>

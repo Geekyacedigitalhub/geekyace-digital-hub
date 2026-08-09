@@ -37,42 +37,50 @@ export default function ShowcaseFilters({
   onReset,
 }: ShowcaseFiltersProps) {
   return (
-    <section className="mt-10">
-      {/* Filters */}
-      <div className="grid gap-6 lg:grid-cols-5">
+    <section
+      aria-label="Project filters"
+      className="mb-12 rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6"
+    >
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {/* Search */}
-        <div className="relative lg:col-span-2">
-          <label htmlFor="project-search" className="sr-only">
-            Search projects
+        <div className="relative lg:col-span-1">
+          <label
+            htmlFor="project-search"
+            className="mb-2 block text-sm font-semibold text-slate-700"
+          >
+            Search
           </label>
 
           <Search
-            size={20}
+            size={19}
             aria-hidden="true"
-            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            className="pointer-events-none absolute left-4 top-[calc(50%+12px)] -translate-y-1/2 text-slate-400"
           />
 
           <input
             id="project-search"
-            type="text"
+            type="search"
             placeholder="Search projects..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-12 pr-4 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
+            onChange={(event) => setSearch(event.target.value)}
+            className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-11 pr-4 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
           />
         </div>
 
         {/* Category */}
         <div>
-          <label htmlFor="project-category" className="sr-only">
-            Filter by category
+          <label
+            htmlFor="project-category"
+            className="mb-2 block text-sm font-semibold text-slate-700"
+          >
+            Category
           </label>
 
           <select
             id="project-category"
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
+            onChange={(event) => setCategory(event.target.value)}
+            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-slate-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
           >
             <option value="">All Categories</option>
 
@@ -86,15 +94,18 @@ export default function ShowcaseFilters({
 
         {/* Industry */}
         <div>
-          <label htmlFor="project-industry" className="sr-only">
-            Filter by industry
+          <label
+            htmlFor="project-industry"
+            className="mb-2 block text-sm font-semibold text-slate-700"
+          >
+            Industry
           </label>
 
           <select
             id="project-industry"
             value={industry}
-            onChange={(e) => setIndustry(e.target.value)}
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
+            onChange={(event) => setIndustry(event.target.value)}
+            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-slate-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
           >
             <option value="">All Industries</option>
 
@@ -108,15 +119,18 @@ export default function ShowcaseFilters({
 
         {/* Service */}
         <div>
-          <label htmlFor="project-service" className="sr-only">
-            Filter by service
+          <label
+            htmlFor="project-service"
+            className="mb-2 block text-sm font-semibold text-slate-700"
+          >
+            Service
           </label>
 
           <select
             id="project-service"
             value={service}
-            onChange={(e) => setService(e.target.value)}
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
+            onChange={(event) => setService(event.target.value)}
+            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-slate-700 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
           >
             <option value="">All Services</option>
 
@@ -129,14 +143,14 @@ export default function ShowcaseFilters({
         </div>
       </div>
 
-      {/* Reset Filters */}
-      <div className="mt-6 flex justify-end">
+      {/* Reset */}
+      <div className="mt-5 flex justify-end">
         <button
           type="button"
           onClick={onReset}
-          className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-3 font-semibold text-gray-700 transition hover:border-green-500 hover:bg-green-50 hover:text-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20"
+          className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:border-green-500 hover:bg-green-50 hover:text-green-600 focus:outline-none focus:ring-2 focus:ring-green-500/20"
         >
-          <RotateCcw size={18} aria-hidden="true" />
+          <RotateCcw size={17} aria-hidden="true" />
           Reset Filters
         </button>
       </div>

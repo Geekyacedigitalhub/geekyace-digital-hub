@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  CheckCircle2,
+  Send,
+} from "lucide-react";
+
 import Input from "../ui/Input";
 import Select from "../ui/Select";
 import Textarea from "../ui/Textarea";
@@ -24,27 +29,59 @@ export default function ContactForm() {
   } = useContactForm();
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
-      <h3 className="mb-8 text-3xl font-bold text-slate-900">
-        Tell Us About Your Project
-      </h3>
+    <div>
+      {/* Form Header */}
+      <div className="mb-8">
+        <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
+          Project Enquiry
+        </span>
 
+        <h2 className="mt-5 text-3xl font-extrabold text-slate-900">
+          Tell Us About Your Project
+        </h2>
+
+        <p className="mt-3 leading-7 text-slate-600">
+          Share a few details about your project and we'll get back to you
+          with the next steps.
+        </p>
+      </div>
+
+      {/* Success Message */}
       {success && (
-        <div className="mb-6 rounded-xl border border-green-200 bg-green-50 p-4 text-green-700">
-          ✅ Your enquiry has been sent successfully. We'll contact you soon.
+        <div
+          role="status"
+          className="mb-6 flex items-start gap-3 rounded-2xl border border-green-200 bg-green-50 p-4 text-green-700"
+        >
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
+
+          <div>
+            <p className="font-semibold">
+              Enquiry sent successfully!
+            </p>
+
+            <p className="mt-1 text-sm leading-6">
+              Thanks for reaching out. We'll contact you soon.
+            </p>
+          </div>
         </div>
       )}
 
+      {/* Server Error */}
       {serverError && (
-        <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
+        <div
+          role="alert"
+          className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm leading-6 text-red-700"
+        >
           {serverError}
         </div>
       )}
 
+      {/* Form */}
       <form
         onSubmit={handleSubmit}
         className="space-y-6"
       >
+        {/* Name + Company */}
         <div className="grid gap-6 md:grid-cols-2">
           <div>
             <Input
@@ -53,6 +90,7 @@ export default function ContactForm() {
               value={formData.name}
               onChange={handleChange}
             />
+
             {errors.name && (
               <p className="mt-2 text-sm text-red-600">
                 {errors.name}
@@ -60,14 +98,17 @@ export default function ContactForm() {
             )}
           </div>
 
-          <Input
-            name="company"
-            placeholder="Company Name (Optional)"
-            value={formData.company}
-            onChange={handleChange}
-          />
+          <div>
+            <Input
+              name="company"
+              placeholder="Company Name (Optional)"
+              value={formData.company}
+              onChange={handleChange}
+            />
+          </div>
         </div>
 
+        {/* Email + Phone */}
         <div className="grid gap-6 md:grid-cols-2">
           <div>
             <Input
@@ -77,6 +118,7 @@ export default function ContactForm() {
               value={formData.email}
               onChange={handleChange}
             />
+
             {errors.email && (
               <p className="mt-2 text-sm text-red-600">
                 {errors.email}
@@ -91,6 +133,7 @@ export default function ContactForm() {
               value={formData.phone}
               onChange={handleChange}
             />
+
             {errors.phone && (
               <p className="mt-2 text-sm text-red-600">
                 {errors.phone}
@@ -99,13 +142,16 @@ export default function ContactForm() {
           </div>
         </div>
 
+        {/* Service */}
         <div>
           <Select
             name="service"
             value={formData.service}
             onChange={handleChange}
           >
-            <option value="">Select Service Required</option>
+            <option value="">
+              Select Service Required
+            </option>
 
             {services.map((service) => (
               <option
@@ -124,13 +170,16 @@ export default function ContactForm() {
           )}
         </div>
 
+        {/* Budget + Timeline */}
         <div className="grid gap-6 md:grid-cols-2">
           <Select
             name="budget"
             value={formData.budget}
             onChange={handleChange}
           >
-            <option value="">Estimated Budget</option>
+            <option value="">
+              Estimated Budget
+            </option>
 
             {budgets.map((budget) => (
               <option
@@ -147,7 +196,9 @@ export default function ContactForm() {
             value={formData.timeline}
             onChange={handleChange}
           >
-            <option value="">Project Timeline</option>
+            <option value="">
+              Project Timeline
+            </option>
 
             {timelines.map((timeline) => (
               <option
@@ -160,12 +211,15 @@ export default function ContactForm() {
           </Select>
         </div>
 
+        {/* Preferred Contact Method */}
         <Select
           name="contactMethod"
           value={formData.contactMethod}
           onChange={handleChange}
         >
-          <option value="">Preferred Contact Method</option>
+          <option value="">
+            Preferred Contact Method
+          </option>
 
           {contactMethods.map((method) => (
             <option
@@ -177,10 +231,11 @@ export default function ContactForm() {
           ))}
         </Select>
 
+        {/* Project Message */}
         <div>
           <Textarea
             name="message"
-            placeholder="Tell us about your project..."
+            placeholder="Tell us about your project, goals, features you need, or any other important details..."
             value={formData.message}
             onChange={handleChange}
           />
@@ -192,13 +247,29 @@ export default function ContactForm() {
           )}
         </div>
 
+        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-xl bg-green-600 py-4 font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 py-4 font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-sm"
         >
-          {loading ? "Sending..." : "Send Project Enquiry"}
+          {loading ? (
+            <>
+              <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+              Sending Enquiry...
+            </>
+          ) : (
+            <>
+              <Send className="h-5 w-5" />
+              Send Project Enquiry
+            </>
+          )}
         </button>
+
+        <p className="text-center text-xs leading-5 text-slate-500">
+          Your project information will only be used to respond to your
+          enquiry.
+        </p>
       </form>
     </div>
   );

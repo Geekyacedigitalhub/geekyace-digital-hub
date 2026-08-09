@@ -1,6 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import {
+  ArrowRight,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 
 import Container from "../ui/Container";
 import Logo from "./Logo";
@@ -20,11 +26,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-slate-200 bg-slate-950 text-white">
+    <footer className="bg-slate-950 text-white">
       <Container>
-        <div className="grid gap-16 py-20 md:grid-cols-2 xl:grid-cols-4">
+        {/* Main Footer */}
+        <div className="grid gap-12 py-16 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:py-20">
           {/* Company */}
-          <div>
+          <div className="max-w-md">
             <Logo />
 
             <p className="mt-6 leading-8 text-slate-400">
@@ -32,11 +39,23 @@ export default function Footer() {
               websites, AI solutions, automation, mobile apps,
               branding, and modern digital experiences.
             </p>
+
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-green-600 px-5 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg"
+            >
+              Start Your Project
+
+              <ArrowRight
+                className="h-4 w-4"
+                aria-hidden="true"
+              />
+            </Link>
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 className="mb-6 text-lg font-bold">
+            <h3 className="mb-6 text-lg font-bold text-white">
               Navigation
             </h3>
 
@@ -45,7 +64,7 @@ export default function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-slate-400 transition hover:text-green-400"
+                    className="text-slate-400 transition-colors duration-200 hover:text-green-400"
                   >
                     {item.label}
                   </Link>
@@ -56,17 +75,19 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="mb-6 text-lg font-bold">
+            <h3 className="mb-6 text-lg font-bold text-white">
               Services
             </h3>
 
             <ul className="space-y-4">
               {services.map((service) => (
-                <li
-                  key={service}
-                  className="text-slate-400"
-                >
-                  {service}
+                <li key={service}>
+                  <Link
+                    href="/solutions"
+                    className="text-slate-400 transition-colors duration-200 hover:text-green-400"
+                  >
+                    {service}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -74,52 +95,80 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="mb-6 text-lg font-bold">
-              Contact
+            <h3 className="mb-6 text-lg font-bold text-white">
+              Contact Us
             </h3>
 
-            <ul className="space-y-4 text-slate-400">
+            <ul className="space-y-5">
               <li>
                 <a
                   href="mailto:hello@geekyacedigitalhub.com"
-                  className="transition hover:text-green-400"
+                  className="group flex items-start gap-3 text-slate-400 transition-colors duration-200 hover:text-green-400"
                 >
-                  hello@geekyacedigitalhub.com
+                  <Mail
+                    className="mt-1 h-5 w-5 shrink-0 text-green-500"
+                    aria-hidden="true"
+                  />
+
+                  <span>
+                    hello@geekyacedigitalhub.com
+                  </span>
                 </a>
               </li>
 
               <li>
                 <a
                   href="tel:+2348028793121"
-                  className="transition hover:text-green-400"
+                  className="group flex items-start gap-3 text-slate-400 transition-colors duration-200 hover:text-green-400"
                 >
-                  +234 802 879 3121
+                  <Phone
+                    className="mt-1 h-5 w-5 shrink-0 text-green-500"
+                    aria-hidden="true"
+                  />
+
+                  <span>
+                    +234 802 879 3121
+                  </span>
                 </a>
               </li>
 
-              <li>Worldwide (Remote Services)</li>
+              <li className="flex items-start gap-3 text-slate-400">
+                <MapPin
+                  className="mt-1 h-5 w-5 shrink-0 text-green-500"
+                  aria-hidden="true"
+                />
 
-              <li>Response within 24 Hours</li>
+                <span>
+                  Worldwide
+                  <br />
+                  Remote Services
+                </span>
+              </li>
+
+              <li className="rounded-xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-slate-400">
+                We usually respond within 24 hours.
+              </li>
             </ul>
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-800 py-8 text-sm text-slate-500 md:flex-row">
-          <p>
+        {/* Bottom Footer */}
+        <div className="flex flex-col gap-6 border-t border-slate-800 py-8 text-sm md:flex-row md:items-center md:justify-between">
+          <p className="text-center text-slate-500 md:text-left">
             © {currentYear} Geekyace Digital Hub. All rights reserved.
           </p>
 
-          <div className="flex gap-6">
+          <div className="flex flex-wrap justify-center gap-6 md:justify-end">
             <Link
               href="/privacy"
-              className="transition hover:text-green-400"
+              className="text-slate-500 transition-colors duration-200 hover:text-green-400"
             >
               Privacy Policy
             </Link>
 
             <Link
               href="/terms"
-              className="transition hover:text-green-400"
+              className="text-slate-500 transition-colors duration-200 hover:text-green-400"
             >
               Terms of Service
             </Link>

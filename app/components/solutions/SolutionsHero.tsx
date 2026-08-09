@@ -6,12 +6,15 @@ import PageHero from "../ui/PageHero";
 export default function SolutionsHero() {
   return (
     <PageHero
-      badge="INDUSTRY SOLUTIONS"
-      title="Digital Solutions Built Around Your Industry"
-      description="Every industry has unique challenges. We create websites, mobile applications, AI solutions, business automation, and digital experiences tailored to your organization's goals."
+      title="Digital Solutions Built for Business Growth"
+      description="From websites and mobile applications to AI, automation, branding, and custom digital systems, Geekyace Digital Hub builds practical technology solutions designed to help businesses work smarter and grow faster."
     >
-      <div className="flex flex-col justify-center gap-4 sm:flex-row">
-        <Button href="/contact" size="lg">
+      <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button
+          href="/contact"
+          variant="primary"
+          size="lg"
+        >
           Start Your Project
         </Button>
 

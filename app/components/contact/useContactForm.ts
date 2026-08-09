@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+
 import {
   ContactFormData,
   initialFormData,
 } from "./types";
+
 import {
   validateContactForm,
   ValidationErrors,
@@ -44,12 +46,18 @@ export function useContactForm() {
       ...previous,
       [name]: undefined,
     }));
+
+    setSuccess(false);
+    setServerError("");
   }
 
   async function handleSubmit(
     event: React.FormEvent<HTMLFormElement>
   ) {
     event.preventDefault();
+
+    setSuccess(false);
+    setServerError("");
 
     const validation =
       validateContactForm(formData);
@@ -59,35 +67,37 @@ export function useContactForm() {
       return;
     }
 
-    try {
-      setLoading(true);
-      setServerError("");
-      setSuccess(false);
+    setErrors({});
+    setLoading(true);
 
-      const response = await fetch(
-        "/api/contact",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json().catch(() => null);
 
       if (!response.ok) {
         throw new Error(
-          "Unable to send enquiry."
+          data?.message ||
+            "Unable to send your enquiry. Please try again."
         );
       }
 
       setSuccess(true);
       setFormData(initialFormData);
+      setErrors({});
+    } catch (error) {
+      console.error("Contact form error:", error);
 
-    } catch {
       setServerError(
-        "Something went wrong. Please try again."
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
       );
     } finally {
       setLoading(false);
