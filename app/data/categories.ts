@@ -11,13 +11,14 @@ import {
   Building2,
   Gamepad2,
   LayoutDashboard,
+  type LucideIcon,
 } from "lucide-react";
 
 export interface Category {
   id: number;
   title: string;
   description: string;
-  icon: any;
+  icon: LucideIcon;
   count: number;
 }
 
