@@ -24,7 +24,7 @@ function convertToArray(value: string | null | undefined) {
 
   return value
     .split(",")
-    .map((item) => item.trim())
+    .map((item: string) => item.trim())
     .filter(Boolean);
 }
 
@@ -41,13 +41,9 @@ export default async function TeamMemberProfilePage({
 
   if (!member) {
     return (
-      <main className="min-h-screen bg-slate-50 py-16">
+      <main className="min-h-screen bg-slate-50">
         <Container>
-          <div className="mx-auto max-w-4xl rounded-3xl border border-slate-200 bg-white px-8 py-20 text-center shadow-sm">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-green-100 text-green-700">
-              <User size={30} />
-            </div>
-
+          <div className="py-20">
             <h1 className="mt-6 text-3xl font-bold text-slate-900">
               Team Member Not Found
             </h1>
@@ -86,15 +82,15 @@ export default async function TeamMemberProfilePage({
 
   const initials = member.name
     .split(" ")
-    .map((name) => name[0])
+    .map((name: string) => name[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
 
   return (
-    <main className="min-h-screen bg-slate-50 py-16">
+    <main className="min-h-screen bg-slate-50">
       <Container>
-        <div className="mx-auto max-w-6xl">
+        <div className="py-10 md:py-14">
 
           {/* Back */}
           <Link
@@ -127,7 +123,6 @@ export default async function TeamMemberProfilePage({
 
                 {/* Information */}
                 <div className="flex-1">
-
                   <div className="flex flex-wrap items-center gap-3">
                     <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">
                       {member.name}
@@ -148,7 +143,6 @@ export default async function TeamMemberProfilePage({
                       {member.location}
                     </div>
                   )}
-
                 </div>
               </div>
             </div>
@@ -190,7 +184,7 @@ export default async function TeamMemberProfilePage({
 
                   <div className="mt-5 flex flex-wrap gap-3">
                     {expertise.length > 0 ? (
-                      expertise.map((item) => (
+                      expertise.map((item: string) => (
                         <span
                           key={item}
                           className="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700"
@@ -220,7 +214,7 @@ export default async function TeamMemberProfilePage({
 
                   <div className="mt-5 flex flex-wrap gap-3">
                     {skills.length > 0 ? (
-                      skills.map((skill) => (
+                      skills.map((skill: string) => (
                         <span
                           key={skill}
                           className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium text-slate-700"
@@ -235,7 +229,6 @@ export default async function TeamMemberProfilePage({
                     )}
                   </div>
                 </section>
-
               </div>
 
               {/* Sidebar */}
@@ -243,7 +236,6 @@ export default async function TeamMemberProfilePage({
 
                 {/* Platforms */}
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
-
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-green-700">
                       <Layers3 size={20} />
@@ -256,7 +248,7 @@ export default async function TeamMemberProfilePage({
 
                   <div className="mt-5 space-y-3">
                     {platforms.length > 0 ? (
-                      platforms.map((platform) => (
+                      platforms.map((platform: string) => (
                         <div
                           key={platform}
                           className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700"
@@ -270,12 +262,10 @@ export default async function TeamMemberProfilePage({
                       </p>
                     )}
                   </div>
-
                 </div>
 
                 {/* Availability */}
                 <div className="mt-5 rounded-2xl border border-green-200 bg-green-50 p-6">
-
                   <p className="text-sm font-semibold uppercase tracking-wider text-green-700">
                     Availability
                   </p>
@@ -283,14 +273,11 @@ export default async function TeamMemberProfilePage({
                   <p className="mt-2 text-lg font-bold text-slate-900">
                     {member.availability}
                   </p>
-
                 </div>
 
               </aside>
-
             </div>
           </div>
-
         </div>
       </Container>
     </main>
