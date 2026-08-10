@@ -35,7 +35,7 @@ export default async function ProjectPage({
             </h1>
 
             <p className="mt-4 text-slate-600">
-              The project you are looking for doesn't exist or may have
+              The project you are looking for doesn&apos;t exist or may have
               been removed.
             </p>
 
@@ -313,7 +313,7 @@ export default async function ProjectPage({
               </h2>
 
               <p className="mx-auto mt-5 max-w-2xl leading-7 text-slate-300">
-                Let's turn your idea into a professional digital
+                Let&apos;s turn your idea into a professional digital
                 solution designed around your business goals.
               </p>
 

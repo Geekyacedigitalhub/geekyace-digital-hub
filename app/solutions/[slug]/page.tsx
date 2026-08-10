@@ -33,15 +33,11 @@ export default async function IndustryPage({
 
   return (
     <MainLayout>
-
       {/* Hero */}
 
       <section className="bg-gradient-to-br from-green-50 via-white to-green-100 py-24">
-
         <Container>
-
           <div className="max-w-4xl">
-
             <div className="text-6xl">
               {industry.icon}
             </div>
@@ -53,25 +49,19 @@ export default async function IndustryPage({
             <p className="mt-6 text-xl leading-9 text-gray-600">
               {industry.description}
             </p>
-
           </div>
-
         </Container>
-
       </section>
 
       {/* Challenges */}
 
       <section className="py-24">
-
         <Container>
-
           <h2 className="mb-10 text-4xl font-bold">
             Industry Challenges
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
-
             {industry.challenges.map((challenge) => (
               <div
                 key={challenge}
@@ -80,25 +70,19 @@ export default async function IndustryPage({
                 {challenge}
               </div>
             ))}
-
           </div>
-
         </Container>
-
       </section>
 
       {/* Solutions */}
 
       <section className="bg-gray-50 py-24">
-
         <Container>
-
           <h2 className="mb-10 text-4xl font-bold">
             Our Solutions
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
-
             {industry.solutions.map((solution) => (
               <div
                 key={solution}
@@ -107,25 +91,19 @@ export default async function IndustryPage({
                 {solution}
               </div>
             ))}
-
           </div>
-
         </Container>
-
       </section>
 
       {/* Services */}
 
       <section className="py-24">
-
         <Container>
-
           <h2 className="mb-10 text-4xl font-bold">
             Recommended Services
           </h2>
 
           <div className="flex flex-wrap gap-4">
-
             {industry.services.map((service) => (
               <span
                 key={service}
@@ -134,43 +112,31 @@ export default async function IndustryPage({
                 {service}
               </span>
             ))}
-
           </div>
-
         </Container>
-
       </section>
 
       {/* CTA */}
 
       <section className="bg-green-600 py-24 text-white">
-
         <Container>
-
           <div className="mx-auto max-w-3xl text-center">
-
             <h2 className="text-5xl font-bold">
               Ready to Transform Your Business?
             </h2>
 
             <p className="mt-6 text-xl">
-              Let's build a digital solution tailored for your industry.
+              Let&apos;s build a digital solution tailored for your industry.
             </p>
 
             <div className="mt-10">
-
               <Button href="/contact">
                 Start Your Project
               </Button>
-
             </div>
-
           </div>
-
         </Container>
-
       </section>
-
     </MainLayout>
   );
 }

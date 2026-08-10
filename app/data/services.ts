@@ -10,6 +10,7 @@ import {
   PenTool,
   Building2,
   Gamepad2,
+  type LucideIcon,
 } from "lucide-react";
 
 export interface Service {
@@ -18,7 +19,7 @@ export interface Service {
   title: string;
   shortTitle: string;
   description: string;
-  icon: any;
+  icon: LucideIcon;
   heroImage: string;
   category: string;
   featured: boolean;
