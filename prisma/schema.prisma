@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_POSTGRES_URL")
 }
 
 model TeamMember {
@@ -52,7 +52,7 @@ model Client {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
-  projects     Project[]
+  projects Project[]
 }
 
 model Project {
@@ -67,8 +67,8 @@ model Project {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  clientId    String
-  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
   milestones ProjectMilestone[]
   updates    ProjectUpdate[]
@@ -85,8 +85,8 @@ model ProjectMilestone {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  projectId   String
-  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model ProjectUpdate {
@@ -96,5 +96,5 @@ model ProjectUpdate {
   createdAt DateTime @default(now())
 
   projectId String
-  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
