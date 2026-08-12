@@ -6,10 +6,11 @@ export default function Logo() {
     <Link
       href="/"
       className="flex items-center"
+      aria-label="GeekyAce Digital Hub Home"
     >
       <Image
         src="/images/logo.png"
-        alt="Geekyace Digital Hub"
+        alt="GeekyAce Digital Hub"
         width={180}
         height={60}
         priority

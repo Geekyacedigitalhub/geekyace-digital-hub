@@ -7,25 +7,17 @@ import {
   validateAdminCredentials,
 } from "@/app/lib/admin-auth";
 
-export async function POST(
-  request: Request
-) {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const email = String(
-      body.email || ""
-    ).trim();
-
-    const password = String(
-      body.password || ""
-    );
+    const email = String(body?.email ?? "").trim();
+    const password = String(body?.password ?? "");
 
     if (!email || !password) {
       return NextResponse.json(
         {
-          error:
-            "Email and password are required.",
+          error: "Email and password are required.",
         },
         {
           status: 400,
@@ -33,17 +25,15 @@ export async function POST(
       );
     }
 
-    const valid =
-      validateAdminCredentials(
-        email,
-        password
-      );
+    const valid = validateAdminCredentials(
+      email,
+      password
+    );
 
     if (!valid) {
       return NextResponse.json(
         {
-          error:
-            "Invalid admin email or password.",
+          error: "Invalid admin email or password.",
         },
         {
           status: 401,
@@ -51,15 +41,12 @@ export async function POST(
       );
     }
 
-    const session =
-      createAdminSession();
+    const session = createAdminSession();
 
-    const response =
-      NextResponse.json({
-        success: true,
-        message:
-          "Admin login successful.",
-      });
+    const response = NextResponse.json({
+      success: true,
+      message: "Admin login successful.",
+    });
 
     response.cookies.set(
       getAdminSessionCookieName(),
@@ -69,15 +56,11 @@ export async function POST(
 
     return response;
   } catch (error) {
-    console.error(
-      "Admin login error:",
-      error
-    );
+    console.error("Admin login error:", error);
 
     return NextResponse.json(
       {
-        error:
-          "Unable to log in as administrator.",
+        error: "Unable to log in as administrator.",
       },
       {
         status: 500,

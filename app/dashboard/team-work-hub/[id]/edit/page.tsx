@@ -60,12 +60,18 @@ export default function EditTeamMemberPage({
   const [success, setSuccess] = useState("");
 
   /*
-   * Get the member ID from the dynamic route.
+   * Get the team member ID from the dynamic route.
    */
   useEffect(() => {
     async function getParams() {
-      const resolvedParams = await params;
-      setMemberId(resolvedParams.id);
+      try {
+        const resolvedParams = await params;
+        setMemberId(resolvedParams.id);
+      } catch (error) {
+        console.error("Unable to resolve route params:", error);
+        setError("Unable to determine team member ID.");
+        setLoading(false);
+      }
     }
 
     getParams();
@@ -96,7 +102,7 @@ export default function EditTeamMemberPage({
 
         if (!response.ok) {
           throw new Error(
-            data.error || "Unable to load team member."
+            data?.error || "Unable to load team member."
           );
         }
 
@@ -120,10 +126,7 @@ export default function EditTeamMemberPage({
 
         setExistingImageUrl(member.imageUrl || null);
       } catch (error) {
-        console.error(
-          "Load team member error:",
-          error
-        );
+        console.error("Load team member error:", error);
 
         setError(
           error instanceof Error
@@ -294,7 +297,7 @@ export default function EditTeamMemberPage({
 
       if (!response.ok) {
         throw new Error(
-          data.error ||
+          data?.error ||
             "Unable to update team member."
         );
       }
@@ -303,10 +306,6 @@ export default function EditTeamMemberPage({
         "Team member updated successfully!"
       );
 
-      /*
-       * Give the user a moment to see the success message,
-       * then return to the full profile.
-       */
       setTimeout(() => {
         window.location.href = `/dashboard/team-work-hub/${memberId}`;
       }, 700);
@@ -509,6 +508,7 @@ export default function EditTeamMemberPage({
                     className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-700 hover:shadow-lg"
                   >
                     <ImagePlus size={18} />
+
                     {image
                       ? "Change Image"
                       : "Upload New Image"}

@@ -1,15 +1,14 @@
 import crypto from "crypto";
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "";
 const ADMIN_SESSION_SECRET =
-  process.env.ADMIN_SESSION_SECRET || "";
+  process.env.ADMIN_SESSION_SECRET ?? "";
 
 const SESSION_COOKIE_NAME = "geekyace_admin_session";
+const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
 
-const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
-
-function createSignature(value: string) {
+function createSignature(value: string): string {
   return crypto
     .createHmac("sha256", ADMIN_SESSION_SECRET)
     .update(value)
@@ -19,10 +18,10 @@ function createSignature(value: string) {
 export function validateAdminCredentials(
   email: string,
   password: string
-) {
+): boolean {
   if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
     console.error(
-      "ADMIN_EMAIL or ADMIN_PASSWORD is missing from .env.local"
+      "ADMIN_EMAIL or ADMIN_PASSWORD is missing from environment variables."
     );
 
     return false;
@@ -35,15 +34,20 @@ export function validateAdminCredentials(
   );
 }
 
-export function createAdminSession() {
-  const timestamp = Date.now().toString();
+export function createAdminSession(): string {
+  if (!ADMIN_SESSION_SECRET) {
+    throw new Error(
+      "ADMIN_SESSION_SECRET is missing from environment variables."
+    );
+  }
 
+  const timestamp = Date.now().toString();
   const signature = createSignature(timestamp);
 
   return `${timestamp}.${signature}`;
 }
 
-export function getAdminSessionCookieName() {
+export function getAdminSessionCookieName(): string {
   return SESSION_COOKIE_NAME;
 }
 
@@ -59,7 +63,7 @@ export function getAdminSessionCookieOptions() {
 
 export function isAdminAuthenticated(
   session: string | undefined
-) {
+): boolean {
   if (!session || !ADMIN_SESSION_SECRET) {
     return false;
   }
@@ -72,27 +76,38 @@ export function isAdminAuthenticated(
 
   const [timestamp, signature] = parts;
 
+  if (!timestamp || !signature) {
+    return false;
+  }
+
   const timestampNumber = Number(timestamp);
 
   if (!Number.isFinite(timestampNumber)) {
     return false;
   }
 
-  // Session expires after 7 days
-  if (
-    Date.now() - timestampNumber >
-    SESSION_MAX_AGE * 1000
-  ) {
+  const age = Date.now() - timestampNumber;
+
+  if (age < 0 || age > SESSION_MAX_AGE * 1000) {
     return false;
   }
 
-  const expectedSignature =
-    createSignature(timestamp);
+  const expectedSignature = createSignature(timestamp);
+
+  const providedBuffer = Buffer.from(signature, "utf8");
+  const expectedBuffer = Buffer.from(
+    expectedSignature,
+    "utf8"
+  );
+
+  if (providedBuffer.length !== expectedBuffer.length) {
+    return false;
+  }
 
   try {
     return crypto.timingSafeEqual(
-      Buffer.from(signature),
-      Buffer.from(expectedSignature)
+      providedBuffer,
+      expectedBuffer
     );
   } catch {
     return false;

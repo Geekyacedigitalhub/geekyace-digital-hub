@@ -18,6 +18,7 @@ export async function POST() {
       {
         ...getAdminSessionCookieOptions(),
         maxAge: 0,
+        expires: new Date(0),
       }
     );
 
