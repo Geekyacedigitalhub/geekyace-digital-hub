@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import {
   ArrowRight,
   ArrowUpRight,
@@ -43,7 +44,10 @@ import {
   FaSnapchatGhost,
 } from "react-icons/fa";
 
-import { FaXTwitter, FaThreads } from "react-icons/fa6";
+import {
+  FaXTwitter,
+  FaThreads,
+} from "react-icons/fa6";
 
 const values = [
   {
@@ -199,28 +203,12 @@ const founderCapabilities = [
 
 const socialPlatforms = [
   {
-    name: "Facebook",
-    category: "Social Media",
-    description:
-      "Follow GeekyAce Digital Hub for updates, projects, announcements, and business content.",
-    url: "https://www.facebook.com/geekyacedigitalhub",
-    icon: FaFacebook,
-  },
-  {
     name: "Instagram",
     category: "Social Media",
     description:
       "Explore GeekyAce Digital Hub's creative work, projects, digital services, and visual updates.",
     url: "https://www.instagram.com/geekyacedigitalhub/",
-    icon: FaInstagram,
-  },
-  {
-    name: "TikTok",
-    category: "Social Media",
-    description:
-      "Watch short-form technology, business, digital, and creative content.",
-    url: "https://www.tiktok.com/@geekyacedigitalhub",
-    icon: FaTiktok,
+    short: "ig",
   },
   {
     name: "LinkedIn",
@@ -228,7 +216,7 @@ const socialPlatforms = [
     description:
       "Connect with GeekyAce Digital Hub professionally and follow company updates.",
     url: "https://www.linkedin.com/company/geekyace-digital-hub",
-    icon: FaLinkedinIn,
+    short: "in",
   },
   {
     name: "X",
@@ -236,62 +224,7 @@ const socialPlatforms = [
     description:
       "Follow GeekyAce Digital Hub for technology updates, announcements, and insights.",
     url: "https://x.com/GEEKYACEDIGITAL",
-    icon: FaXTwitter,
-  },
-  {
-    name: "YouTube",
-    category: "Video Platform",
-    description:
-      "Watch tutorials, technology content, digital projects, and educational videos.",
-    url: "https://www.youtube.com/@geekyacedigitalhub",
-    icon: FaYoutube,
-  },
-  {
-    name: "Threads",
-    category: "Social Media",
-    description:
-      "Join the conversation and follow GeekyAce Digital Hub's latest digital updates.",
-    url: "https://www.threads.net/@geekyacedigitalhub",
-    icon: FaThreads,
-  },
-  {
-    name: "Pinterest",
-    category: "Visual Discovery",
-    description:
-      "Discover our creative ideas, digital designs, inspiration, and projects.",
-    url: "https://www.pinterest.com/geekyacedigitalhub/",
-    icon: FaPinterestP,
-  },
-  {
-    name: "Reddit",
-    category: "Community",
-    description:
-      "Connect with us through technology and digital communities.",
-    url: "https://www.reddit.com/user/geekyacedigitalhub/",
-    icon: FaReddit,
-  },
-  {
-    name: "Telegram",
-    category: "Community & Messaging",
-    description:
-      "Connect with GeekyAce Digital Hub and receive updates through Telegram.",
-    url: "https://t.me/geekyacedigitalhub",
-    icon: FaTelegramPlane,
-  },
-  {
-    name: "WhatsApp",
-    category: "Messaging",
-    description:
-      "Chat directly with GeekyAce Digital Hub about your project or service.",
-    url: "https://wa.me/YOUR_PHONE_NUMBER",
-    icon: FaWhatsapp,
-  },
-  {
-    name: "Discord",
-    category: "Community",
-    description: "Connect with our digital and technology community.",
-    url: "https://discord.gg/YOUR_INVITE",
-    icon: FaDiscord,
+    short: "X",
   },
   {
     name: "GitHub",
@@ -299,14 +232,7 @@ const socialPlatforms = [
     description:
       "Explore GeekyAce Digital Hub's development projects, repositories, and technical work.",
     url: "https://github.com/Geekyacedigitalhub",
-    icon: FaGithub,
-  },
-  {
-    name: "GitLab",
-    category: "Development",
-    description: "Explore development repositories, projects, and technical work.",
-    url: "https://gitlab.com/geekyacedigitalhub",
-    icon: FaGitlab,
+    short: "gh",
   },
   {
     name: "Behance",
@@ -314,28 +240,7 @@ const socialPlatforms = [
     description:
       "Explore GeekyAce Digital Hub's creative work, branding, digital designs, and portfolio.",
     url: "https://www.behance.net/geekyacedigital",
-    icon: FaBehance,
-  },
-  {
-    name: "Dribbble",
-    category: "Design",
-    description: "Explore UI, UX, interface designs, and creative digital work.",
-    url: "https://dribbble.com/geekyacedigitalhub",
-    icon: FaDribbble,
-  },
-  {
-    name: "Medium",
-    category: "Articles & Insights",
-    description: "Read our technology, business, development, and digital insights.",
-    url: "https://medium.com/@geekyacedigitalhub",
-    icon: FaMedium,
-  },
-  {
-    name: "Snapchat",
-    category: "Social Media",
-    description: "Follow GeekyAce Digital Hub for social updates and content.",
-    url: "https://www.snapchat.com/add/geekyacedigitalhub",
-    icon: FaSnapchatGhost,
+    short: "be",
   },
 ];
 
@@ -1169,44 +1074,40 @@ export default function AboutPage() {
             </div>
 
             <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {socialPlatforms.map((platform) => {
-                const Icon = platform.icon;
-
-                return (
-                  <a
-                    key={platform.name}
-                    href={platform.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-green-400/40 hover:bg-white/[0.08]"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-500/10 text-green-400 ring-1 ring-green-400/20 transition-all duration-300 group-hover:bg-green-500 group-hover:text-white">
-                        <Icon className="h-5 w-5" aria-hidden="true" />
-                      </div>
-
-                      <ExternalLink className="h-4 w-4 text-slate-500 transition group-hover:text-green-400" />
+              {socialPlatforms.map((platform) => (
+                <a
+                  key={platform.name}
+                  href={platform.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-green-400/40 hover:bg-white/[0.08]"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-500/10 text-sm font-black uppercase text-green-400 ring-1 ring-green-400/20">
+                      {platform.short}
                     </div>
 
-                    <h4 className="mt-5 font-extrabold text-white">
-                      {platform.name}
-                    </h4>
+                    <ExternalLink className="h-4 w-4 text-slate-500 transition group-hover:text-green-400" />
+                  </div>
 
-                    <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-green-400/80">
-                      {platform.category}
-                    </p>
+                  <h4 className="mt-5 font-extrabold text-white">
+                    {platform.name}
+                  </h4>
 
-                    <p className="mt-3 text-sm leading-6 text-slate-400">
-                      {platform.description}
-                    </p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-green-400/80">
+                    {platform.category}
+                  </p>
 
-                    <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-green-400">
-                      Visit profile
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </span>
-                  </a>
-                );
-              })}
+                  <p className="mt-3 text-sm leading-6 text-slate-400">
+                    {platform.description}
+                  </p>
+
+                  <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-green-400">
+                    Visit profile
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
 

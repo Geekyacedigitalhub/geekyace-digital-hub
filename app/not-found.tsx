@@ -23,13 +23,15 @@ export default function NotFound() {
       >
         {/* Logo */}
         <div className="mb-10 flex justify-center">
-          <Image
-            src="/images/logo.png"
-            alt="GeekyAce Digital Hub"
-            width={220}
-            height={70}
-            className="h-auto w-[220px] object-contain"
-          />
+          <div className="relative h-16 w-[220px]">
+            <Image
+              src="/images/logo.png"
+              alt="GeekyAce Digital Hub"
+              fill
+              sizes="220px"
+              className="object-contain"
+            />
+          </div>
         </div>
 
         {/* 404 */}

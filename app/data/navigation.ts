@@ -17,11 +17,7 @@ export const navigation: NavigationItem[] = [
     href: "/solutions",
   },
   {
-    label: "Portfolio",
-    href: "/portfolio",
-  },
-  {
-    label: "Showcase",
+    label: "Our Work",
     href: "/showcase",
   },
   {

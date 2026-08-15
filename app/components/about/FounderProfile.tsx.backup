@@ -1,0 +1,469 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Crown,
+  ExternalLink,
+  Globe,
+  Mail,
+} from "lucide-react";
+
+type SocialPlatform = {
+  name: string;
+  description: string;
+  href: string;
+  available: boolean;
+  icon: React.ReactNode;
+};
+
+function LinkedInIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M20.45 20.45h-3.56v-5.58c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.68H9.34V8.99h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.3ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM3.54 20.45H7.1V8.99H3.54v11.46Z" />
+    </svg>
+  );
+}
+
+function FiverrIcon() {
+  return (
+    <span className="text-[15px] font-black leading-none">
+      fi
+    </span>
+  );
+}
+
+function UpworkIcon() {
+  return (
+    <span className="text-[15px] font-black leading-none">
+      up
+    </span>
+  );
+}
+
+function GitHubIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12 .67a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.25c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.09-.75.08-.74.08-.74 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 12 .67Z" />
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M13.5 21v-8h2.67l.4-3.12H13.5V7.89c0-.9.25-1.51 1.54-1.51h1.65V3.59c-.29-.04-1.29-.13-2.45-.13-2.43 0-4.09 1.49-4.09 4.22v2.2H7.4V13h2.75v8h3.35Z" />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle
+        cx="17.4"
+        cy="6.6"
+        r="1"
+        fill="currentColor"
+        stroke="none"
+      />
+    </svg>
+  );
+}
+
+function YouTubeIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.88.56 9.38.56 9.38.56s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8ZM9.6 15.8V8.2l6.3 3.8-6.3 3.8Z" />
+    </svg>
+  );
+}
+
+function XIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-6.4L6.47 22H3.36l7.24-8.28L2.8 2h6.4l4.42 5.84L18.9 2Zm-1.1 17.9h1.73L8.27 4.02H6.42L17.8 19.9Z" />
+    </svg>
+  );
+}
+
+function DribbbleIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3.5 9.5c4.5.3 8.6-.3 12.1-2.2" />
+      <path d="M7 4.4c2.9 2.6 5.1 5.6 6.8 9.2 1 2.1 1.7 4.2 2 6.4" />
+      <path d="M4.7 18.2c3.5-2.4 7.5-3.5 12.4-3.1 1.2.1 2.3.3 3.4.6" />
+    </svg>
+  );
+}
+
+const socialPlatforms: SocialPlatform[] = [
+  {
+    name: "LinkedIn",
+    description: "Professional profile",
+    href: "#",
+    available: false,
+    icon: <LinkedInIcon />,
+  },
+  {
+    name: "Fiverr",
+    description: "Freelance services",
+    href: "#",
+    available: false,
+    icon: <FiverrIcon />,
+  },
+  {
+    name: "Upwork",
+    description: "Freelance profile",
+    href: "#",
+    available: false,
+    icon: <UpworkIcon />,
+  },
+  {
+    name: "GitHub",
+    description: "Code & projects",
+    href: "#",
+    available: false,
+    icon: <GitHubIcon />,
+  },
+  {
+    name: "Facebook",
+    description: "Social profile",
+    href: "#",
+    available: false,
+    icon: <FacebookIcon />,
+  },
+  {
+    name: "Instagram",
+    description: "Visual updates",
+    href: "#",
+    available: false,
+    icon: <InstagramIcon />,
+  },
+  {
+    name: "YouTube",
+    description: "Videos & content",
+    href: "#",
+    available: false,
+    icon: <YouTubeIcon />,
+  },
+  {
+    name: "X / Twitter",
+    description: "Updates & thoughts",
+    href: "#",
+    available: false,
+    icon: <XIcon />,
+  },
+  {
+    name: "Dribbble",
+    description: "Design portfolio",
+    href: "#",
+    available: false,
+    icon: <DribbbleIcon />,
+  },
+];
+
+export default function FounderProfile() {
+  return (
+    <section
+      id="founder"
+      className="relative overflow-hidden border-y border-slate-200 bg-white py-20 md:py-28"
+    >
+      {/* Decorative background */}
+      <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-green-100/50 blur-3xl" />
+      <div className="pointer-events-none absolute -right-32 bottom-10 h-80 w-80 rounded-full bg-emerald-100/40 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Section Heading */}
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-4 py-2 text-sm font-bold text-green-700">
+            <Crown size={15} />
+            Meet the Founder
+          </span>
+
+          <h2 className="mt-5 text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
+            The Person Behind
+            <span className="block text-green-600">
+              GeekyAce Digital Hub
+            </span>
+          </h2>
+
+          <p className="mt-5 text-lg leading-8 text-slate-600">
+            Building the vision, leading the technology, and creating
+            digital solutions that help ideas become reality.
+          </p>
+        </div>
+
+        {/* Founder Main Card */}
+        <div className="mt-14 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50 shadow-sm">
+          <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
+            {/* Founder Identity */}
+            <div className="relative overflow-hidden bg-gradient-to-br from-green-700 via-green-600 to-emerald-700 p-8 text-white md:p-12">
+              <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
+
+              <div className="relative">
+                {/* Founder Photo */}
+                <div className="relative h-48 w-48 overflow-hidden rounded-[2rem] bg-white shadow-2xl ring-8 ring-white/10 sm:h-56 sm:w-56">
+                  <Image
+                    src="/images/opeyemi-ajose-founder.png"
+                    alt="Opeyemi Ajose, Founder and CEO of GeekyAce Digital Hub"
+                    fill
+                    priority
+                    sizes="(max-width: 640px) 192px, 224px"
+                    className="object-cover object-top"
+                  />
+                </div>
+
+                <div className="mt-8">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-bold backdrop-blur-sm">
+                    <Crown size={15} />
+                    Founder & CEO
+                  </div>
+
+                  <h3 className="mt-5 text-4xl font-black tracking-tight md:text-5xl">
+                    Opeyemi Ajose
+                  </h3>
+
+                  <p className="mt-3 text-lg font-medium text-green-50">
+                    Founder & CEO — GeekyAce Digital Hub
+                  </p>
+
+                  <p className="mt-6 max-w-md leading-8 text-green-50/90">
+                    Digital entrepreneur, developer, technology enthusiast,
+                    and the driving force behind the GeekyAce Digital Hub
+                    vision.
+                  </p>
+                </div>
+
+                <div className="mt-10 flex flex-wrap gap-3">
+                  <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-sm">
+                    Digital Technology
+                  </span>
+
+                  <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-sm">
+                    Web Development
+                  </span>
+
+                  <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-sm">
+                    Digital Entrepreneurship
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Founder Bio & Message */}
+            <div className="bg-white p-8 md:p-12">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-green-600">
+                  About Opeyemi
+                </p>
+
+                <h3 className="mt-3 text-3xl font-extrabold text-slate-900">
+                  Building with purpose. Creating with technology.
+                </h3>
+
+                <div className="mt-6 space-y-5 text-base leading-8 text-slate-600">
+                  <p>
+                    Opeyemi Ajose is the Founder and CEO of GeekyAce Digital
+                    Hub, a digital agency focused on helping individuals,
+                    entrepreneurs, startups, and businesses turn ideas into
+                    professional digital solutions.
+                  </p>
+
+                  <p>
+                    Through GeekyAce Digital Hub, he brings together
+                    technology, creativity, development, digital services,
+                    and problem-solving to create practical solutions
+                    designed around real business needs.
+                  </p>
+
+                  <p>
+                    His vision is to build a recognized digital brand that
+                    people and businesses can trust whenever they need
+                    technology, creativity, and digital solutions.
+                  </p>
+                </div>
+              </div>
+
+              {/* Founder Message */}
+              <div className="mt-10 rounded-3xl border border-green-100 bg-green-50/70 p-6 md:p-8">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-600 text-white">
+                    <BriefcaseBusiness size={19} />
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-bold uppercase tracking-wider text-green-700">
+                      Founder&apos;s Message
+                    </p>
+
+                    <p className="font-bold text-slate-900">
+                      A message from Opeyemi Ajose
+                    </p>
+                  </div>
+                </div>
+
+                <blockquote className="mt-5 text-lg font-medium leading-8 text-slate-700">
+                  “At GeekyAce Digital Hub, I believe technology should do
+                  more than look good — it should solve problems, create
+                  opportunities, and move people and businesses forward. My
+                  goal is to build a digital brand known for professionalism,
+                  creativity, reliability, and meaningful results.”
+                </blockquote>
+
+                <p className="mt-5 font-bold text-green-700">
+                  — Opeyemi Ajose
+                </p>
+              </div>
+
+              {/* Founder Contact */}
+              <div className="mt-10 grid gap-4 sm:grid-cols-2">
+                <a
+                  href="mailto:Hello@geekyacedigitalhub.com"
+                  className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-green-300 hover:bg-green-50"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-600 text-white">
+                    <Mail size={19} />
+                  </div>
+
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Business Email
+                    </p>
+
+                    <p className="mt-1 truncate text-sm font-bold text-slate-900 group-hover:text-green-700">
+                      Hello@geekyacedigitalhub.com
+                    </p>
+                  </div>
+                </a>
+
+                <Link
+                  href="/contact"
+                  className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-green-300 hover:bg-green-50"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white">
+                    <Globe size={19} />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Work With GeekyAce
+                    </p>
+
+                    <p className="mt-1 text-sm font-bold text-slate-900 group-hover:text-green-700">
+                      Start a Project
+                    </p>
+                  </div>
+
+                  <ArrowUpRight
+                    size={18}
+                    className="text-slate-400 transition group-hover:text-green-600"
+                  />
+                </Link>
+              </div>
+
+              {/* Social Profiles */}
+              <div className="mt-10 border-t border-slate-100 pt-8">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-bold uppercase tracking-wider text-slate-500">
+                      Connect
+                    </p>
+
+                    <p className="mt-1 font-bold text-slate-900">
+                      Follow Opeyemi&apos;s work
+                    </p>
+                  </div>
+
+                  <ExternalLink size={18} className="text-slate-400" />
+                </div>
+
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {socialPlatforms.map((platform) => (
+                    <a
+                      key={platform.name}
+                      href={platform.available ? platform.href : undefined}
+                      target={platform.available ? "_blank" : undefined}
+                      rel={platform.available ? "noreferrer" : undefined}
+                      aria-disabled={!platform.available}
+                      onClick={(event) => {
+                        if (!platform.available) {
+                          event.preventDefault();
+                        }
+                      }}
+                      className={`flex items-center gap-3 rounded-xl border p-3 transition ${
+                        platform.available
+                          ? "border-slate-200 bg-white text-slate-700 hover:border-green-300 hover:bg-green-50 hover:text-green-700"
+                          : "cursor-default border-slate-100 bg-slate-50 text-slate-400"
+                      }`}
+                    >
+                      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-white">
+                        {platform.icon}
+                      </span>
+
+                      <span className="min-w-0">
+                        <span className="block text-sm font-bold">
+                          {platform.name}
+                        </span>
+
+                        <span className="block text-xs">
+                          {platform.available
+                            ? platform.description
+                            : "Profile coming soon"}
+                        </span>
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

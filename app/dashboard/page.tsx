@@ -10,7 +10,7 @@ import {
   Settings,
   Users,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const dashboardItems = [
   {
@@ -41,32 +41,6 @@ const dashboardItems = [
 
 export default function DashboardPage() {
   const [loggingOut, setLoggingOut] = useState(false);
-  const [checkingSession, setCheckingSession] = useState(true);
-
-  useEffect(() => {
-    async function checkAdminSession() {
-      try {
-        const response = await fetch("/api/admin/session", {
-          method: "GET",
-          cache: "no-store",
-        });
-
-        const data = await response.json();
-
-        if (!response.ok || !data?.authenticated) {
-          window.location.href = "/admin/login";
-          return;
-        }
-
-        setCheckingSession(false);
-      } catch (error) {
-        console.error("Admin session check error:", error);
-        window.location.href = "/admin/login";
-      }
-    }
-
-    checkAdminSession();
-  }, []);
 
   async function handleLogout() {
     const confirmed = window.confirm(
@@ -87,9 +61,7 @@ export default function DashboardPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data?.error || "Unable to log out."
-        );
+        throw new Error(data?.error || "Unable to log out.");
       }
 
       window.location.href = "/admin/login";
@@ -106,27 +78,11 @@ export default function DashboardPage() {
     }
   }
 
-  // Prevent dashboard content from flashing before authentication is checked.
-  if (checkingSession) {
-    return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-50">
-        <div className="text-center">
-          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-green-600" />
-
-          <p className="mt-5 text-sm font-medium text-slate-600">
-            Checking admin session...
-          </p>
-        </div>
-      </main>
-    );
-  }
-
   return (
     <main className="min-h-screen bg-slate-50">
-      {/* Admin Header */}
+      {/* Admin Dashboard Top Bar */}
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-4 px-6 lg:px-8">
-          {/* Brand */}
           <Link
             href="/dashboard"
             className="flex items-center gap-3"
@@ -146,7 +102,6 @@ export default function DashboardPage() {
             </div>
           </Link>
 
-          {/* Header Actions */}
           <div className="flex items-center gap-2">
             <Link
               href="/"
@@ -161,11 +116,9 @@ export default function DashboardPage() {
               disabled={loggingOut}
               className="inline-flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:border-red-300 hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              <LogOut size={17} />
+              <LogOut size={17} aria-hidden="true" />
 
-              {loggingOut
-                ? "Logging out..."
-                : "Logout"}
+              {loggingOut ? "Logging out..." : "Logout"}
             </button>
           </div>
         </div>
@@ -193,18 +146,19 @@ export default function DashboardPage() {
         {/* Quick Actions */}
         <section className="mt-10">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Team Work Hub */}
+            {/* Team Members */}
             <Link
               href="/dashboard/team-work-hub"
               className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-400 hover:shadow-lg"
             >
               <div className="flex items-start justify-between">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-700">
-                  <Users size={24} />
+                  <Users size={24} aria-hidden="true" />
                 </div>
 
                 <ArrowRight
                   size={20}
+                  aria-hidden="true"
                   className="text-slate-300 transition group-hover:translate-x-1 group-hover:text-green-600"
                 />
               </div>
@@ -226,11 +180,12 @@ export default function DashboardPage() {
             >
               <div className="flex items-start justify-between">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-700">
-                  <Plus size={24} />
+                  <Plus size={24} aria-hidden="true" />
                 </div>
 
                 <ArrowRight
                   size={20}
+                  aria-hidden="true"
                   className="text-slate-300 transition group-hover:translate-x-1 group-hover:text-green-600"
                 />
               </div>
@@ -244,18 +199,19 @@ export default function DashboardPage() {
               </p>
             </Link>
 
-            {/* GeekyAce AI */}
+            {/* AI Assistant */}
             <Link
               href="/#ai"
               className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-400 hover:shadow-lg"
             >
               <div className="flex items-start justify-between">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-700">
-                  <Bot size={24} />
+                  <Bot size={24} aria-hidden="true" />
                 </div>
 
                 <ArrowRight
                   size={20}
+                  aria-hidden="true"
                   className="text-slate-300 transition group-hover:translate-x-1 group-hover:text-green-600"
                 />
               </div>
@@ -297,11 +253,12 @@ export default function DashboardPage() {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-100 text-green-700">
-                      <Icon size={27} />
+                      <Icon size={27} aria-hidden="true" />
                     </div>
 
                     <ArrowRight
                       size={21}
+                      aria-hidden="true"
                       className="text-slate-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-green-600"
                     />
                   </div>
@@ -316,7 +273,7 @@ export default function DashboardPage() {
 
                   <div className="mt-6 inline-flex items-center gap-2 font-semibold text-green-600">
                     {item.action}
-                    <ArrowRight size={17} />
+                    <ArrowRight size={17} aria-hidden="true" />
                   </div>
                 </Link>
               );
@@ -324,13 +281,13 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        {/* Workspace Management */}
+        {/* Admin Information */}
         <section className="mt-12 rounded-3xl border border-slate-200 bg-white p-7 shadow-sm md:p-9">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
               <div className="flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
-                  <Settings size={21} />
+                  <Settings size={21} aria-hidden="true" />
                 </div>
 
                 <h2 className="text-xl font-bold text-slate-900">
@@ -350,43 +307,10 @@ export default function DashboardPage() {
               className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3 font-semibold text-white transition hover:bg-green-700"
             >
               Go to Website
-              <ArrowRight size={18} />
+              <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
         </section>
-
-        {/* Admin Footer */}
-        <footer className="mt-12 border-t border-slate-200 py-8">
-          <div className="flex flex-col gap-3 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-            <p>
-              © {new Date().getFullYear()} GeekyAce Digital Hub.
-              All rights reserved.
-            </p>
-
-            <div className="flex items-center gap-5">
-              <Link
-                href="/dashboard"
-                className="transition hover:text-green-600"
-              >
-                Dashboard
-              </Link>
-
-              <Link
-                href="/dashboard/team-work-hub"
-                className="transition hover:text-green-600"
-              >
-                Team Work Hub
-              </Link>
-
-              <Link
-                href="/"
-                className="font-medium text-green-600 transition hover:text-green-700"
-              >
-                Back to Website
-              </Link>
-            </div>
-          </div>
-        </footer>
       </div>
     </main>
   );

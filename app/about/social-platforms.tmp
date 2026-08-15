@@ -1,0 +1,146 @@
+const socialPlatforms = [
+  {
+    name: "Facebook",
+    category: "Social Media",
+    description:
+      "Follow GeekyAce Digital Hub for updates, projects, announcements, and business content.",
+    url: "https://www.facebook.com/geekyacedigitalhub",
+    icon: FaFacebook,
+  },
+  {
+    name: "Instagram",
+    category: "Social Media",
+    description:
+      "Explore GeekyAce Digital Hub's creative work, projects, digital services, and visual updates.",
+    url: "https://www.instagram.com/geekyacedigitalhub/",
+    icon: FaInstagram,
+  },
+  {
+    name: "TikTok",
+    category: "Social Media",
+    description:
+      "Watch short-form technology, business, digital, and creative content.",
+    url: "https://www.tiktok.com/@geekyacedigitalhub",
+    icon: FaTiktok,
+  },
+  {
+    name: "LinkedIn",
+    category: "Professional Network",
+    description:
+      "Connect with GeekyAce Digital Hub professionally and follow company updates.",
+    url: "https://www.linkedin.com/company/geekyace-digital-hub",
+    icon: FaLinkedinIn,
+  },
+  {
+    name: "X",
+    category: "Social Media",
+    description:
+      "Follow GeekyAce Digital Hub for technology updates, announcements, and insights.",
+    url: "https://x.com/GEEKYACEDIGITAL",
+    icon: FaXTwitter,
+  },
+  {
+    name: "YouTube",
+    category: "Video Platform",
+    description:
+      "Watch tutorials, technology content, digital projects, and educational videos.",
+    url: "https://www.youtube.com/@geekyacedigitalhub",
+    icon: FaYoutube,
+  },
+  {
+    name: "Threads",
+    category: "Social Media",
+    description:
+      "Join the conversation and follow GeekyAce Digital Hub's latest digital updates.",
+    url: "https://www.threads.net/@geekyacedigitalhub",
+    icon: FaThreads,
+  },
+  {
+    name: "Pinterest",
+    category: "Visual Discovery",
+    description:
+      "Discover our creative ideas, digital designs, inspiration, and projects.",
+    url: "https://www.pinterest.com/geekyacedigitalhub/",
+    icon: FaPinterestP,
+  },
+  {
+    name: "Reddit",
+    category: "Community",
+    description:
+      "Connect with us through technology and digital communities.",
+    url: "https://www.reddit.com/user/geekyacedigitalhub/",
+    icon: FaReddit,
+  },
+  {
+    name: "Telegram",
+    category: "Community & Messaging",
+    description:
+      "Connect with GeekyAce Digital Hub and receive updates through Telegram.",
+    url: "https://t.me/geekyacedigitalhub",
+    icon: FaTelegramPlane,
+  },
+  {
+    name: "WhatsApp",
+    category: "Messaging",
+    description:
+      "Chat directly with GeekyAce Digital Hub about your project or service.",
+    url: "https://wa.me/YOUR_PHONE_NUMBER",
+    icon: FaWhatsapp,
+  },
+  {
+    name: "Discord",
+    category: "Community",
+    description:
+      "Connect with our digital and technology community.",
+    url: "https://discord.gg/YOUR_INVITE",
+    icon: FaDiscord,
+  },
+  {
+    name: "GitHub",
+    category: "Development",
+    description:
+      "Explore GeekyAce Digital Hub's development projects, repositories, and technical work.",
+    url: "https://github.com/Geekyacedigitalhub",
+    icon: FaGithub,
+  },
+  {
+    name: "GitLab",
+    category: "Development",
+    description:
+      "Explore development repositories, projects, and technical work.",
+    url: "https://gitlab.com/geekyacedigitalhub",
+    icon: FaGitlab,
+  },
+  {
+    name: "Behance",
+    category: "Creative Portfolio",
+    description:
+      "Explore GeekyAce Digital Hub's creative work, branding, digital designs, and portfolio.",
+    url: "https://www.behance.net/geekyacedigital",
+    icon: FaBehance,
+  },
+  {
+    name: "Dribbble",
+    category: "Design",
+    description:
+      "Explore UI, UX, interface designs, and creative digital work.",
+    url: "https://dribbble.com/geekyacedigitalhub",
+    icon: FaDribbble,
+  },
+  {
+    name: "Medium",
+    category: "Articles & Insights",
+    description:
+      "Read our technology, business, development, and digital insights.",
+    url: "https://medium.com/@geekyacedigitalhub",
+    icon: FaMedium,
+  },
+  {
+    name: "Snapchat",
+    category: "Social Media",
+    description:
+      "Follow GeekyAce Digital Hub for social updates and content.",
+    url: "https://www.snapchat.com/add/geekyacedigitalhub",
+    icon: FaSnapchatGhost,
+  },
+];

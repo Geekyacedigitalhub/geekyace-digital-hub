@@ -47,16 +47,15 @@ export default function Header() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center"
+          className="relative flex h-11 w-[158px] items-center"
           aria-label="GeekyAce Digital Hub Home"
         >
           <Image
             src="/images/logo.png"
             alt="GeekyAce Digital Hub"
-            width={180}
-            height={50}
-            className="h-11 w-auto object-contain"
-            style={{ width: "auto" }}
+            fill
+            sizes="158px"
+            className="object-contain object-left"
             priority
           />
         </Link>

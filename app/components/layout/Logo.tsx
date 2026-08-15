@@ -5,16 +5,16 @@ export default function Logo() {
   return (
     <Link
       href="/"
-      className="flex items-center"
+      className="relative flex h-12 w-[180px] items-center"
       aria-label="GeekyAce Digital Hub Home"
     >
       <Image
         src="/images/logo.png"
         alt="GeekyAce Digital Hub"
-        width={180}
-        height={60}
+        fill
+        sizes="180px"
+        className="object-contain object-left"
         priority
-        className="h-auto w-[180px] object-contain"
       />
     </Link>
   );

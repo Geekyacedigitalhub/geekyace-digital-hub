@@ -1,48 +1,57 @@
 import Link from "next/link";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import Container from "@/app/components/ui/Container";
+import Container from "../ui/Container";
 
 export default function CTA() {
   return (
-    <section className="relative overflow-hidden bg-slate-950 py-24">
+    <section className="relative overflow-hidden bg-slate-900 py-20 sm:py-24 lg:py-28">
       {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute left-0 top-0 h-80 w-80 rounded-full bg-blue-600/20 blur-3xl" />
-        <div className="absolute right-0 bottom-0 h-80 w-80 rounded-full bg-violet-600/20 blur-3xl" />
-      </div>
+      <div
+        className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-green-500/10 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div
+        className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl"
+        aria-hidden="true"
+      />
 
       <Container>
-        <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 px-8 py-16 text-center shadow-2xl lg:px-16">
-          <span className="inline-flex rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-blue-400">
-            Let's Build Something Amazing
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
+          {/* Label */}
+          <span className="inline-flex rounded-full border border-green-400/20 bg-green-500/10 px-4 py-2 text-sm font-semibold text-green-400">
+            Let's Build Something Great
           </span>
 
-          <h2 className="mx-auto mt-8 max-w-4xl text-4xl font-extrabold leading-tight text-white md:text-5xl">
-            Ready to Transform Your Business with Technology?
+          {/* Heading */}
+          <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Ready to Turn Your Idea Into Reality?
           </h2>
 
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-300">
-            Whether you need a modern website, AI-powered automation,
-            mobile application, or a complete digital transformation,
-            Geekyace Digital Hub is ready to help you achieve your goals.
+          {/* Description */}
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+            Whether you need a website, AI solution, mobile application,
+            automation system, branding, or another digital product,
+            Geekyace Digital Hub is ready to help you build it.
           </p>
 
-          <div className="mt-12 flex flex-wrap justify-center gap-4">
+          {/* Buttons */}
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-500"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-7 py-4 font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-xl"
             >
               Start Your Project
-              <ArrowRight size={20} />
+              <ArrowRight size={18} aria-hidden="true" />
             </Link>
 
             <Link
-              href="/portfolio"
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-8 py-4 font-semibold text-slate-200 transition hover:border-slate-600"
+              href="/showcase"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800 px-7 py-4 font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:border-green-500 hover:bg-slate-700"
             >
-              <MessageCircle size={20} />
-              View Portfolio
+              Explore Our Work
+              <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
         </div>

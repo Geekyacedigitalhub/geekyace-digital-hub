@@ -1,16 +1,23 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
-  Calendar,
   CheckCircle2,
+  ExternalLink,
   Layers3,
-  Sparkles,
+  CalendarDays,
+  Building2,
+  BriefcaseBusiness,
 } from "lucide-react";
 
 import Container from "@/app/components/ui/Container";
 import ProjectImage from "@/app/components/showcase/ProjectImage";
-import { getProjectBySlug } from "@/app/data/projects";
+import {
+  projects,
+  getProjectBySlug,
+} from "@/app/data/projects";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -18,7 +25,43 @@ interface ProjectPageProps {
   }>;
 }
 
-export default async function ProjectPage({
+/**
+ * Generate all project detail routes at build time.
+ */
+export function generateStaticParams() {
+  return projects.map((project) => ({
+    slug: project.slug,
+  }));
+}
+
+/**
+ * Generate SEO metadata for every project.
+ */
+export async function generateMetadata({
+  params,
+}: ProjectPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const project = getProjectBySlug(slug);
+
+  if (!project) {
+    return {
+      title: "Project Not Found | Geekyace Digital Hub",
+      description:
+        "The requested Geekyace Digital Hub project could not be found.",
+    };
+  }
+
+  return {
+    title: `${project.title} | Geekyace Digital Hub`,
+    description: project.shortDescription,
+  };
+}
+
+/**
+ * Project Case Study Page
+ */
+export default async function ProjectCaseStudyPage({
   params,
 }: ProjectPageProps) {
   const { slug } = await params;
@@ -26,86 +69,156 @@ export default async function ProjectPage({
   const project = getProjectBySlug(slug);
 
   if (!project) {
-    return (
-      <main className="min-h-screen bg-slate-50 py-24">
-        <Container>
-          <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-            <h1 className="text-3xl font-extrabold text-slate-900">
-              Project Not Found
-            </h1>
-
-            <p className="mt-4 text-slate-600">
-              The project you are looking for doesn&apos;t exist or may have
-              been removed.
-            </p>
-
-            <Link
-              href="/showcase"
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-green-600 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-green-700"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Showcase
-            </Link>
-          </div>
-        </Container>
-      </main>
-    );
+    notFound();
   }
 
   return (
-    <main className="bg-white">
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-slate-950 py-20 sm:py-28">
+    <main className="min-h-screen bg-white">
+
+      {/* =========================================================
+          HERO
+      ========================================================= */}
+      <section className="relative overflow-hidden bg-slate-950 py-20 text-white sm:py-24 lg:py-28">
+
+        {/* Background Glow */}
         <div
+          className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-green-500/10 blur-3xl"
           aria-hidden="true"
-          className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-green-500/10 blur-3xl"
+        />
+
+        <div
+          className="pointer-events-none absolute bottom-0 right-0 h-[350px] w-[350px] translate-x-1/3 translate-y-1/3 rounded-full bg-emerald-500/10 blur-3xl"
+          aria-hidden="true"
         />
 
         <Container>
-          <div className="relative">
+          <div className="relative z-10">
+
+            {/* Back Link */}
             <Link
               href="/showcase"
               className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 transition hover:text-green-400"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft
+                size={18}
+                aria-hidden="true"
+              />
+
               Back to Showcase
             </Link>
 
-            <div className="mt-10 grid items-center gap-12 lg:grid-cols-2">
-              {/* Left */}
-              <div>
-                <div className="flex flex-wrap gap-3">
-                  <span className="rounded-full bg-green-500/10 px-4 py-2 text-sm font-semibold text-green-400 ring-1 ring-green-500/20">
-                    {project.category}
-                  </span>
+            {/* Category */}
+            <div className="mt-10 flex flex-wrap gap-3">
+              <span className="rounded-full bg-green-500/10 px-4 py-2 text-sm font-semibold text-green-400 ring-1 ring-inset ring-green-500/20">
+                {project.category}
+              </span>
 
-                  <span className="rounded-full bg-white/5 px-4 py-2 text-sm font-semibold text-slate-300 ring-1 ring-white/10">
-                    {project.industry}
-                  </span>
-                </div>
+              <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-slate-300 ring-1 ring-inset ring-white/10">
+                {project.service}
+              </span>
+            </div>
 
-                <h1 className="mt-7 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-                  {project.title}
-                </h1>
+            {/* Title */}
+            <h1 className="mt-7 max-w-5xl text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-7xl">
+              {project.title}
+            </h1>
 
-                <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
-                  {project.shortDescription}
+            {/* Description */}
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">
+              {project.shortDescription}
+            </p>
+
+            {/* Project Metadata */}
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+              {/* Client */}
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <Building2
+                  className="text-green-400"
+                  size={22}
+                  aria-hidden="true"
+                />
+
+                <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                  Client
                 </p>
 
-                <div className="mt-8 flex flex-wrap gap-3">
-                  {project.technologies.map((technology) => (
-                    <span
-                      key={technology}
-                      className="rounded-lg bg-white/5 px-3 py-2 text-xs font-medium text-slate-300 ring-1 ring-white/10"
-                    >
-                      {technology}
-                    </span>
-                  ))}
-                </div>
+                <p className="mt-2 font-semibold text-white">
+                  {project.client}
+                </p>
               </div>
 
-              {/* Right */}
-              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl">
+              {/* Industry */}
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <BriefcaseBusiness
+                  className="text-green-400"
+                  size={22}
+                  aria-hidden="true"
+                />
+
+                <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                  Industry
+                </p>
+
+                <p className="mt-2 font-semibold text-white">
+                  {project.industry}
+                </p>
+              </div>
+
+              {/* Year */}
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <CalendarDays
+                  className="text-green-400"
+                  size={22}
+                  aria-hidden="true"
+                />
+
+                <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                  Year
+                </p>
+
+                <p className="mt-2 font-semibold text-white">
+                  {project.year}
+                </p>
+              </div>
+
+              {/* Duration */}
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <Layers3
+                  className="text-green-400"
+                  size={22}
+                  aria-hidden="true"
+                />
+
+                <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                  Duration
+                </p>
+
+                <p className="mt-2 font-semibold text-white">
+                  {project.duration}
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* =========================================================
+          MAIN CASE STUDY CONTENT
+      ========================================================= */}
+      <section className="py-20 sm:py-24 lg:py-28">
+        <Container>
+
+          <div className="grid gap-16 lg:grid-cols-[1.5fr_1fr]">
+
+            {/* =====================================================
+                LEFT CONTENT
+            ===================================================== */}
+            <div>
+
+              {/* Main Project Image */}
+              <div className="relative overflow-hidden rounded-[32px] border border-slate-200 bg-slate-100 shadow-2xl">
                 <div className="relative aspect-[16/10]">
                   <ProjectImage
                     src={project.image}
@@ -114,220 +227,256 @@ export default async function ProjectPage({
                   />
                 </div>
               </div>
-            </div>
-          </div>
-        </Container>
-      </section>
 
-      {/* Project Details */}
-      <section className="py-20 sm:py-24">
-        <Container>
-          <div className="grid gap-12 lg:grid-cols-[1fr_350px]">
-            {/* Main Content */}
-            <div>
-              <span className="text-sm font-bold uppercase tracking-[0.2em] text-green-600">
-                Project Overview
-              </span>
+              {/* ===================================================
+                  OVERVIEW
+              =================================================== */}
+              <div className="mt-16">
 
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-                {project.title}
-              </h2>
+                <span className="text-sm font-bold uppercase tracking-widest text-green-600">
+                  Project Overview
+                </span>
 
-              <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg">
-                {project.overview}
-              </p>
+                <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                  About the Project
+                </h2>
 
-              {/* Challenge */}
-              <div className="mt-14">
-                <h3 className="text-2xl font-bold text-slate-900">
+                <p className="mt-6 text-lg leading-9 text-slate-600">
+                  {project.overview}
+                </p>
+
+              </div>
+
+              {/* ===================================================
+                  CHALLENGE
+              =================================================== */}
+              <div className="mt-16">
+
+                <span className="text-sm font-bold uppercase tracking-widest text-green-600">
                   The Challenge
-                </h3>
+                </span>
 
-                <p className="mt-4 leading-8 text-slate-600">
+                <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                  What Needed to Be Solved
+                </h2>
+
+                <p className="mt-6 text-lg leading-9 text-slate-600">
                   {project.challenge}
                 </p>
+
               </div>
 
-              {/* Solution */}
-              <div className="mt-12">
-                <h3 className="text-2xl font-bold text-slate-900">
-                  Our Solution
-                </h3>
+              {/* ===================================================
+                  SOLUTION
+              =================================================== */}
+              <div className="mt-16">
 
-                <p className="mt-4 leading-8 text-slate-600">
+                <span className="text-sm font-bold uppercase tracking-widest text-green-600">
+                  Our Solution
+                </span>
+
+                <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                  How Geekyace Approached It
+                </h2>
+
+                <p className="mt-6 text-lg leading-9 text-slate-600">
                   {project.solution}
                 </p>
+
               </div>
 
-              {/* Results */}
-              <div className="mt-12">
-                <h3 className="text-2xl font-bold text-slate-900">
-                  Project Results
-                </h3>
+              {/* ===================================================
+                  RESULTS
+              =================================================== */}
+              <div className="mt-16">
 
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <span className="text-sm font-bold uppercase tracking-widest text-green-600">
+                  Results
+                </span>
+
+                <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                  What We Delivered
+                </h2>
+
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+
                   {project.results.map((result) => (
                     <div
                       key={result}
-                      className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4"
+                      className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:border-green-200 hover:bg-green-50/40"
                     >
-                      <CheckCircle2 className="h-5 w-5 shrink-0 text-green-600" />
+                      <CheckCircle2
+                        className="mt-0.5 shrink-0 text-green-600"
+                        size={22}
+                        aria-hidden="true"
+                      />
 
-                      <span className="font-medium text-slate-700">
+                      <p className="font-semibold leading-7 text-slate-800">
                         {result}
-                      </span>
+                      </p>
                     </div>
                   ))}
+
                 </div>
               </div>
-            </div>
 
-            {/* Sidebar */}
-            <aside>
-              <div className="sticky top-8 rounded-3xl border border-slate-200 bg-slate-50 p-7">
-                <h3 className="text-xl font-bold text-slate-900">
-                  Project Details
-                </h3>
+              {/* ===================================================
+                  GALLERY
+              =================================================== */}
+              {project.gallery?.length > 0 && (
+                <div className="mt-16">
 
-                <div className="mt-7 space-y-6">
-                  <div className="flex gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600">
-                      <Calendar className="h-5 w-5" />
-                    </div>
+                  <span className="text-sm font-bold uppercase tracking-widest text-green-600">
+                    Project Gallery
+                  </span>
 
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                        Year
-                      </p>
+                  <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                    A Closer Look
+                  </h2>
 
-                      <p className="mt-1 font-semibold text-slate-800">
-                        {project.year}
-                      </p>
-                    </div>
-                  </div>
+                  <div className="mt-8 grid gap-6 sm:grid-cols-2">
 
-                  <div className="flex gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600">
-                      <Layers3 className="h-5 w-5" />
-                    </div>
+                    {project.gallery.map((image, index) => (
+                      <div
+                        key={`${image}-${index}`}
+                        className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100"
+                      >
+                        <div className="relative aspect-[4/3]">
 
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                        Duration
-                      </p>
+                          <ProjectImage
+                            src={image}
+                            alt={`${project.title} project gallery image ${index + 1}`}
+                          />
 
-                      <p className="mt-1 font-semibold text-slate-800">
-                        {project.duration}
-                      </p>
-                    </div>
-                  </div>
+                        </div>
+                      </div>
+                    ))}
 
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                      Service
-                    </p>
-
-                    <p className="mt-2 font-semibold text-slate-800">
-                      {project.service}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                      Industry
-                    </p>
-
-                    <p className="mt-2 font-semibold text-slate-800">
-                      {project.industry}
-                    </p>
                   </div>
                 </div>
+              )}
+
+            </div>
+
+            {/* =====================================================
+                RIGHT SIDEBAR
+            ===================================================== */}
+            <aside className="lg:sticky lg:top-24 lg:self-start">
+
+              {/* Technologies */}
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-7 sm:p-8">
+
+                <h2 className="text-xl font-bold text-slate-900">
+                  Technologies Used
+                </h2>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+
+                  {project.technologies.map((technology) => (
+                    <span
+                      key={technology}
+                      className="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200"
+                    >
+                      {technology}
+                    </span>
+                  ))}
+
+                </div>
+
+                {/* Live Project */}
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-4 font-bold text-white transition hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg"
+                  >
+                    Visit Live Project
+
+                    <ExternalLink
+                      size={18}
+                      aria-hidden="true"
+                    />
+                  </a>
+                )}
+
+              </div>
+
+              {/* CTA */}
+              <div className="mt-6 overflow-hidden rounded-3xl bg-slate-950 p-7 text-white sm:p-8">
+
+                <div
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-500/10 ring-1 ring-green-500/20"
+                  aria-hidden="true"
+                >
+                  <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
+                </div>
+
+                <h2 className="mt-6 text-2xl font-extrabold">
+                  Have a project in mind?
+                </h2>
+
+                <p className="mt-4 leading-7 text-slate-300">
+                  Let's build a digital solution that helps your business
+                  grow, operate better, and stand out.
+                </p>
 
                 <Link
                   href="/contact"
-                  className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-green-700 hover:shadow-lg"
+                  className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-4 font-bold text-white transition hover:-translate-y-0.5 hover:bg-green-700"
                 >
-                  Start a Similar Project
-                  <ArrowRight className="h-4 w-4" />
+                  Start Your Project
+
+                  <ArrowRight
+                    size={18}
+                    aria-hidden="true"
+                  />
                 </Link>
+
               </div>
+
             </aside>
           </div>
         </Container>
       </section>
 
-      {/* Gallery */}
-      {project.gallery && project.gallery.length > 0 && (
-        <section className="bg-slate-50 py-20 sm:py-24">
-          <Container>
-            <div className="text-center">
-              <span className="text-sm font-bold uppercase tracking-[0.2em] text-green-600">
-                Project Gallery
-              </span>
-
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-                Inside the Project
-              </h2>
-
-              <p className="mx-auto mt-5 max-w-2xl leading-7 text-slate-600">
-                Explore more screens and details from this digital
-                project.
-              </p>
-            </div>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
-              {project.gallery.map((image, index) => (
-                <div
-                  key={`${image}-${index}`}
-                  className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"
-                >
-                  <div className="relative aspect-[16/10]">
-                    <ProjectImage
-                      src={image}
-                      alt={`${project.title} project preview ${index + 1}`}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* Final CTA */}
-      <section className="py-20 sm:py-24">
+      {/* =========================================================
+          BOTTOM NAVIGATION
+      ========================================================= */}
+      <section className="border-t border-slate-200 bg-slate-50 py-12">
         <Container>
-          <div className="relative overflow-hidden rounded-[32px] bg-slate-950 px-7 py-14 text-center sm:px-12">
-            <div
-              aria-hidden="true"
-              className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-green-500/20 blur-3xl"
-            />
 
-            <div className="relative">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-green-500 text-slate-950">
-                <Sparkles className="h-7 w-7" />
-              </div>
+          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
 
-              <h2 className="mt-7 text-3xl font-extrabold text-white sm:text-4xl">
-                Have a Project Like This?
-              </h2>
+            <Link
+              href="/showcase"
+              className="inline-flex items-center gap-2 font-semibold text-slate-700 transition hover:text-green-600"
+            >
+              <ArrowLeft
+                size={18}
+                aria-hidden="true"
+              />
 
-              <p className="mx-auto mt-5 max-w-2xl leading-7 text-slate-300">
-                Let&apos;s turn your idea into a professional digital
-                solution designed around your business goals.
-              </p>
+              Back to All Projects
+            </Link>
 
-              <Link
-                href="/contact"
-                className="mt-8 inline-flex items-center gap-2 rounded-xl bg-green-500 px-7 py-3.5 text-sm font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-green-400 hover:shadow-lg"
-              >
-                Start Your Project
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 font-bold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+            >
+              Discuss Your Project
+
+              <ArrowRight
+                size={18}
+                aria-hidden="true"
+              />
+            </Link>
+
           </div>
+
         </Container>
       </section>
+
     </main>
   );
 }
