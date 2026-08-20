@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { prisma } from "@/app/lib/prisma";
+import { checkRateLimit, isRequestBodyTooLarge, rateLimitHeaders } from "@/app/lib/request-security";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const clean = (value: unknown, max = 500) => String(value ?? "").trim().slice(0, max);
 
 function escapeHtml(value: unknown): string {
   return String(value ?? "")
@@ -14,8 +17,24 @@ function escapeHtml(value: unknown): string {
 
 export async function POST(request: Request) {
   try {
-    if (!process.env.RESEND_API_KEY) {
-      console.error("RESEND_API_KEY is not configured.");
+    if (isRequestBodyTooLarge(request, 32 * 1024)) {
+      return NextResponse.json({ success: false, message: "Request is too large." }, { status: 413 });
+    }
+
+    const rateLimit = checkRateLimit(request, "contact", 6, 15 * 60 * 1000);
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { success: false, message: "Too many enquiries were submitted. Please wait before trying again." },
+        { status: 429, headers: rateLimitHeaders(rateLimit) }
+      );
+    }
+
+    const resendApiKey = process.env.RESEND_API_KEY;
+    const fromEmail = process.env.CONTACT_FROM_EMAIL;
+    const toEmail = process.env.CONTACT_TO_EMAIL;
+
+    if (!resendApiKey || !fromEmail || !toEmail) {
+      console.error("RESEND_API_KEY, CONTACT_FROM_EMAIL, or CONTACT_TO_EMAIL is not configured.");
 
       return NextResponse.json(
         {
@@ -26,7 +45,13 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = await request.json();
+    const resend = new Resend(resendApiKey);
+
+    const body = await request.json().catch(() => null);
+
+    if (!body || typeof body !== "object") {
+      return NextResponse.json({ success: false, message: "Invalid request body." }, { status: 400 });
+    }
 
     const {
       name,
@@ -38,9 +63,28 @@ export async function POST(request: Request) {
       timeline,
       contactMethod,
       message,
+      source,
+      serviceSlug,
+      studioId,
+      consent,
+      website,
     } = body;
 
-    if (!name || !email || !phone || !service || !message) {
+    if (clean(website)) {
+      return NextResponse.json({ success: true, message: "Enquiry received." });
+    }
+
+    const normalizedName = clean(name, 100).replace(/[\r\n]+/g, " ");
+    const normalizedCompany = clean(company, 160);
+    const normalizedEmail = clean(email, 160).toLowerCase();
+    const normalizedPhone = clean(phone, 60);
+    const normalizedService = clean(service, 160);
+    const normalizedBudget = clean(budget, 100);
+    const normalizedTimeline = clean(timeline, 100);
+    const normalizedContactMethod = clean(contactMethod, 100);
+    const normalizedMessage = clean(message, 4_000);
+
+    if (!normalizedName || !emailPattern.test(normalizedEmail) || !normalizedPhone || !normalizedService || normalizedMessage.length < 10 || consent !== true) {
       return NextResponse.json(
         {
           success: false,
@@ -50,26 +94,52 @@ export async function POST(request: Request) {
       );
     }
 
-    const safeName = escapeHtml(name);
-    const safeCompany = escapeHtml(company || "N/A");
-    const safeEmail = escapeHtml(email);
-    const safePhone = escapeHtml(phone);
-    const safeService = escapeHtml(service);
-    const safeBudget = escapeHtml(budget || "N/A");
-    const safeTimeline = escapeHtml(timeline || "N/A");
+    const safeName = escapeHtml(normalizedName);
+    const safeCompany = escapeHtml(normalizedCompany || "N/A");
+    const safeEmail = escapeHtml(normalizedEmail);
+    const safePhone = escapeHtml(normalizedPhone);
+    const safeService = escapeHtml(normalizedService);
+    const safeBudget = escapeHtml(normalizedBudget || "N/A");
+    const safeTimeline = escapeHtml(normalizedTimeline || "N/A");
     const safeContactMethod = escapeHtml(
-      contactMethod || "N/A"
+      normalizedContactMethod || "N/A"
     );
-    const safeMessage = escapeHtml(message).replace(
+    const safeMessage = escapeHtml(normalizedMessage).replace(
       /\n/g,
       "<br />"
     );
 
+    try {
+      const leadData = {
+          name: normalizedName,
+          email: normalizedEmail,
+          businessName: normalizedCompany || null,
+          projectType: normalizedService,
+          mainGoal: normalizedMessage,
+          timeline: normalizedTimeline || null,
+          budget: normalizedBudget || null,
+          recommendedService: normalizedService,
+          conversationSummary: [
+            `Phone: ${normalizedPhone}`,
+            `Preferred contact: ${normalizedContactMethod || "Not specified"}`,
+          ].join("\n"),
+          source: String(source || "CONTACT").trim().toUpperCase(),
+          serviceSlug: String(serviceSlug || "").trim() || null,
+          studioId: String(studioId || "").trim() || null,
+          referrer: request.headers.get("referer"),
+          consent: true,
+          status: "NEW",
+        };
+      await prisma.lead.create({ data: leadData as unknown as Parameters<typeof prisma.lead.create>[0]["data"] });
+    } catch (leadError) {
+      console.error("CONTACT LEAD SAVE ERROR:", leadError);
+    }
+
     const result = await resend.emails.send({
-      from: "Geekyace Contact Form <onboarding@resend.dev>",
-      to: "geekyacedigital@gmail.com",
-      replyTo: email,
-      subject: `New Project Enquiry from ${name}`,
+      from: fromEmail,
+      to: toEmail,
+      replyTo: normalizedEmail,
+      subject: `New Project Enquiry from ${normalizedName}`,
       html: `
         <div
           style="

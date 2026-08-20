@@ -16,30 +16,26 @@ const services = [
   {
     icon: Globe,
     title: "Website Development",
-    value: "98%",
-    color: "bg-blue-500",
-    width: "98%",
+    value: "Product studio",
+    color: "bg-green-300",
   },
   {
     icon: Bot,
     title: "AI Solutions",
-    value: "92%",
-    color: "bg-violet-500",
-    width: "92%",
+    value: "AI studio",
+    color: "bg-green-400",
   },
   {
     icon: Cog,
     title: "Business Automation",
-    value: "95%",
+    value: "Systems studio",
     color: "bg-green-500",
-    width: "95%",
   },
   {
     icon: Smartphone,
     title: "Mobile Applications",
-    value: "90%",
-    color: "bg-orange-500",
-    width: "90%",
+    value: "Product studio",
+    color: "bg-emerald-500",
   },
 ];
 
@@ -59,7 +55,7 @@ export default function HeroDashboard() {
           duration: 0.6,
           ease: "easeOut",
         }}
-        className="relative mx-auto w-full max-w-xl lg:ml-auto"
+        className="soft-float relative mx-auto w-full max-w-xl lg:ml-auto"
       >
         {/* Decorative glow */}
         <div
@@ -68,7 +64,7 @@ export default function HeroDashboard() {
         />
 
         {/* Main dashboard */}
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/95 shadow-2xl shadow-black/30">
+        <div className="glass-panel relative overflow-hidden rounded-[2rem] bg-slate-950/80 shadow-2xl shadow-black/30">
           {/* Dashboard header */}
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
             <div className="flex items-center gap-3">
@@ -81,7 +77,7 @@ export default function HeroDashboard() {
 
               <div>
                 <p className="text-sm font-bold text-white">
-                  Digital Growth Dashboard
+                  GeekyAce Project Studio
                 </p>
 
                 <div className="mt-0.5 flex items-center gap-2">
@@ -91,14 +87,14 @@ export default function HeroDashboard() {
                   />
 
                   <span className="text-xs text-slate-400">
-                    Systems operating normally
+                    New project window open
                   </span>
                 </div>
               </div>
             </div>
 
             <div className="hidden rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300 sm:block">
-              Live
+              Studio live
             </div>
           </div>
 
@@ -107,7 +103,7 @@ export default function HeroDashboard() {
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-medium text-slate-400">
-                  Projects
+                  Expert studios
                 </p>
 
                 <TrendingUp
@@ -116,17 +112,17 @@ export default function HeroDashboard() {
                 />
               </div>
 
-              <p className="mt-3 text-2xl font-extrabold text-white">50+</p>
+              <p className="mt-3 text-2xl font-extrabold text-white">5</p>
 
               <p className="mt-1 text-xs text-green-400">
-                Growing portfolio
+                Working as one
               </p>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-medium text-slate-400">
-                  Availability
+                  Delivery
                 </p>
 
                 <CheckCircle2
@@ -135,10 +131,10 @@ export default function HeroDashboard() {
                 />
               </div>
 
-              <p className="mt-3 text-2xl font-extrabold text-white">24/7</p>
+              <p className="mt-3 text-2xl font-extrabold text-white">1 team</p>
 
               <p className="mt-1 text-xs text-green-400">
-                Support available
+                End-to-end thinking
               </p>
             </div>
           </div>
@@ -148,11 +144,11 @@ export default function HeroDashboard() {
             <div className="mb-4 flex items-center justify-between">
               <div>
                 <p className="text-sm font-bold text-white">
-                  Core Capabilities
+                  Your growth stack
                 </p>
 
                 <p className="mt-1 text-xs text-slate-500">
-                  Digital solutions built for growth
+                  Connected expertise, not isolated services
                 </p>
               </div>
 
@@ -203,24 +199,9 @@ export default function HeroDashboard() {
                           </span>
                         </div>
 
-                        <div
-                          className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-800"
-                          aria-label={`${service.title}: ${service.value}`}
-                        >
-                          <motion.div
-                            initial={{
-                              width: 0,
-                            }}
-                            animate={{
-                              width: service.width,
-                            }}
-                            transition={{
-                              delay: 0.2 + index * 0.06,
-                              duration: 0.6,
-                              ease: "easeOut",
-                            }}
-                            className={`h-full rounded-full ${service.color}`}
-                          />
+                        <div className="mt-2 flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-slate-500">
+                          <span className={`h-1.5 w-8 rounded-full ${service.color}`} />
+                          Strategy · delivery · handover
                         </div>
                       </div>
                     </div>
@@ -240,7 +221,7 @@ export default function HeroDashboard() {
                 />
 
                 <span className="text-xs font-medium text-slate-400">
-                  Digital systems active
+                  Ready for your next brief
                 </span>
               </div>
 

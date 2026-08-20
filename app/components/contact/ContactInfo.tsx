@@ -2,13 +2,21 @@
 
 import Link from "next/link";
 import {
+  CalendarCheck2,
   Mail,
   Phone,
   Globe,
   Clock,
 } from "lucide-react";
+import { isExternalPublicLink, publicLinks } from "@/app/lib/publicLinks";
 
 const contactInfo = [
+  {
+    icon: CalendarCheck2,
+    title: "Consultation",
+    value: "Request a project-fit conversation",
+    href: publicLinks.booking,
+  },
   {
     icon: Mail,
     title: "Email",
@@ -36,9 +44,7 @@ const contactInfo = [
 export default function ContactInfo() {
   return (
     <div>
-      <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
-        Get In Touch
-      </span>
+      <span className="brand-eyebrow">Get In Touch</span>
 
       <h2 className="mt-6 text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl">
         Contact Information
@@ -57,10 +63,10 @@ export default function ContactInfo() {
           return (
             <div
               key={item.title}
-              className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-500 hover:shadow-xl"
+              className="premium-card group rounded-[1.75rem] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-green-500"
             >
               <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-green-100 text-green-700">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-green-400 transition group-hover:bg-green-600 group-hover:text-white">
                   <Icon size={26} />
                 </div>
 
@@ -72,6 +78,8 @@ export default function ContactInfo() {
                   {item.href ? (
                     <Link
                       href={item.href}
+                      target={isExternalPublicLink(item.href) ? "_blank" : undefined}
+                      rel={isExternalPublicLink(item.href) ? "noopener noreferrer" : undefined}
                       className="break-all text-slate-600 transition hover:text-green-600"
                     >
                       {item.value}

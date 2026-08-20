@@ -18,6 +18,7 @@ import {
   projects,
   getProjectBySlug,
 } from "@/app/data/projects";
+import { isVerifiedProject } from "@/app/lib/projectProof";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -53,7 +54,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${project.title} | Geekyace Digital Hub`,
+    title: project.title,
     description: project.shortDescription,
   };
 }
@@ -71,6 +72,8 @@ export default async function ProjectCaseStudyPage({
   if (!project) {
     notFound();
   }
+
+  const isVerified = isVerifiedProject(project);
 
   return (
     <main className="min-h-screen bg-white">
@@ -109,6 +112,9 @@ export default async function ProjectCaseStudyPage({
 
             {/* Category */}
             <div className="mt-10 flex flex-wrap gap-3">
+              <span className={`rounded-full px-4 py-2 text-sm font-black ring-1 ring-inset ${isVerified ? "bg-green-500 text-white ring-green-400" : "bg-amber-300/10 text-amber-200 ring-amber-300/25"}`}>
+                {isVerified ? "Verified client work" : "Capability concept"}
+              </span>
               <span className="rounded-full bg-green-500/10 px-4 py-2 text-sm font-semibold text-green-400 ring-1 ring-inset ring-green-500/20">
                 {project.category}
               </span>
@@ -116,6 +122,7 @@ export default async function ProjectCaseStudyPage({
               <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-slate-300 ring-1 ring-inset ring-white/10">
                 {project.service}
               </span>
+              {isVerified && project.proofUrl ? <a href={project.proofUrl} target="_blank" rel="noopener noreferrer" className="rounded-full border border-green-300/30 bg-green-300/10 px-4 py-2 text-sm font-black text-green-200">Open verification source</a> : null}
             </div>
 
             {/* Title */}
@@ -131,7 +138,7 @@ export default async function ProjectCaseStudyPage({
             {/* Project Metadata */}
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
-              {/* Client */}
+              {/* Proof format */}
               <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
                 <Building2
                   className="text-green-400"
@@ -140,11 +147,11 @@ export default async function ProjectCaseStudyPage({
                 />
 
                 <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
-                  Client
+                  {isVerified ? "Client" : "Project format"}
                 </p>
 
                 <p className="mt-2 font-semibold text-white">
-                  {project.client}
+                  {isVerified ? project.client : "Illustrative capability concept"}
                 </p>
               </div>
 
@@ -174,7 +181,7 @@ export default async function ProjectCaseStudyPage({
                 />
 
                 <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
-                  Year
+                  {isVerified ? "Year" : "Concept year"}
                 </p>
 
                 <p className="mt-2 font-semibold text-white">
@@ -191,7 +198,7 @@ export default async function ProjectCaseStudyPage({
                 />
 
                 <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
-                  Duration
+                  {isVerified ? "Duration" : "Illustrative scope"}
                 </p>
 
                 <p className="mt-2 font-semibold text-white">
@@ -234,7 +241,7 @@ export default async function ProjectCaseStudyPage({
               <div className="mt-16">
 
                 <span className="text-sm font-bold uppercase tracking-widest text-green-600">
-                  Project Overview
+                  {isVerified ? "Project Overview" : "Concept Overview"}
                 </span>
 
                 <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
@@ -291,11 +298,11 @@ export default async function ProjectCaseStudyPage({
               <div className="mt-16">
 
                 <span className="text-sm font-bold uppercase tracking-widest text-green-600">
-                  Results
+                  {isVerified ? "Results" : "Planned Deliverables"}
                 </span>
 
                 <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-                  What We Delivered
+                  {isVerified ? "What We Delivered" : "What This Concept Demonstrates"}
                 </h2>
 
                 <div className="mt-8 grid gap-4 sm:grid-cols-2">

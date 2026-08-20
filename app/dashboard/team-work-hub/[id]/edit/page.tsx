@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   ArrowLeft,
@@ -11,11 +12,20 @@ import {
 } from "lucide-react";
 
 import Container from "@/app/components/ui/Container";
+import { studios } from "@/app/data/studios";
 
 interface TeamMember {
   id: string;
   name: string;
   role: string;
+  slug?: string | null;
+  headline?: string | null;
+  studioId?: string | null;
+  yearsExperience?: number | null;
+  languages?: string | null;
+  portfolioUrl?: string | null;
+  featured?: boolean;
+  published?: boolean;
   bio: string;
   location: string | null;
   availability: string;
@@ -30,10 +40,19 @@ export default function EditTeamMemberPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const router = useRouter();
   const [memberId, setMemberId] = useState("");
 
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
+  const [slug, setSlug] = useState("");
+  const [headline, setHeadline] = useState("");
+  const [studioId, setStudioId] = useState("");
+  const [yearsExperience, setYearsExperience] = useState("");
+  const [languages, setLanguages] = useState("");
+  const [portfolioUrl, setPortfolioUrl] = useState("");
+  const [featured, setFeatured] = useState(false);
+  const [published, setPublished] = useState(true);
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
 
@@ -110,6 +129,14 @@ export default function EditTeamMemberPage({
 
         setName(member.name || "");
         setRole(member.role || "");
+        setSlug(member.slug || "");
+        setHeadline(member.headline || "");
+        setStudioId(member.studioId || "");
+        setYearsExperience(member.yearsExperience ? String(member.yearsExperience) : "");
+        setLanguages(member.languages || "");
+        setPortfolioUrl(member.portfolioUrl || "");
+        setFeatured(Boolean(member.featured));
+        setPublished(member.published !== false);
         setBio(member.bio || "");
         setLocation(member.location || "");
 
@@ -145,17 +172,20 @@ export default function EditTeamMemberPage({
    * Create local preview for newly selected image.
    */
   useEffect(() => {
-    if (!image) {
-      setImagePreview("");
-      return;
-    }
+    let previewUrl = "";
+    const frame = window.requestAnimationFrame(() => {
+      if (!image) {
+        setImagePreview("");
+        return;
+      }
 
-    const previewUrl = URL.createObjectURL(image);
-
-    setImagePreview(previewUrl);
+      previewUrl = URL.createObjectURL(image);
+      setImagePreview(previewUrl);
+    });
 
     return () => {
-      URL.revokeObjectURL(previewUrl);
+      window.cancelAnimationFrame(frame);
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, [image]);
 
@@ -186,11 +216,11 @@ export default function EditTeamMemberPage({
       return;
     }
 
-    const maxSize = 5 * 1024 * 1024;
+    const maxSize = 4 * 1024 * 1024;
 
     if (selectedFile.size > maxSize) {
       setError(
-        "Profile image must be 5MB or smaller."
+        "Profile image must be 4MB or smaller."
       );
 
       event.target.value = "";
@@ -245,6 +275,14 @@ export default function EditTeamMemberPage({
 
       formData.append("name", name.trim());
       formData.append("role", role.trim());
+      formData.append("slug", slug.trim().toLowerCase());
+      formData.append("headline", headline.trim());
+      formData.append("studioId", studioId);
+      formData.append("yearsExperience", yearsExperience);
+      formData.append("languages", languages.trim());
+      formData.append("portfolioUrl", portfolioUrl.trim());
+      formData.append("featured", String(featured));
+      formData.append("published", String(published));
       formData.append("bio", bio.trim());
       formData.append("location", location.trim());
       formData.append("availability", availability);
@@ -307,7 +345,7 @@ export default function EditTeamMemberPage({
       );
 
       setTimeout(() => {
-        window.location.href = `/dashboard/team-work-hub/${memberId}`;
+        router.push(`/dashboard/team-work-hub/${memberId}`);
       }, 700);
     } catch (error) {
       console.error(
@@ -445,7 +483,7 @@ export default function EditTeamMemberPage({
               <p className="mt-2 text-sm text-slate-500">
                 Replace or remove the existing profile
                 image. JPG, PNG, and WEBP are supported.
-                Maximum size: 5MB.
+                Maximum size: 4MB.
               </p>
 
               <div className="mt-6 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
@@ -638,6 +676,20 @@ export default function EditTeamMemberPage({
                 </div>
 
               </div>
+            </section>
+
+            <section className="rounded-2xl border border-green-100 bg-green-50/50 p-6">
+              <h2 className="text-2xl font-bold text-slate-900">Public Expert Profile</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Complete these fields before publishing a richer buyer-facing expert profile.</p>
+              <div className="mt-6 grid gap-6 md:grid-cols-2">
+                <div><label htmlFor="slug" className="mb-2 block text-sm font-semibold text-slate-700">Public profile slug</label><input id="slug" value={slug} onChange={(event) => setSlug(event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "-"))} placeholder="john-doe" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20" /></div>
+                <div><label htmlFor="studioId" className="mb-2 block text-sm font-semibold text-slate-700">Primary studio</label><select id="studioId" value={studioId} onChange={(event) => setStudioId(event.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-green-500"><option value="">Select studio</option>{studios.map((studio) => <option key={studio.id} value={studio.id}>{studio.name}</option>)}</select></div>
+                <div className="md:col-span-2"><label htmlFor="headline" className="mb-2 block text-sm font-semibold text-slate-700">Buyer-focused headline</label><input id="headline" value={headline} onChange={(event) => setHeadline(event.target.value)} placeholder="What this expert helps buyers achieve" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20" /></div>
+                <div><label htmlFor="yearsExperience" className="mb-2 block text-sm font-semibold text-slate-700">Years of relevant experience</label><input id="yearsExperience" type="number" min="1" max="60" value={yearsExperience} onChange={(event) => setYearsExperience(event.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500" /></div>
+                <div><label htmlFor="languages" className="mb-2 block text-sm font-semibold text-slate-700">Working languages</label><input id="languages" value={languages} onChange={(event) => setLanguages(event.target.value)} placeholder="English, French" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500" /></div>
+                <div className="md:col-span-2"><label htmlFor="portfolioUrl" className="mb-2 block text-sm font-semibold text-slate-700">Public portfolio URL</label><input id="portfolioUrl" type="url" value={portfolioUrl} onChange={(event) => setPortfolioUrl(event.target.value)} placeholder="https://..." className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500" /></div>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-5 text-sm font-semibold text-slate-700"><label className="flex items-center gap-2"><input type="checkbox" checked={featured} onChange={(event) => setFeatured(event.target.checked)} className="h-4 w-4 accent-green-600" />Feature this expert</label><label className="flex items-center gap-2"><input type="checkbox" checked={published} onChange={(event) => setPublished(event.target.checked)} className="h-4 w-4 accent-green-600" />Publish in the public directory</label></div>
             </section>
 
             {/* Bio */}

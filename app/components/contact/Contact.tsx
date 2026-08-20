@@ -7,13 +7,12 @@ import ContactInfo from "./ContactInfo";
 
 export default function Contact() {
   return (
-    <section className="bg-slate-50 py-20 md:py-28">
+    <section className="relative overflow-hidden bg-slate-50 py-20 md:py-28">
+      <div aria-hidden="true" className="absolute -right-40 top-20 h-96 w-96 rounded-full bg-green-100/80 blur-3xl" />
       <Container>
         {/* Section Heading */}
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex rounded-full bg-green-100 px-5 py-2 text-sm font-semibold text-green-700">
-            Start a Project
-          </span>
+          <span className="brand-eyebrow">Start a Project</span>
 
           <h2 className="mt-6 text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl">
             Tell Us About Your Project
@@ -35,7 +34,7 @@ export default function Contact() {
           {/* Contact Form */}
           <div
             id="contact-form"
-            className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10"
+            className="premium-card rounded-[2rem] p-6 sm:p-8 lg:p-10"
           >
             <ContactForm />
           </div>

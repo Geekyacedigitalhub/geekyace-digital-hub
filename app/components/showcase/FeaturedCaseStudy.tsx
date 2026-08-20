@@ -4,6 +4,7 @@ import Container from "../ui/Container";
 import ProjectImage from "./ProjectImage";
 
 import { projects } from "@/app/data/projects";
+import { isVerifiedProject } from "@/app/lib/projectProof";
 
 export default function FeaturedCaseStudy() {
   const featuredProject = projects.find(
@@ -11,6 +12,7 @@ export default function FeaturedCaseStudy() {
   );
 
   if (!featuredProject) return null;
+  const isVerified = isVerifiedProject(featuredProject);
 
   return (
     <section className="py-20 lg:py-28">
@@ -18,7 +20,7 @@ export default function FeaturedCaseStudy() {
         {/* Heading */}
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <span className="inline-flex rounded-full bg-green-100 px-5 py-2 text-sm font-semibold text-green-700">
-            Featured Case Study
+            {isVerified ? "Featured Case Study" : "Featured Capability Concept"}
           </span>
 
           <h2 className="mt-6 text-5xl font-extrabold tracking-tight text-gray-900">
@@ -62,10 +64,9 @@ export default function FeaturedCaseStudy() {
             </h3>
 
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Every Geekyace project is designed with one goal:
-              helping businesses grow through modern technology,
-              intuitive user experiences and scalable digital
-              solutions.
+              This {isVerified ? "project" : "concept"} demonstrates how GeekyAce combines modern technology,
+              intuitive user experience, and scalable thinking around a
+              practical business scenario.
             </p>
 
             {/* Technologies */}
@@ -94,7 +95,7 @@ export default function FeaturedCaseStudy() {
                 </p>
 
                 <p className="mt-2 text-gray-600">
-                  Project Year
+                  {isVerified ? "Project Year" : "Concept Year"}
                 </p>
               </div>
 
@@ -104,7 +105,7 @@ export default function FeaturedCaseStudy() {
                 </p>
 
                 <p className="mt-2 text-gray-600">
-                  Development Time
+                  {isVerified ? "Development Time" : "Illustrative Scope"}
                 </p>
               </div>
             </div>
@@ -114,7 +115,7 @@ export default function FeaturedCaseStudy() {
               href={`/showcase/${featuredProject.slug}`}
               className="mt-10 inline-flex items-center rounded-xl bg-green-600 px-7 py-4 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-xl"
             >
-              View Full Case Study →
+              {isVerified ? "View Full Case Study" : "Explore Capability Study"} →
             </Link>
           </div>
         </div>

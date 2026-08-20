@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   ContactFormData,
@@ -28,6 +28,36 @@ export function useContactForm() {
   const [serverError, setServerError] =
     useState("");
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const brief = params.get("brief");
+    const service = params.get("service");
+    const studio = params.get("studio");
+    const intent = params.get("intent");
+    const platform = params.get("platform");
+    const channel = params.get("channel");
+
+    if (!brief && !service && !studio && !intent && !platform && !channel) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      setFormData((previous) => ({
+        ...previous,
+        service: service || "Multiple Services",
+        serviceSlug: service || previous.serviceSlug,
+        studioId: studio || previous.studioId,
+        source: brief ? "ACEMATCH" : platform ? "MARKETPLACE" : channel ? channel.toUpperCase() : "CONTACT",
+        message: brief || [
+          studio ? `I would like to discuss the ${studio} studio.` : "",
+          intent === "consultation" ? "I would like to request a project-fit consultation." : "",
+          platform ? `I would like to work through ${platform}.` : "",
+          channel ? `I would like to connect through ${channel}.` : "",
+        ].filter(Boolean).join("\n"),
+      }));
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
   function handleChange(
     event: React.ChangeEvent<
       HTMLInputElement |
@@ -36,10 +66,11 @@ export function useContactForm() {
     >
   ) {
     const { name, value } = event.target;
+    const nextValue = event.target instanceof HTMLInputElement && event.target.type === "checkbox" ? event.target.checked : value;
 
     setFormData((previous) => ({
       ...previous,
-      [name]: value,
+      [name]: nextValue,
     }));
 
     setErrors((previous) => ({

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
+import { checkRateLimit, isRequestBodyTooLarge, rateLimitHeaders } from "@/app/lib/request-security";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = "gemini-3.5-flash-lite";
@@ -105,6 +106,8 @@ SALES ASSISTANT RULES:
 
 29. Ask for the visitor's name and email only when it is appropriate and useful for follow-up.
 
+29a. Before saving any contact or project details, clearly ask whether the visitor agrees that GeekyAce may store those details so the team can follow up. Do not mark the lead ready unless the visitor explicitly agrees.
+
 30. Once the visitor's main project need is clear and enough information has been collected, end your response with the exact marker:
 
 [LEAD_READY]
@@ -126,7 +129,8 @@ The JSON must use this exact structure:
   "timeline": null,
   "budget": null,
   "recommendedService": null,
-  "conversationSummary": null
+  "conversationSummary": null,
+  "consent": false
 }
 [/LEAD_DATA]
 
@@ -136,9 +140,10 @@ Rules for LEAD_DATA:
 - Use null when information was not provided.
 - Keep the summary short and factual.
 - recommendedService must be one of the GeekyAce services listed above.
+- consent must be true only when the visitor explicitly agreed that GeekyAce may store the submitted details for follow-up.
 - Do not include extra fields.
 - Do not put markdown around the JSON.
-- The visitor must never be told that this data is being extracted internally.
+- Never expose the internal markers. Be transparent that agreed contact and project details will be stored for follow-up.
 
 Do NOT use [LEAD_READY] when:
 
@@ -147,6 +152,7 @@ Do NOT use [LEAD_READY] when:
 - You still need important information to understand the project.
 - You are asking a necessary follow-up question.
 - You do not yet have enough information to recommend a service.
+- The visitor has not explicitly agreed that GeekyAce may store their submitted details for follow-up.
 
 Use [LEAD_READY] when:
 
@@ -199,6 +205,7 @@ type LeadData = {
   budget?: string | null;
   recommendedService?: string | null;
   conversationSummary?: string | null;
+  consent?: boolean;
 };
 
 function cleanLeadValue(value: unknown): string | null {
@@ -246,6 +253,7 @@ function extractLeadData(reply: string): LeadData | null {
       conversationSummary: cleanLeadValue(
         parsed?.conversationSummary
       ),
+      consent: parsed?.consent === true,
     };
   } catch (error) {
     console.error("LEAD DATA JSON ERROR:", error);
@@ -262,6 +270,18 @@ function removeInternalMarkers(reply: string): string {
 
 export async function POST(request: Request) {
   try {
+    if (isRequestBodyTooLarge(request, 24 * 1024)) {
+      return NextResponse.json({ success: false, message: "Message is too large." }, { status: 413 });
+    }
+
+    const rateLimit = checkRateLimit(request, "ai", 20, 10 * 60 * 1000);
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { success: false, message: "The assistant has received too many requests. Please wait a moment and try again." },
+        { status: 429, headers: rateLimitHeaders(rateLimit) }
+      );
+    }
+
     if (!GEMINI_API_KEY) {
       return NextResponse.json(
         {
@@ -273,14 +293,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const body: RequestBody = await request.json();
+    const body = await request.json().catch(() => null) as RequestBody | null;
+
+    if (!body) {
+      return NextResponse.json({ success: false, message: "Invalid request body." }, { status: 400 });
+    }
 
     const message = String(body?.message || "").trim();
 
     const previousInteractionId =
       typeof body?.previousInteractionId === "string" &&
       body.previousInteractionId.trim().length > 0
-        ? body.previousInteractionId.trim()
+        ? body.previousInteractionId.trim().slice(0, 240)
         : undefined;
 
     if (!message) {
@@ -289,6 +313,13 @@ export async function POST(request: Request) {
           success: false,
           message: "Please enter a message.",
         },
+        { status: 400 }
+      );
+    }
+
+    if (message.length > 2_000) {
+      return NextResponse.json(
+        { success: false, message: "Please keep each message under 2,000 characters." },
         { status: 400 }
       );
     }
@@ -366,9 +397,12 @@ export async function POST(request: Request) {
       );
     }
 
-    const leadReady = reply.includes(
+    const leadMarkerPresent = reply.includes(
       "[LEAD_READY]"
     );
+
+    const leadData = leadMarkerPresent ? extractLeadData(reply) : null;
+    const leadReady = Boolean(leadMarkerPresent && leadData?.consent === true);
 
     let leadSaved = false;
     let leadId: string | null = null;
@@ -377,12 +411,9 @@ export async function POST(request: Request) {
      * Save qualified lead
      */
     if (leadReady) {
-      const leadData = extractLeadData(reply);
-
       if (leadData) {
         try {
-          const savedLead = await prisma.lead.create({
-            data: {
+          const aiLeadData = {
               name: leadData.name,
               email: leadData.email,
               businessName: leadData.businessName,
@@ -397,9 +428,11 @@ export async function POST(request: Request) {
                 leadData.recommendedService,
               conversationSummary:
                 leadData.conversationSummary,
+              source: "AI",
+              consent: true,
               status: "NEW",
-            },
-          });
+            };
+          const savedLead = await prisma.lead.create({ data: aiLeadData as unknown as Parameters<typeof prisma.lead.create>[0]["data"] });
 
           leadSaved = true;
           leadId = savedLead.id;

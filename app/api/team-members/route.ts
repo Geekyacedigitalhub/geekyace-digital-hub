@@ -1,22 +1,16 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
-import { mkdir, unlink, writeFile } from "fs/promises";
-import path from "path";
-import crypto from "crypto";
 import { cookies } from "next/headers";
+import {
+  deleteTeamImage,
+  TeamImageStorageError,
+  uploadTeamImage,
+} from "@/app/lib/team-image-storage";
 
 import {
   getAdminSessionCookieName,
   isAdminAuthenticated,
 } from "@/app/lib/admin-auth";
-
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
-
-const ALLOWED_IMAGE_TYPES = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-} as const;
 
 /**
  * Check whether the current request
@@ -49,48 +43,6 @@ function normalizeList(value: unknown): string {
 }
 
 /**
- * Validate the actual file signature instead
- * of trusting only the browser-provided MIME type.
- */
-function isValidImageSignature(
-  buffer: Buffer,
-  mimeType: string
-): boolean {
-  if (mimeType === "image/jpeg") {
-    return (
-      buffer.length >= 3 &&
-      buffer[0] === 0xff &&
-      buffer[1] === 0xd8 &&
-      buffer[2] === 0xff
-    );
-  }
-
-  if (mimeType === "image/png") {
-    return (
-      buffer.length >= 8 &&
-      buffer[0] === 0x89 &&
-      buffer[1] === 0x50 &&
-      buffer[2] === 0x4e &&
-      buffer[3] === 0x47 &&
-      buffer[4] === 0x0d &&
-      buffer[5] === 0x0a &&
-      buffer[6] === 0x1a &&
-      buffer[7] === 0x0a
-    );
-  }
-
-  if (mimeType === "image/webp") {
-    return (
-      buffer.length >= 12 &&
-      buffer.toString("ascii", 0, 4) === "RIFF" &&
-      buffer.toString("ascii", 8, 12) === "WEBP"
-    );
-  }
-
-  return false;
-}
-
-/**
  * GET
  *
  * Public team directory.
@@ -102,29 +54,22 @@ function isValidImageSignature(
  */
 export async function GET() {
   try {
-    const members = await prisma.teamMember.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const query = { where: { published: true }, orderBy: [{ featured: "desc" }, { createdAt: "desc" }] };
+    const members = await prisma.teamMember.findMany(query as unknown as Parameters<typeof prisma.teamMember.findMany>[0]);
 
     return NextResponse.json({
       success: true,
       members,
     });
   } catch (error) {
-    console.error(
-      "Get team members error:",
-      error
+    console.warn(
+      "Team database is temporarily unavailable:",
+      error instanceof Error ? error.message : error
     );
 
     return NextResponse.json(
-      {
-        error: "Unable to load team members.",
-      },
-      {
-        status: 500,
-      }
+      { success: false, members: [], error: "The team directory is temporarily unavailable." },
+      { status: 503 }
     );
   }
 }
@@ -137,7 +82,7 @@ export async function GET() {
  * Creates a new team member.
  */
 export async function POST(request: Request) {
-  let uploadedImagePath: string | null = null;
+  let uploadedImageUrl: string | null = null;
 
   try {
     /**
@@ -165,6 +110,14 @@ export async function POST(request: Request) {
 
     let name = "";
     let role = "";
+    let slug = "";
+    let headline = "";
+    let studioId = "";
+    let yearsExperience: number | null = null;
+    let languages = "";
+    let portfolioUrl = "";
+    let featured = false;
+    let published = true;
     let bio = "";
     let location = "";
     let availability = "Available";
@@ -194,6 +147,16 @@ export async function POST(request: Request) {
       role = String(
         formData.get("role") || ""
       ).trim();
+
+      slug = String(formData.get("slug") || "").trim().toLowerCase();
+      headline = String(formData.get("headline") || "").trim();
+      studioId = String(formData.get("studioId") || "").trim();
+      const experienceValue = Number(formData.get("yearsExperience"));
+      yearsExperience = Number.isFinite(experienceValue) && experienceValue > 0 ? Math.floor(experienceValue) : null;
+      languages = normalizeList(formData.get("languages"));
+      portfolioUrl = String(formData.get("portfolioUrl") || "").trim();
+      featured = String(formData.get("featured") || "").toLowerCase() === "true";
+      published = String(formData.get("published") || "true").toLowerCase() !== "false";
 
       bio = String(
         formData.get("bio") || ""
@@ -231,104 +194,16 @@ export async function POST(request: Request) {
         image instanceof File &&
         image.size > 0
       ) {
-        /**
-         * File size validation
-         */
-        if (image.size > MAX_IMAGE_SIZE) {
-          return NextResponse.json(
-            {
-              error:
-                "Profile image must be 5MB or smaller.",
-            },
-            {
-              status: 400,
-            }
-          );
+        try {
+          imageUrl = await uploadTeamImage(image);
+          uploadedImageUrl = imageUrl;
+        } catch (error) {
+          if (error instanceof TeamImageStorageError) {
+            return NextResponse.json({ error: error.message }, { status: error.status });
+          }
+
+          throw error;
         }
-
-        /**
-         * MIME type validation
-         */
-        const extension =
-          ALLOWED_IMAGE_TYPES[
-            image.type as keyof typeof ALLOWED_IMAGE_TYPES
-          ];
-
-        if (!extension) {
-          return NextResponse.json(
-            {
-              error:
-                "Only JPG, PNG, and WEBP images are allowed.",
-            },
-            {
-              status: 400,
-            }
-          );
-        }
-
-        /**
-         * Read file
-         */
-        const buffer = Buffer.from(
-          await image.arrayBuffer()
-        );
-
-        /**
-         * Verify actual file signature
-         */
-        if (
-          !isValidImageSignature(
-            buffer,
-            image.type
-          )
-        ) {
-          return NextResponse.json(
-            {
-              error:
-                "The uploaded file is not a valid image.",
-            },
-            {
-              status: 400,
-            }
-          );
-        }
-
-        /**
-         * Create upload directory
-         */
-        const uploadDirectory = path.join(
-          process.cwd(),
-          "public",
-          "uploads",
-          "team-members"
-        );
-
-        await mkdir(uploadDirectory, {
-          recursive: true,
-        });
-
-        /**
-         * Generate unique filename
-         */
-        const filename = `${crypto.randomUUID()}.${extension}`;
-
-        const filePath = path.join(
-          uploadDirectory,
-          filename
-        );
-
-        /**
-         * Save image
-         */
-        await writeFile(
-          filePath,
-          buffer
-        );
-
-        uploadedImagePath = filePath;
-
-        imageUrl =
-          `/uploads/team-members/${filename}`;
       }
     } else {
       /**
@@ -359,6 +234,16 @@ export async function POST(request: Request) {
       role = String(
         body.role || ""
       ).trim();
+
+      slug = String(body.slug || "").trim().toLowerCase();
+      headline = String(body.headline || "").trim();
+      studioId = String(body.studioId || "").trim();
+      const experienceValue = Number(body.yearsExperience);
+      yearsExperience = Number.isFinite(experienceValue) && experienceValue > 0 ? Math.floor(experienceValue) : null;
+      languages = normalizeList(body.languages);
+      portfolioUrl = String(body.portfolioUrl || "").trim();
+      featured = Boolean(body.featured);
+      published = body.published !== false;
 
       bio = String(
         body.bio || ""
@@ -415,9 +300,9 @@ export async function POST(request: Request) {
        * If an image was already uploaded but
        * validation failed afterward, remove it.
        */
-      if (uploadedImagePath) {
+      if (uploadedImageUrl) {
         try {
-          await unlink(uploadedImagePath);
+          await deleteTeamImage(uploadedImageUrl);
         } catch (cleanupError) {
           console.warn(
             "Unable to clean up uploaded image:",
@@ -442,11 +327,21 @@ export async function POST(request: Request) {
      * CREATE DATABASE RECORD
      * ==========================================
      */
-    const member =
-      await prisma.teamMember.create({
-        data: {
+    if (slug && !slug.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)) {
+      return NextResponse.json({ error: "Public profile slug must use lowercase letters, numbers, and hyphens." }, { status: 400 });
+    }
+
+    const memberData = {
           name,
           role,
+          slug: slug || null,
+          headline: headline || null,
+          studioId: studioId || null,
+          yearsExperience,
+          languages: languages || null,
+          portfolioUrl: portfolioUrl || null,
+          featured,
+          published,
           bio,
           location: location || null,
           availability:
@@ -455,8 +350,8 @@ export async function POST(request: Request) {
           expertise,
           platforms,
           imageUrl,
-        },
-      });
+        };
+    const member = await prisma.teamMember.create({ data: memberData as unknown as Parameters<typeof prisma.teamMember.create>[0]["data"] });
 
     /**
      * ==========================================
@@ -485,9 +380,9 @@ export async function POST(request: Request) {
      * image was uploaded, remove the orphaned
      * image file.
      */
-    if (uploadedImagePath) {
+    if (uploadedImageUrl) {
       try {
-        await unlink(uploadedImagePath);
+        await deleteTeamImage(uploadedImageUrl);
       } catch (cleanupError) {
         console.warn(
           "Unable to clean up uploaded image after error:",

@@ -268,7 +268,7 @@ export default function Team() {
                 </div>
 
                 <Link
-                  href="/dashboard/team-work-hub"
+                  href="/about#team"
                   className="inline-flex items-center gap-2 rounded-xl bg-green-600 px-5 py-3 text-sm font-bold text-white transition-all hover:bg-green-700 hover:shadow-lg"
                 >
                   Meet Our Team

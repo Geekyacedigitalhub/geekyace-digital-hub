@@ -28,10 +28,6 @@ const links = [
     name: "Contact",
     href: "/contact",
   },
-  {
-    name: "Dashboard",
-    href: "/dashboard/team-work-hub",
-  },
 ];
 
 export default function Navbar() {

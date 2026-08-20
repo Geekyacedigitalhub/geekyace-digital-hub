@@ -7,6 +7,7 @@ import {
 
 import { Project } from "@/app/types/project";
 import ProjectImage from "./ProjectImage";
+import { isVerifiedProject } from "@/app/lib/projectProof";
 
 interface ProjectCardProps {
   project: Project;
@@ -17,6 +18,7 @@ export default function ProjectCard({
   project,
   priority = false,
 }: ProjectCardProps) {
+  const isVerified = isVerifiedProject(project);
   const technologies = project.technologies.slice(0, 4);
   const remainingTechnologies =
     project.technologies.length - technologies.length;
@@ -27,7 +29,7 @@ export default function ProjectCard({
       <Link
         href={`/showcase/${project.slug}`}
         className="block"
-        aria-label={`View ${project.title} case study`}
+        aria-label={`View ${project.title} ${isVerified ? "case study" : "capability concept"}`}
       >
         <div className="relative h-64 overflow-hidden bg-slate-100 sm:h-72">
           <ProjectImage
@@ -41,6 +43,11 @@ export default function ProjectCard({
           <div className="absolute left-5 top-5">
             <span className="rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-slate-800 shadow-sm backdrop-blur">
               {project.category}
+            </span>
+          </div>
+          <div className="absolute right-5 top-5">
+            <span className={`rounded-full px-3 py-2 text-[0.65rem] font-black uppercase tracking-[0.12em] shadow-sm backdrop-blur ${isVerified ? "bg-green-500 text-white" : "border border-white/30 bg-slate-950/80 text-slate-100"}`}>
+              {isVerified ? "Verified work" : "Capability concept"}
             </span>
           </div>
         </div>
@@ -116,7 +123,7 @@ export default function ProjectCard({
             className="inline-flex shrink-0 items-center gap-2 font-semibold text-green-600 transition-all duration-300 hover:gap-3 hover:text-green-700"
           >
             <span className="hidden sm:inline">
-              View Case Study
+              {isVerified ? "View Case Study" : "Explore Concept"}
             </span>
 
             <span className="sm:hidden">

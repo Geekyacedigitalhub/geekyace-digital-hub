@@ -2,42 +2,43 @@
 
 import Button from "../Button";
 import Container from "../ui/Container";
+import { projects } from "@/app/data/projects";
 
 const categories = [
   {
     label: "Websites",
-    className: "bg-green-100 text-green-700",
+    className: "border border-green-400/20 bg-green-400/10 text-green-300",
   },
   {
     label: "Mobile Apps",
-    className: "bg-blue-100 text-blue-700",
+    className: "border border-white/10 bg-white/5 text-slate-300",
   },
   {
     label: "AI Solutions",
-    className: "bg-purple-100 text-purple-700",
+    className: "border border-green-400/20 bg-green-400/10 text-green-300",
   },
   {
     label: "Automation",
-    className: "bg-orange-100 text-orange-700",
+    className: "border border-white/10 bg-white/5 text-slate-300",
   },
   {
     label: "Branding",
-    className: "bg-pink-100 text-pink-700",
+    className: "border border-green-400/20 bg-green-400/10 text-green-300",
   },
   {
     label: "CAD",
-    className: "bg-cyan-100 text-cyan-700",
+    className: "border border-white/10 bg-white/5 text-slate-300",
   },
 ];
 
 const stats = [
   {
-    number: "50+",
-    label: "Projects",
+    number: String(projects.length),
+    label: "Capability Concepts",
   },
   {
-    number: "15+",
-    label: "Industries",
+    number: "15",
+    label: "Industry Scenarios",
   },
   {
     number: "20+",
@@ -51,15 +52,15 @@ const stats = [
 
 export default function ShowcaseHero() {
   return (
-    <section className="relative overflow-hidden bg-slate-50 py-20 sm:py-24 lg:py-28">
+    <section className="premium-noise relative overflow-hidden bg-[#07110c] py-24 text-white sm:py-28 lg:py-32">
       {/* Background Effects */}
       <div
-        className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-green-200/40 blur-3xl"
+        className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-500/20 blur-3xl"
         aria-hidden="true"
       />
 
       <div
-        className="pointer-events-none absolute bottom-0 right-0 h-80 w-80 translate-x-1/4 translate-y-1/4 rounded-full bg-emerald-100/50 blur-3xl"
+        className="pointer-events-none absolute bottom-0 right-0 h-80 w-80 translate-x-1/4 translate-y-1/4 rounded-full bg-emerald-400/10 blur-3xl"
         aria-hidden="true"
       />
 
@@ -67,23 +68,23 @@ export default function ShowcaseHero() {
         <div className="relative z-10 grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           {/* Left Content */}
           <div>
-            <span className="inline-flex rounded-full border border-green-200 bg-green-100 px-5 py-2 text-sm font-bold text-green-700">
-              Portfolio Showcase
+            <span className="inline-flex rounded-full border border-green-400/20 bg-green-400/10 px-5 py-2 text-xs font-black uppercase tracking-[0.18em] text-green-300">
+              Capability Showcase
             </span>
 
-            <h1 className="mt-7 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-7xl">
-              Digital Products
+            <h1 className="text-balance mt-7 text-5xl font-black leading-[1.02] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
+              Ideas Made
               <br />
               <span className="text-green-600">
-                That Create Results
+                Visible & Tangible
               </span>
             </h1>
 
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl sm:leading-9">
-              Explore our growing collection of websites, AI solutions,
-              mobile applications, automation systems, branding projects,
-              and other digital experiences designed to help businesses
-              innovate, scale, and succeed.
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl sm:leading-9">
+              Explore capability concepts across websites, AI, mobile,
+              automation, branding, and digital experiences. Concepts show
+              how we think and what we can build; verified client work is
+              identified separately when evidence is available.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -104,18 +105,18 @@ export default function ShowcaseHero() {
           {/* Right Content */}
           <div className="space-y-6">
             {/* Stats Card */}
-            <div className="rounded-[32px] border border-slate-200 bg-white p-7 shadow-xl sm:p-8">
+            <div className="glass-panel rounded-[2rem] p-7 sm:p-8">
               <div className="grid grid-cols-2 gap-6 sm:gap-8">
                 {stats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-2xl bg-slate-50 p-5 transition-all duration-300 hover:bg-green-50"
+                    className="rounded-2xl border border-white/10 bg-white/5 p-5 transition-all duration-300 hover:border-green-400/30 hover:bg-green-400/10"
                   >
                     <h2 className="text-4xl font-extrabold text-green-600 sm:text-5xl">
                       {stat.number}
                     </h2>
 
-                    <p className="mt-2 font-semibold text-slate-900">
+                    <p className="mt-2 font-semibold text-slate-300">
                       {stat.label}
                     </p>
                   </div>
@@ -124,13 +125,13 @@ export default function ShowcaseHero() {
             </div>
 
             {/* Categories Card */}
-            <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-lg sm:p-8">
+            <div className="glass-panel rounded-3xl p-7 sm:p-8">
               <div className="flex items-center justify-between gap-4">
-                <h2 className="text-lg font-bold text-slate-900">
+                <h2 className="text-lg font-bold text-white">
                   Project Categories
                 </h2>
 
-                <span className="text-sm font-medium text-slate-400">
+                <span className="text-sm font-medium text-green-400">
                   Explore
                 </span>
               </div>

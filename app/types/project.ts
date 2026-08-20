@@ -28,4 +28,6 @@ export interface Project {
   technologies: string[];
 
   liveUrl?: string;
+  proofStatus?: "verified" | "concept";
+  proofUrl?: string;
 }

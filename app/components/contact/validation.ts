@@ -6,6 +6,7 @@ export interface ValidationErrors {
   phone?: string;
   service?: string;
   message?: string;
+  consent?: string;
 }
 
 export function validateContactForm(
@@ -49,6 +50,8 @@ export function validateContactForm(
     errors.message =
       "Please provide a little more information about your project.";
   }
+
+  if (!data.consent) errors.consent = "Please confirm that we may use these details to respond.";
 
   return errors;
 }

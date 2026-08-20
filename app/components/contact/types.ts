@@ -8,6 +8,11 @@ export interface ContactFormData {
   timeline: string;
   contactMethod: string;
   message: string;
+  source: string;
+  serviceSlug: string;
+  studioId: string;
+  consent: boolean;
+  website: string;
 }
 
 export const initialFormData: ContactFormData = {
@@ -20,4 +25,9 @@ export const initialFormData: ContactFormData = {
   timeline: "",
   contactMethod: "",
   message: "",
+  source: "CONTACT",
+  serviceSlug: "",
+  studioId: "",
+  consent: false,
+  website: "",
 };

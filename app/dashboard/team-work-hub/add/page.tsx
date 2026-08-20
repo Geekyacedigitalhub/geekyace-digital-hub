@@ -11,10 +11,19 @@ import {
 } from "lucide-react";
 
 import Container from "@/app/components/ui/Container";
+import { studios } from "@/app/data/studios";
 
 export default function AddTeamMemberPage() {
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
+  const [slug, setSlug] = useState("");
+  const [headline, setHeadline] = useState("");
+  const [studioId, setStudioId] = useState("");
+  const [yearsExperience, setYearsExperience] = useState("");
+  const [languages, setLanguages] = useState("");
+  const [portfolioUrl, setPortfolioUrl] = useState("");
+  const [featured, setFeatured] = useState(false);
+  const [published, setPublished] = useState(true);
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
 
@@ -36,16 +45,20 @@ export default function AddTeamMemberPage() {
    * Create and clean up the local image preview.
    */
   useEffect(() => {
-    if (!image) {
-      setImagePreview("");
-      return;
-    }
+    let previewUrl = "";
+    const frame = window.requestAnimationFrame(() => {
+      if (!image) {
+        setImagePreview("");
+        return;
+      }
 
-    const previewUrl = URL.createObjectURL(image);
-    setImagePreview(previewUrl);
+      previewUrl = URL.createObjectURL(image);
+      setImagePreview(previewUrl);
+    });
 
     return () => {
-      URL.revokeObjectURL(previewUrl);
+      window.cancelAnimationFrame(frame);
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, [image]);
 
@@ -77,10 +90,10 @@ export default function AddTeamMemberPage() {
       return;
     }
 
-    const maxSize = 5 * 1024 * 1024;
+    const maxSize = 4 * 1024 * 1024;
 
     if (selectedFile.size > maxSize) {
-      setError("Profile image must be 5MB or smaller.");
+      setError("Profile image must be 4MB or smaller.");
 
       event.target.value = "";
       setImage(null);
@@ -115,6 +128,14 @@ export default function AddTeamMemberPage() {
 
       formData.append("name", name.trim());
       formData.append("role", role.trim());
+      formData.append("slug", slug.trim().toLowerCase());
+      formData.append("headline", headline.trim());
+      formData.append("studioId", studioId);
+      formData.append("yearsExperience", yearsExperience);
+      formData.append("languages", languages.trim());
+      formData.append("portfolioUrl", portfolioUrl.trim());
+      formData.append("featured", String(featured));
+      formData.append("published", String(published));
       formData.append("bio", bio.trim());
       formData.append("location", location.trim());
       formData.append("availability", availability);
@@ -167,6 +188,14 @@ export default function AddTeamMemberPage() {
 
       setName("");
       setRole("");
+      setSlug("");
+      setHeadline("");
+      setStudioId("");
+      setYearsExperience("");
+      setLanguages("");
+      setPortfolioUrl("");
+      setFeatured(false);
+      setPublished(true);
       setBio("");
       setLocation("");
       setAvailability("Available");
@@ -256,7 +285,7 @@ export default function AddTeamMemberPage() {
 
               <p className="mt-2 text-sm text-slate-500">
                 Upload a professional profile photo. JPG, PNG,
-                and WEBP are supported. Maximum size: 5MB.
+                and WEBP are supported. Maximum size: 4MB.
               </p>
 
               <div className="mt-6 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
@@ -429,6 +458,20 @@ export default function AddTeamMemberPage() {
                 </div>
 
               </div>
+            </section>
+
+            <section className="rounded-2xl border border-green-100 bg-green-50/50 p-6">
+              <h2 className="text-2xl font-bold text-slate-900">Public Expert Profile</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-600">These fields power the richer buyer-facing expert profile and its readiness score.</p>
+              <div className="mt-6 grid gap-6 md:grid-cols-2">
+                <div><label htmlFor="slug" className="mb-2 block text-sm font-semibold text-slate-700">Public profile slug</label><input id="slug" value={slug} onChange={(event) => setSlug(event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "-"))} placeholder="john-doe" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20" /></div>
+                <div><label htmlFor="studioId" className="mb-2 block text-sm font-semibold text-slate-700">Primary studio</label><select id="studioId" value={studioId} onChange={(event) => setStudioId(event.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-green-500"><option value="">Select studio</option>{studios.map((studio) => <option key={studio.id} value={studio.id}>{studio.name}</option>)}</select></div>
+                <div className="md:col-span-2"><label htmlFor="headline" className="mb-2 block text-sm font-semibold text-slate-700">Buyer-focused headline</label><input id="headline" value={headline} onChange={(event) => setHeadline(event.target.value)} placeholder="What this expert helps buyers achieve" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20" /></div>
+                <div><label htmlFor="yearsExperience" className="mb-2 block text-sm font-semibold text-slate-700">Years of relevant experience</label><input id="yearsExperience" type="number" min="1" max="60" value={yearsExperience} onChange={(event) => setYearsExperience(event.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500" /></div>
+                <div><label htmlFor="languages" className="mb-2 block text-sm font-semibold text-slate-700">Working languages</label><input id="languages" value={languages} onChange={(event) => setLanguages(event.target.value)} placeholder="English, French" className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500" /></div>
+                <div className="md:col-span-2"><label htmlFor="portfolioUrl" className="mb-2 block text-sm font-semibold text-slate-700">Public portfolio URL</label><input id="portfolioUrl" type="url" value={portfolioUrl} onChange={(event) => setPortfolioUrl(event.target.value)} placeholder="https://..." className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-green-500" /></div>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-5 text-sm font-semibold text-slate-700"><label className="flex items-center gap-2"><input type="checkbox" checked={featured} onChange={(event) => setFeatured(event.target.checked)} className="h-4 w-4 accent-green-600" />Feature this expert</label><label className="flex items-center gap-2"><input type="checkbox" checked={published} onChange={(event) => setPublished(event.target.checked)} className="h-4 w-4 accent-green-600" />Publish in the public directory</label></div>
             </section>
 
             {/* Bio */}

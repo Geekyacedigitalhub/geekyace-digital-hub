@@ -1,0 +1,31 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { Activity, ArrowUpRight, BarChart3, CheckCircle2, CircleDollarSign, Compass, Sparkles, Target } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { previewGrowthLeads } from "@/app/data/v32GrowthOS";
+
+type AnalyticsLead = { source: string; status: string; service: string; valueBand: string };
+const preview: AnalyticsLead[] = previewGrowthLeads.map((lead) => ({ source: lead.source, status: lead.status, service: lead.service, valueBand: lead.valueBand }));
+
+export default function GrowthAnalytics() {
+  const [leads, setLeads] = useState<AnalyticsLead[]>(preview);
+  const [mode, setMode] = useState<"loading" | "live" | "preview">("loading");
+
+  useEffect(() => { void (async () => { try { const response = await fetch("/api/leads", { cache: "no-store" }); const data = await response.json(); if (!response.ok || !Array.isArray(data.leads) || data.leads.length === 0) throw new Error("Preview"); setLeads(data.leads.map((lead: Record<string, unknown>) => ({ source: String(lead.source || "CONTACT"), status: String(lead.status || "NEW"), service: String(lead.recommendedService || lead.projectType || "Unassigned"), valueBand: String(lead.budget || "Not set") }))); setMode("live"); } catch { setLeads(preview); setMode("preview"); } })(); }, []);
+
+  const analytics = useMemo(() => {
+    const countBy = (key: "source" | "status" | "service") => leads.reduce<Record<string, number>>((acc, lead) => { acc[lead[key]] = (acc[lead[key]] || 0) + 1; return acc; }, {});
+    const qualified = leads.filter((lead) => ["QUALIFIED", "PROPOSAL", "WON"].includes(lead.status)).length;
+    const proposals = leads.filter((lead) => ["PROPOSAL", "WON"].includes(lead.status)).length;
+    const won = leads.filter((lead) => lead.status === "WON").length;
+    return { sources: countBy("source"), statuses: countBy("status"), services: countBy("service"), qualified, proposals, won };
+  }, [leads]);
+  const maxSource = Math.max(1, ...Object.values(analytics.sources));
+  const metricCards: { label: string; value: number; icon: LucideIcon }[] = [{ label: "Total opportunities", value: leads.length, icon: Activity }, { label: "Qualified or later", value: analytics.qualified, icon: Target }, { label: "Proposal stage or later", value: analytics.proposals, icon: CircleDollarSign }, { label: "Won", value: analytics.won, icon: CheckCircle2 }];
+
+  return <div className="mx-auto max-w-[1440px] px-5 py-10 sm:px-7 lg:px-10"><div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><span className="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-4 py-2 text-xs font-black uppercase tracking-[.16em] text-green-800"><BarChart3 className="h-4 w-4" />Attribution and conversion</span><h1 className="mt-5 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Know which journeys create serious conversations.</h1><p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">Measure enquiry sources and pipeline movement without pretending page views are business outcomes.</p></div><div className={`rounded-2xl border px-4 py-3 text-sm font-bold ${mode === "live" ? "border-green-200 bg-green-50 text-green-800" : "border-amber-200 bg-amber-50 text-amber-900"}`}>{mode === "loading" ? "Checking live data…" : mode === "live" ? "Live lead attribution" : "Clearly labeled preview data"}</div></div>
+    <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">{metricCards.map(({ label, value, icon: Icon }) => <article key={label} className="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-sm"><Icon className="h-6 w-6 text-green-700" /><p className="mt-6 text-4xl font-black text-slate-950">{value}</p><p className="mt-2 text-sm font-bold text-slate-500">{label}</p></article>)}</div>
+    <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_.9fr]"><section className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8"><div className="flex items-center justify-between"><div><p className="text-xs font-black uppercase tracking-[.14em] text-green-700">Source mix</p><h2 className="mt-2 text-2xl font-black text-slate-950">Where enquiries begin</h2></div><Compass className="h-7 w-7 text-slate-300" /></div><div className="mt-8 space-y-5">{Object.entries(analytics.sources).sort((a,b) => b[1]-a[1]).map(([source, count]) => <div key={source}><div className="flex items-center justify-between text-sm font-black"><span className="text-slate-700">{source}</span><span className="text-slate-950">{count}</span></div><div className="mt-2 h-3 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-green-600" style={{ width: `${Math.max(12, (count / maxSource) * 100)}%` }} /></div></div>)}</div></section><section className="rounded-[1.75rem] bg-[#07110c] p-6 text-white sm:p-8"><p className="text-xs font-black uppercase tracking-[.14em] text-green-400">Decision dashboard</p><h2 className="mt-2 text-2xl font-black">What to act on next</h2><div className="mt-7 space-y-4">{Object.entries(analytics.services).sort((a,b) => b[1]-a[1]).slice(0,4).map(([service, count]) => <div key={service} className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-4"><div><p className="font-black text-white">{service}</p><p className="mt-1 text-xs text-slate-400">Buyer interest</p></div><span className="grid h-10 w-10 place-items-center rounded-full bg-green-400 font-black text-slate-950">{count}</span></div>)}</div><a href="/dashboard/crm" className="mt-7 inline-flex items-center gap-2 font-black text-green-300">Open the pipeline <ArrowUpRight className="h-4 w-4" /></a></section></div>
+    <section className="mt-8 rounded-[1.75rem] border border-green-200 bg-green-50 p-6 sm:p-8"><div className="flex gap-4"><Sparkles className="mt-1 h-6 w-6 shrink-0 text-green-700" /><div><h2 className="text-xl font-black text-slate-950">Measurement standard</h2><p className="mt-2 max-w-4xl leading-7 text-slate-600">These figures describe submitted enquiries and pipeline status—not revenue attribution or advertising return. Add consent-aware web analytics and campaign identifiers during the deployment phase before drawing channel-performance conclusions.</p></div></div></section></div>;
+}

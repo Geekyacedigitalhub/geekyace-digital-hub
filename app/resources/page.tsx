@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -15,6 +16,11 @@ import {
 
 import Container from "../components/ui/Container";
 
+export const metadata: Metadata = {
+  title: "Digital Project Resources",
+  description: "Use GeekyAce planning tools, checklists, and practical guides to make clearer decisions about websites, AI, automation, and digital growth.",
+};
+
 const resources = [
   {
     icon: ClipboardCheck,
@@ -26,7 +32,7 @@ const resources = [
       "Prepare your content and branding",
       "Choose the right features",
     ],
-    href: "/contact",
+    href: "/project-planner",
     cta: "Plan My Website",
   },
   {
@@ -52,7 +58,7 @@ const resources = [
       "Check forms and navigation",
       "Review SEO and performance",
     ],
-    href: "/contact",
+    href: "/project-planner",
     cta: "Get Launch Support",
   },
   {
@@ -91,8 +97,8 @@ const resources = [
       "Prioritize important features",
       "Prepare for development",
     ],
-    href: "/contact",
-    cta: "Discuss My Project",
+    href: "/project-planner",
+    cta: "Build My Project Brief",
   },
 ];
 
@@ -121,32 +127,33 @@ export default function ResourcesPage() {
   return (
     <main className="min-h-screen bg-slate-50">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-white py-24 sm:py-28 lg:py-32">
+      <section className="premium-noise relative overflow-hidden bg-[#07110c] py-24 text-white sm:py-28 lg:py-32">
+        <div aria-hidden="true" className="premium-grid absolute inset-0 opacity-70" />
         <div
           aria-hidden="true"
-          className="absolute -left-40 top-0 h-96 w-96 rounded-full bg-green-100/60 blur-3xl"
+          className="absolute -left-40 top-0 h-96 w-96 rounded-full bg-green-500/15 blur-3xl"
         />
 
         <div
           aria-hidden="true"
-          className="absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-green-50 blur-3xl"
+          className="absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-green-400/10 blur-3xl"
         />
 
         <Container>
           <div className="relative mx-auto max-w-4xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-5 py-2 text-sm font-bold text-green-700">
+            <span className="inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-400/10 px-5 py-2 text-xs font-black uppercase tracking-[0.18em] text-green-300">
               <BookOpen className="h-4 w-4" />
               GeekyAce Digital Toolkit
             </span>
 
-            <h1 className="mt-7 text-5xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+            <h1 className="text-balance mt-7 text-5xl font-black leading-[1.02] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
               Useful Resources.
               <span className="block text-green-600">
                 Better Digital Decisions.
               </span>
             </h1>
 
-            <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl">
+            <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">
               Practical guides and checklists to help entrepreneurs,
               startups, and businesses understand technology, plan
               digital projects, and make smarter decisions.
@@ -154,16 +161,16 @@ export default function ResourcesPage() {
 
             <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-7 py-4 font-bold text-white transition hover:-translate-y-1 hover:bg-green-500 hover:shadow-xl"
+                href="/project-planner"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-green-500 px-7 py-4 font-black text-slate-950 transition hover:-translate-y-1 hover:bg-green-400 hover:shadow-xl"
               >
-                Discuss Your Project
+                Try Project Planner
                 <ArrowRight className="h-5 w-5" />
               </Link>
 
               <Link
                 href="/services"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-7 py-4 font-bold text-slate-700 transition hover:border-green-300 hover:bg-green-50 hover:text-green-700"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 py-4 font-black text-white transition hover:border-green-300 hover:bg-white/10 hover:text-green-300"
               >
                 Explore Services
               </Link>
@@ -176,9 +183,7 @@ export default function ResourcesPage() {
       <section className="py-20 sm:py-24 lg:py-28">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
-            <span className="text-sm font-bold uppercase tracking-[0.2em] text-green-600">
-              Free Knowledge
-            </span>
+            <span className="brand-eyebrow">Free Knowledge</span>
 
             <h2 className="mt-4 text-3xl font-extrabold text-slate-900 sm:text-4xl">
               Resources Built Around Real Digital Projects
@@ -199,7 +204,7 @@ export default function ResourcesPage() {
               return (
                 <article
                   key={resource.title}
-                  className="group flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-green-400 hover:shadow-xl"
+                  className="premium-card group flex h-full flex-col rounded-[2rem] p-8 transition-all duration-500 hover:-translate-y-2 hover:border-green-400"
                 >
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-100 text-green-700 transition-all duration-300 group-hover:bg-green-600 group-hover:text-white">
                     <Icon className="h-7 w-7" />

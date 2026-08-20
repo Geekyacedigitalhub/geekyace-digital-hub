@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   Bot,
@@ -8,11 +9,48 @@ import {
   LogOut,
   Plus,
   Settings,
+  Inbox,
   Users,
+  BarChart3,
+  BookOpenCheck,
+  KanbanSquare,
+  MonitorCheck,
 } from "lucide-react";
 import { useState } from "react";
 
 const dashboardItems = [
+  {
+    title: "Growth CRM",
+    description:
+      "Manage AceMatch, booking, proposal, and contact enquiries in one source-aware pipeline.",
+    href: "/dashboard/crm",
+    icon: KanbanSquare,
+    action: "Open Growth CRM",
+  },
+  {
+    title: "Growth Analytics",
+    description:
+      "Measure enquiry sources and pipeline movement without confusing traffic with revenue.",
+    href: "/dashboard/analytics",
+    icon: BarChart3,
+    action: "Open Analytics",
+  },
+  {
+    title: "Case Study CMS",
+    description:
+      "Control proof labels, readiness checks, publication status, and evidence notes.",
+    href: "/dashboard/case-studies",
+    icon: BookOpenCheck,
+    action: "Manage Case Studies",
+  },
+  {
+    title: "Lead Workspace",
+    description:
+      "Review buyer enquiries and move qualified opportunities through your sales pipeline.",
+    href: "/dashboard/leads",
+    icon: Inbox,
+    action: "Open Lead Workspace",
+  },
   {
     title: "Team Work Hub",
     description:
@@ -37,9 +75,18 @@ const dashboardItems = [
     icon: Globe,
     action: "View Website",
   },
+  {
+    title: "Client Workspace Preview",
+    description:
+      "Review the client-facing experience for milestones, files, approvals, and project feedback.",
+    href: "/client-portal",
+    icon: MonitorCheck,
+    action: "Preview Client Workspace",
+  },
 ];
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
 
   async function handleLogout() {
@@ -64,7 +111,8 @@ export default function DashboardPage() {
         throw new Error(data?.error || "Unable to log out.");
       }
 
-      window.location.href = "/admin/login";
+      router.replace("/admin/login");
+      router.refresh();
     } catch (error) {
       console.error("Admin logout error:", error);
 
@@ -137,9 +185,8 @@ export default function DashboardPage() {
           </h1>
 
           <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">
-            Manage your GeekyAce Digital Hub workspace,
-            team members, AI assistant, and website from
-            one place.
+            Manage buyer enquiries, proof, experts, project delivery,
+            analytics, and the public website from one workspace.
           </p>
         </section>
 

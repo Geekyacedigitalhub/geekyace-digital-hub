@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -42,8 +43,15 @@ import {
   FaMedium,
   FaSnapchatGhost,
 } from "react-icons/fa";
-
 import { FaXTwitter, FaThreads } from "react-icons/fa6";
+
+import PublicTeamRoster from "@/app/components/about/PublicTeamRoster";
+import { publicLinks } from "@/app/lib/publicLinks";
+
+export const metadata: Metadata = {
+  title: "About GeekyAce",
+  description: "Learn how GeekyAce Digital Hub combines specialist expertise, coordinated delivery, and practical technology around business goals.",
+};
 
 const values = [
   {
@@ -78,27 +86,27 @@ const values = [
 
 const experienceStats = [
   {
-    value: "15+",
-    label: "Digital Services",
-    description: "Technology and creative solutions",
+    value: "5",
+    label: "Expert Studios",
+    description: "Coordinated around each brief",
     icon: Layers3,
   },
   {
-    value: "5+",
-    label: "Core Areas",
-    description: "Development, AI, automation and more",
+    value: "Multi-skill",
+    label: "Squad Model",
+    description: "Specialists selected for the outcome",
     icon: Cpu,
   },
   {
-    value: "Worldwide",
-    label: "Digital Reach",
-    description: "Built for clients and businesses anywhere",
+    value: "Global-ready",
+    label: "Digital Delivery",
+    description: "Remote collaboration across time zones",
     icon: Globe2,
   },
   {
-    value: "100%",
-    label: "Client Focus",
-    description: "Solutions designed around real goals",
+    value: "Clear",
+    label: "Handover",
+    description: "Ownership and next steps documented",
     icon: Target,
   },
 ];
@@ -283,14 +291,14 @@ const socialPlatforms = [
     category: "Messaging",
     description:
       "Chat directly with GeekyAce Digital Hub about your project or service.",
-    url: "https://wa.me/YOUR_PHONE_NUMBER",
+    url: publicLinks.whatsapp,
     icon: FaWhatsapp,
   },
   {
     name: "Discord",
     category: "Community",
     description: "Connect with our digital and technology community.",
-    url: "https://discord.gg/YOUR_INVITE",
+    url: publicLinks.discord,
     icon: FaDiscord,
   },
   {
@@ -339,6 +347,10 @@ const socialPlatforms = [
   },
 ];
 
+const configuredSocialPlatforms = socialPlatforms.filter(
+  (platform) => platform.url.startsWith("https://") && !platform.url.includes("YOUR_")
+);
+
 /* =========================================================
    FREELANCING & PROFESSIONAL MARKETPLACES
    ========================================================= */
@@ -348,14 +360,14 @@ const freelancingPlatforms = [
     name: "Fiverr",
     description:
       "Hire GeekyAce Digital Hub for websites, AI, automation, design, and digital services.",
-    url: "https://fiverr.com/YOUR_USERNAME",
+    url: publicLinks.fiverr,
     short: "fi",
   },
   {
     name: "Upwork",
     description:
       "Work with us on professional technology, development, AI, and digital projects.",
-    url: "https://upwork.com/freelancers/YOUR_USERNAME",
+    url: publicLinks.upwork,
     short: "up",
   },
   {
@@ -465,47 +477,123 @@ const freelancingPlatforms = [
   },
 ];
 
+const marketplaceDirectoryUrls = new Set([
+  "https://linkedin.com/services",
+  "https://www.toptal.com",
+  "https://codeable.io",
+  "https://gun.io",
+  "https://arc.dev",
+]);
+
+function hasLiveMarketplaceProfile(url: string) {
+  return url.startsWith("https://") && !url.includes("YOUR_") && !marketplaceDirectoryUrls.has(url);
+}
+
+const networkTones = [
+  {
+    card: "hover:border-sky-300/45 hover:shadow-[0_26px_80px_-42px_rgba(56,189,248,0.9)]",
+    icon: "bg-sky-400/10 text-sky-300 ring-sky-300/20 group-hover:bg-sky-300 group-hover:text-slate-950",
+    wash: "from-sky-400/20 via-sky-400/[0.03] to-transparent",
+  },
+  {
+    card: "hover:border-fuchsia-300/45 hover:shadow-[0_26px_80px_-42px_rgba(232,121,249,0.85)]",
+    icon: "bg-fuchsia-400/10 text-fuchsia-300 ring-fuchsia-300/20 group-hover:bg-fuchsia-300 group-hover:text-slate-950",
+    wash: "from-fuchsia-400/20 via-fuchsia-400/[0.03] to-transparent",
+  },
+  {
+    card: "hover:border-amber-300/45 hover:shadow-[0_26px_80px_-42px_rgba(252,211,77,0.8)]",
+    icon: "bg-amber-400/10 text-amber-300 ring-amber-300/20 group-hover:bg-amber-300 group-hover:text-slate-950",
+    wash: "from-amber-400/20 via-amber-400/[0.03] to-transparent",
+  },
+  {
+    card: "hover:border-emerald-300/45 hover:shadow-[0_26px_80px_-42px_rgba(52,211,153,0.85)]",
+    icon: "bg-emerald-400/10 text-emerald-300 ring-emerald-300/20 group-hover:bg-emerald-300 group-hover:text-slate-950",
+    wash: "from-emerald-400/20 via-emerald-400/[0.03] to-transparent",
+  },
+];
+
+const orbitPositions = [
+  "left-1/2 top-3 -translate-x-1/2",
+  "right-3 top-1/2 -translate-y-1/2",
+  "bottom-3 left-1/2 -translate-x-1/2",
+  "left-3 top-1/2 -translate-y-1/2",
+];
+
+const engagementPaths = [
+  {
+    label: "Direct studio partnership",
+    title: "Build something ambitious with our full team.",
+    description:
+      "The clearest route for complete websites, digital products, AI solutions, automation systems, and transformation projects.",
+    bestFor: "Products, platforms & transformations",
+    cta: "Plan a project",
+    href: "/project-planner",
+    icon: Rocket,
+  },
+  {
+    label: "Marketplace contract",
+    title: "Work through a platform you already trust.",
+    description:
+      "Choose a familiar freelance marketplace for defined deliverables, protected milestones, and platform-managed contracts.",
+    bestFor: "Focused tasks & fixed milestones",
+    cta: "Choose a platform",
+    href: "#marketplace-directory",
+    icon: BriefcaseBusiness,
+  },
+  {
+    label: "Ongoing collaboration",
+    title: "Keep a capable digital team within reach.",
+    description:
+      "Create an ongoing partnership for continuous improvements, technical support, creative production, and growth experiments.",
+    bestFor: "Retainers & continuous support",
+    cta: "Discuss a partnership",
+    href: "/contact",
+    icon: Workflow,
+  },
+];
+
 /* =========================================================
    PAGE
    ========================================================= */
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-slate-50 text-slate-900">
+    <main className="flex min-h-screen flex-col overflow-hidden bg-slate-50 text-slate-900">
       {/* =========================================================
           HERO
       ========================================================= */}
-      <section className="relative overflow-hidden bg-white py-24 sm:py-28 lg:py-32">
+      <section className="premium-noise relative order-[-20] overflow-hidden bg-[#07110c] py-24 text-white sm:py-28 lg:py-32">
+        <div aria-hidden="true" className="premium-grid absolute inset-0 opacity-70" />
         <div
           aria-hidden="true"
-          className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-green-100/60 blur-3xl"
+          className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-green-500/15 blur-3xl"
         />
 
         <div
           aria-hidden="true"
-          className="absolute -right-40 bottom-0 h-[30rem] w-[30rem] rounded-full bg-emerald-100/50 blur-3xl"
+          className="absolute -right-40 bottom-0 h-[30rem] w-[30rem] rounded-full bg-emerald-400/10 blur-3xl"
         />
 
         <div
           aria-hidden="true"
-          className="absolute left-1/2 top-20 h-40 w-40 -translate-x-1/2 rounded-full bg-green-50 blur-3xl"
+          className="absolute left-1/2 top-20 h-40 w-40 -translate-x-1/2 rounded-full bg-green-300/10 blur-3xl"
         />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-5 py-2 text-sm font-bold text-green-700">
+            <span className="inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-400/10 px-5 py-2 text-xs font-black uppercase tracking-[0.18em] text-green-300">
               <Sparkles className="h-4 w-4" />
               About GeekyAce Digital Hub
             </span>
 
-            <h1 className="mt-7 text-5xl font-black leading-[1.05] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
+            <h1 className="text-balance mt-7 text-5xl font-black leading-[1.02] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
               We Build Digital Solutions
               <span className="block text-green-600">
                 That Move Businesses Forward
               </span>
             </h1>
 
-            <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl">
+            <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">
               GeekyAce Digital Hub is a technology and digital solutions
               agency focused on helping individuals, entrepreneurs, startups,
               and businesses turn ideas into useful, professional, and
@@ -515,7 +603,7 @@ export default function AboutPage() {
             <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-7 py-4 font-bold text-white shadow-lg shadow-green-600/20 transition hover:-translate-y-1 hover:bg-green-500 hover:shadow-xl"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-green-500 px-7 py-4 font-black text-slate-950 shadow-lg shadow-green-500/20 transition hover:-translate-y-1 hover:bg-green-400 hover:shadow-xl"
               >
                 Start a Conversation
                 <ArrowRight className="h-5 w-5" />
@@ -523,7 +611,7 @@ export default function AboutPage() {
 
               <Link
                 href="/services"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-7 py-4 font-bold text-slate-800 transition hover:-translate-y-1 hover:border-green-300 hover:text-green-700"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 py-4 font-black text-white transition hover:-translate-y-1 hover:border-green-300 hover:bg-white/10"
               >
                 Explore Our Services
                 <ArrowUpRight className="h-5 w-5" />
@@ -532,32 +620,32 @@ export default function AboutPage() {
           </div>
 
           <div className="mx-auto mt-16 grid max-w-5xl gap-5 sm:grid-cols-3">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+            <div className="glass-panel rounded-2xl p-6 text-center">
               <Code2 className="mx-auto h-6 w-6 text-green-600" />
-              <p className="mt-3 font-bold text-slate-900">
+              <p className="mt-3 font-bold text-white">
                 Technology
               </p>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-slate-400">
                 Built around real business needs
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+            <div className="glass-panel rounded-2xl p-6 text-center">
               <Target className="mx-auto h-6 w-6 text-green-600" />
-              <p className="mt-3 font-bold text-slate-900">
+              <p className="mt-3 font-bold text-white">
                 Purpose
               </p>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-slate-400">
                 Every solution has a clear goal
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+            <div className="glass-panel rounded-2xl p-6 text-center">
               <Rocket className="mx-auto h-6 w-6 text-green-600" />
-              <p className="mt-3 font-bold text-slate-900">
+              <p className="mt-3 font-bold text-white">
                 Growth
               </p>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-slate-400">
                 Technology designed to move you forward
               </p>
             </div>
@@ -1122,87 +1210,221 @@ export default function AboutPage() {
       {/* =========================================================
           SOCIAL MEDIA & FREELANCING PLATFORMS
       ========================================================= */}
-      <section className="relative overflow-hidden bg-slate-950 py-20 sm:py-24 lg:py-28">
+      <section className="relative isolate overflow-hidden bg-[#02060f] py-20 text-white sm:py-24 lg:py-32">
+        <div aria-hidden="true" className="premium-grid absolute inset-0 opacity-30" />
         <div
           aria-hidden="true"
-          className="absolute -left-40 top-20 h-96 w-96 rounded-full bg-green-600/20 blur-3xl"
+          className="absolute left-[-14rem] top-[-8rem] h-[34rem] w-[34rem] rounded-full bg-cyan-500/10 blur-[110px]"
         />
-
         <div
           aria-hidden="true"
-          className="absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl"
+          className="absolute right-[-12rem] top-[14rem] h-[32rem] w-[32rem] rounded-full bg-fuchsia-500/10 blur-[120px]"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute bottom-[-14rem] left-1/3 h-[34rem] w-[34rem] rounded-full bg-emerald-500/10 blur-[120px]"
         />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex rounded-full border border-green-400/30 bg-green-500/10 px-4 py-2 text-sm font-bold text-green-400">
-              Connect With GeekyAce
-            </span>
+          <div className="grid items-center gap-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-emerald-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full motion-safe:animate-ping rounded-full bg-emerald-300 opacity-70" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
+                </span>
+                GeekyAce, everywhere
+              </span>
 
-            <h2 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl">
-              Find Us Across the Digital World
-            </h2>
+              <h2 className="mt-7 max-w-4xl text-4xl font-black leading-[0.96] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
+                One studio. Every digital{" "}
+                <span className="bg-gradient-to-r from-emerald-300 via-cyan-300 to-fuchsia-300 bg-clip-text text-transparent">
+                  touchpoint.
+                </span>
+              </h2>
 
-            <p className="mt-5 text-lg leading-8 text-slate-300">
-              Follow GeekyAce Digital Hub, explore our work, connect with our
-              team, or hire us through our professional platforms.
-            </p>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+                Follow the work, join the conversation, or begin a project.
+                GeekyAce brings strategy, creativity, and technology together
+                across the platforms where modern business moves.
+              </p>
+
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/project-planner"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-emerald-400 px-6 py-3.5 text-sm font-black text-slate-950 shadow-[0_18px_50px_-18px_rgba(52,211,153,0.95)] transition duration-300 hover:-translate-y-0.5 hover:bg-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                >
+                  Start a project
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+                <Link
+                  href="/showcase"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 text-sm font-bold text-white transition duration-300 hover:border-white/30 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                >
+                  Explore our work
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+
+              <div className="mt-10 grid max-w-2xl grid-cols-3 border-y border-white/10 py-5">
+                {[
+                  { value: String(configuredSocialPlatforms.length), label: "Live channels" },
+                  { value: String(engagementPaths.length), label: "Ways to engage" },
+                  { value: "Global", label: "Reach" },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="border-white/10 px-3 first:pl-0 [&:not(:first-child)]:border-l sm:px-6"
+                  >
+                    <p className="text-xl font-black text-white sm:text-2xl">
+                      {stat.value}
+                    </p>
+                    <p className="mt-1 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-slate-500 sm:text-xs">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative mx-auto w-full max-w-[32rem]">
+              <div className="absolute -inset-8 rounded-full bg-gradient-to-br from-cyan-400/10 via-transparent to-fuchsia-400/10 blur-3xl" />
+              <div className="relative overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/[0.055] p-5 shadow-[0_40px_120px_-45px_rgba(0,0,0,0.95)] backdrop-blur-xl sm:p-7">
+                <div className="flex items-center justify-between border-b border-white/10 pb-5">
+                  <div>
+                    <p className="text-[0.65rem] font-black uppercase tracking-[0.22em] text-slate-500">
+                      Digital presence
+                    </p>
+                    <p className="mt-1 font-extrabold text-white">
+                      The GeekyAce network
+                    </p>
+                  </div>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-400/10 px-3 py-1.5 text-[0.65rem] font-black uppercase tracking-[0.16em] text-emerald-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
+                    Live
+                  </span>
+                </div>
+
+                <div className="relative mx-auto my-7 aspect-square max-w-[22rem]">
+                  <div aria-hidden="true" className="absolute inset-2 rounded-full border border-white/[0.06]" />
+                  <div aria-hidden="true" className="absolute inset-11 rounded-full border border-dashed border-white/15 motion-safe:animate-[spin_24s_linear_infinite]" />
+                  <div aria-hidden="true" className="absolute inset-[5.5rem] rounded-full border border-emerald-300/15 shadow-[0_0_60px_rgba(52,211,153,0.12)]" />
+
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex h-28 w-28 flex-col items-center justify-center rounded-full border border-emerald-300/25 bg-[#06120e] shadow-[0_0_70px_rgba(52,211,153,0.18)]">
+                      <Globe2 className="h-7 w-7 text-emerald-300" />
+                      <span className="mt-2 text-2xl font-black text-white">
+                        {configuredSocialPlatforms.length}
+                      </span>
+                      <span className="text-[0.58rem] font-black uppercase tracking-[0.2em] text-slate-500">
+                        Channels
+                      </span>
+                    </div>
+                  </div>
+
+                  {socialPlatforms.slice(0, 4).map((platform, index) => {
+                    const Icon = platform.icon;
+                    const tone = networkTones[index];
+
+                    return (
+                      <a
+                        key={platform.name}
+                        href={platform.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Visit GeekyAce on ${platform.name}`}
+                        className={`group absolute z-10 flex h-14 w-14 items-center justify-center rounded-2xl ring-1 backdrop-blur-md transition duration-300 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${orbitPositions[index]} ${tone.icon}`}
+                      >
+                        <Icon className="h-6 w-6" aria-hidden="true" />
+                      </a>
+                    );
+                  })}
+                </div>
+
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    ["Strategy", "Clear"],
+                    ["Creative", "Active"],
+                    ["Technology", "Connected"],
+                  ].map(([label, status]) => (
+                    <div
+                      key={label}
+                      className="rounded-xl border border-white/[0.07] bg-black/20 px-3 py-3"
+                    >
+                      <p className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-slate-600">
+                        {label}
+                      </p>
+                      <p className="mt-1 text-xs font-extrabold text-slate-200">
+                        {status}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* SOCIAL MEDIA */}
-          <div className="mt-16">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="text-sm font-bold uppercase tracking-[0.2em] text-green-400">
-                  Social & Professional Networks
+          <div className="mt-24 rounded-[2.5rem] border border-white/10 bg-white/[0.035] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm sm:p-8 lg:p-10">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-300">
+                  01 / Social & professional
                 </p>
-
-                <h3 className="mt-2 text-2xl font-black text-white sm:text-3xl">
-                  Follow GeekyAce Digital Hub
+                <h3 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">
+                  Choose your channel.
                 </h3>
               </div>
-
-              <p className="max-w-xl text-sm leading-6 text-slate-400 sm:text-right">
-                Stay connected with our latest projects, technology updates,
-                creative work, business insights, and announcements.
+              <p className="max-w-xl text-sm leading-7 text-slate-400 lg:text-right">
+                Follow launches, practical technology insights, behind-the-scenes
+                creative work, and conversations shaping our next digital move.
               </p>
             </div>
 
-            <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {socialPlatforms.map((platform) => {
+            <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {socialPlatforms.map((platform, index) => {
                 const Icon = platform.icon;
+                const tone = networkTones[index % networkTones.length];
+                const isConfigured = platform.url.startsWith("https://") && !platform.url.includes("YOUR_");
 
                 return (
                   <a
                     key={platform.name}
-                    href={platform.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-green-400/40 hover:bg-white/[0.08]"
+                    href={isConfigured ? platform.url : "/contact"}
+                    target={isConfigured ? "_blank" : undefined}
+                    rel={isConfigured ? "noopener noreferrer" : undefined}
+                    className={`group relative flex min-h-72 flex-col overflow-hidden rounded-[1.6rem] border border-white/[0.08] bg-[#070c18]/90 p-6 transition duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 ${tone.card}`}
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-500/10 text-green-400 ring-1 ring-green-400/20 transition-all duration-300 group-hover:bg-green-500 group-hover:text-white">
+                    <div
+                      aria-hidden="true"
+                      className={`absolute inset-0 bg-gradient-to-br opacity-60 transition-opacity duration-300 group-hover:opacity-100 ${tone.wash}`}
+                    />
+                    <div className="relative flex items-start justify-between gap-4">
+                      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ring-1 transition duration-300 ${tone.icon}`}>
                         <Icon className="h-5 w-5" aria-hidden="true" />
                       </div>
-
-                      <ExternalLink className="h-4 w-4 text-slate-500 transition group-hover:text-green-400" />
+                      <span className="font-mono text-[0.65rem] font-bold tracking-widest text-slate-600">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
                     </div>
 
-                    <h4 className="mt-5 font-extrabold text-white">
-                      {platform.name}
-                    </h4>
+                    <div className="relative mt-8">
+                      <p className="text-[0.62rem] font-black uppercase tracking-[0.2em] text-slate-500">
+                        {platform.category}
+                      </p>
+                      <h4 className="mt-2 text-xl font-black text-white">
+                        {platform.name}
+                      </h4>
+                      <p className="mt-3 text-sm leading-6 text-slate-400">
+                        {platform.description}
+                      </p>
+                    </div>
 
-                    <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-green-400/80">
-                      {platform.category}
-                    </p>
-
-                    <p className="mt-3 text-sm leading-6 text-slate-400">
-                      {platform.description}
-                    </p>
-
-                    <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-green-400">
-                      Visit profile
-                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    <span className="relative mt-auto flex items-center justify-between border-t border-white/[0.07] pt-5 text-xs font-black uppercase tracking-[0.12em] text-slate-300 transition group-hover:text-white">
+                      {isConfigured ? "Open channel" : "Ask about access"}
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] transition group-hover:border-white/20 group-hover:bg-white/10">
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                      </span>
                     </span>
                   </a>
                 );
@@ -1211,84 +1433,181 @@ export default function AboutPage() {
           </div>
 
           {/* FREELANCING */}
-          <div className="mt-20">
-            <div className="rounded-[2rem] border border-green-400/20 bg-green-500/[0.04] p-6 sm:p-8 lg:p-10">
-              <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div className="relative mt-8 overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#050a13] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-8 lg:p-10">
+            <div aria-hidden="true" className="absolute -left-32 -top-40 h-96 w-96 rounded-full bg-cyan-400/10 blur-[110px]" />
+            <div aria-hidden="true" className="absolute -right-32 top-24 h-96 w-96 rounded-full bg-violet-500/10 blur-[110px]" />
+
+            <div className="relative flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-cyan-300">
+                  02 / Work with GeekyAce
+                </p>
+                <h3 className="mt-3 text-3xl font-black tracking-[-0.035em] text-white sm:text-5xl">
+                  Choose the engagement that fits your ambition.
+                </h3>
+              </div>
+
+              <div className="flex flex-wrap gap-2 lg:max-w-sm lg:justify-end">
+                <span className="rounded-full border border-white/10 bg-white/[0.045] px-4 py-2 text-xs font-bold text-slate-300">
+                  {engagementPaths.length} engagement models
+                </span>
+                <span className="rounded-full border border-cyan-300/15 bg-cyan-300/[0.06] px-4 py-2 text-xs font-bold text-cyan-200">
+                  {freelancingPlatforms.length}+ platform options
+                </span>
+              </div>
+            </div>
+
+            <div className="relative mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-12">
+              {engagementPaths.map((path, index) => {
+                const Icon = path.icon;
+                const isPrimary = index === 0;
+
+                return (
+                  <Link
+                    key={path.title}
+                    href={path.href}
+                    className={`group relative flex min-h-[22rem] flex-col overflow-hidden rounded-[1.75rem] p-6 transition duration-300 motion-safe:hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 sm:p-7 ${
+                      isPrimary
+                        ? "sm:col-span-2 lg:col-span-6 bg-gradient-to-br from-emerald-300 via-emerald-400 to-cyan-400 text-slate-950 shadow-[0_30px_90px_-45px_rgba(52,211,153,0.9)]"
+                        : "border border-white/[0.09] bg-white/[0.045] text-white hover:border-white/20 hover:bg-white/[0.07] sm:col-span-1 lg:col-span-3"
+                    }`}
+                  >
+                    <div
+                      aria-hidden="true"
+                      className={`absolute rounded-full blur-3xl transition duration-500 group-hover:scale-125 ${
+                        isPrimary
+                          ? "-right-16 -top-20 h-64 w-64 bg-white/25"
+                          : "-right-20 -top-20 h-56 w-56 bg-cyan-400/10"
+                      }`}
+                    />
+
+                    <div className="relative flex items-start justify-between gap-4">
+                      <div
+                        className={`flex h-12 w-12 items-center justify-center rounded-2xl ${
+                          isPrimary
+                            ? "bg-slate-950 text-emerald-300 shadow-xl"
+                            : "border border-white/10 bg-white/[0.06] text-cyan-300"
+                        }`}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <span
+                        className={`font-mono text-xs font-black tracking-[0.18em] ${
+                          isPrimary ? "text-slate-950/45" : "text-slate-600"
+                        }`}
+                      >
+                        0{index + 1}
+                      </span>
+                    </div>
+
+                    <div className="relative mt-10">
+                      <p
+                        className={`text-[0.65rem] font-black uppercase tracking-[0.2em] ${
+                          isPrimary ? "text-slate-950/55" : "text-cyan-300"
+                        }`}
+                      >
+                        {path.label}
+                      </p>
+                      <h4 className={`mt-3 font-black tracking-tight ${isPrimary ? "max-w-md text-3xl sm:text-4xl" : "text-2xl"}`}>
+                        {path.title}
+                      </h4>
+                      <p className={`mt-4 text-sm leading-7 ${isPrimary ? "max-w-xl text-slate-900/75" : "text-slate-400"}`}>
+                        {path.description}
+                      </p>
+                    </div>
+
+                    <div className={`relative mt-auto flex items-end justify-between gap-4 border-t pt-5 ${isPrimary ? "border-slate-950/15" : "border-white/[0.08]"}`}>
+                      <div>
+                        <p className={`text-[0.58rem] font-black uppercase tracking-[0.16em] ${isPrimary ? "text-slate-950/45" : "text-slate-600"}`}>
+                          Best for
+                        </p>
+                        <p className={`mt-1 text-xs font-extrabold ${isPrimary ? "text-slate-950" : "text-slate-300"}`}>
+                          {path.bestFor}
+                        </p>
+                      </div>
+                      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition group-hover:rotate-45 ${isPrimary ? "bg-slate-950 text-white" : "border border-white/10 bg-white/[0.05] text-white"}`}>
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div id="marketplace-directory" className="relative mt-12 scroll-mt-32 border-t border-white/10 pt-10">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-green-400">
-                    Freelancing & Marketplace Platforms
+                  <p className="text-[0.65rem] font-black uppercase tracking-[0.22em] text-violet-300">
+                    Platform directory
                   </p>
-
-                  <h3 className="mt-2 text-2xl font-black text-white sm:text-3xl">
-                    Hire GeekyAce Digital Hub
-                  </h3>
+                  <h4 className="mt-2 text-2xl font-black text-white">
+                    Already have a preferred marketplace?
+                  </h4>
                 </div>
-
-                <p className="max-w-2xl text-sm leading-6 text-slate-400 lg:text-right">
-                  Looking for a website, AI solution, automation system,
-                  design, software development, or another digital service?
-                  Find us on professional freelance marketplaces.
+                <p className="max-w-lg text-sm leading-6 text-slate-500 sm:text-right">
+                  Open an available network or ask us to arrange your project
+                  through a platform whose GeekyAce profile is still being prepared.
                 </p>
               </div>
 
-              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {freelancingPlatforms.map((platform) => (
-                  <a
-                    key={platform.name}
-                    href={platform.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-2xl border border-white/10 bg-slate-900/70 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-green-400/40 hover:bg-slate-900"
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-xs font-black uppercase text-green-400 ring-1 ring-white/10">
+              <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {freelancingPlatforms.map((platform, index) => {
+                  const tone = networkTones[(index + 2) % networkTones.length];
+                  const isConfigured = hasLiveMarketplaceProfile(platform.url);
+
+                  return (
+                    <a
+                      key={platform.name}
+                      href={isConfigured ? platform.url : "/contact"}
+                      target={isConfigured ? "_blank" : undefined}
+                      rel={isConfigured ? "noopener noreferrer" : undefined}
+                      className={`group flex items-center gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4 transition duration-300 hover:border-white/15 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 ${tone.card}`}
+                    >
+                      <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xs font-black uppercase ring-1 transition duration-300 ${tone.icon}`}>
                         {platform.short}
                       </div>
-
-                      <ExternalLink className="h-4 w-4 text-slate-600 transition group-hover:text-green-400" />
-                    </div>
-
-                    <h4 className="mt-5 font-extrabold text-white">
-                      {platform.name}
-                    </h4>
-
-                    <p className="mt-3 text-sm leading-6 text-slate-400">
-                      {platform.description}
-                    </p>
-
-                    <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-green-400">
-                      Visit profile
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </span>
-                  </a>
-                ))}
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-extrabold text-white">
+                          {platform.name}
+                        </p>
+                        <p className={`mt-1 truncate text-[0.6rem] font-black uppercase tracking-[0.14em] ${isConfigured ? "text-emerald-300" : "text-slate-600"}`}>
+                          {isConfigured ? "Explore network" : "Request access"}
+                        </p>
+                      </div>
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/[0.08] text-slate-600 transition group-hover:border-white/20 group-hover:text-white">
+                        {isConfigured ? (
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        ) : (
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        )}
+                      </span>
+                    </a>
+                  );
+                })}
               </div>
             </div>
-          </div>
 
-          {/* DIRECT CONTACT */}
-          <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.04] p-7 text-center sm:p-9">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/10 text-green-400">
-              <MessageSquare className="h-5 w-5" />
+            <div className="relative mt-10 flex flex-col gap-6 overflow-hidden rounded-[1.75rem] border border-white/[0.08] bg-gradient-to-r from-white/[0.055] to-white/[0.025] p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+              <div aria-hidden="true" className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-emerald-400/10 blur-3xl" />
+              <div className="relative flex max-w-2xl items-start gap-4">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-slate-950">
+                  <Sparkles className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="font-black text-white">Not sure which route fits?</h4>
+                  <p className="mt-1 text-sm leading-6 text-slate-400">
+                    Start with the project planner. We will recommend the simplest engagement model for your scope and goals.
+                  </p>
+                </div>
+              </div>
+              <Link
+                href="/project-planner"
+                className="relative inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-black text-slate-950 transition hover:bg-emerald-100"
+              >
+                Get a recommendation
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
-
-            <h3 className="mt-5 text-2xl font-black text-white">
-              Prefer to Work With Us Directly?
-            </h3>
-
-            <p className="mx-auto mt-3 max-w-2xl leading-7 text-slate-400">
-              You can also contact GeekyAce Digital Hub directly to discuss
-              your project, request a quote, or find the right digital
-              solution for your business.
-            </p>
-
-            <Link
-              href="/contact"
-              className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3.5 font-bold text-white transition hover:bg-green-500"
-            >
-              Contact GeekyAce Digital Hub
-              <ArrowRight className="h-4 w-4" />
-            </Link>
           </div>
         </div>
       </section>
@@ -1296,7 +1615,8 @@ export default function AboutPage() {
       {/* =========================================================
           TEAM APPROACH
       ========================================================= */}
-      <section className="bg-white py-20 sm:py-24 lg:py-28">
+      <section className="relative order-[-10] overflow-hidden bg-white py-20 sm:py-24 lg:py-28">
+        <div aria-hidden="true" className="absolute left-1/2 top-0 h-72 w-[46rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-100/70 blur-3xl" />
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <span className="text-sm font-bold uppercase tracking-[0.2em] text-green-600">
@@ -1338,6 +1658,8 @@ export default function AboutPage() {
               );
             })}
           </div>
+
+          <PublicTeamRoster />
         </div>
       </section>
 

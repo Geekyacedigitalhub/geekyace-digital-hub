@@ -9,26 +9,27 @@ import {
 
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
+import { projects, categories, industries } from "@/app/data/projects";
 
 const stats = [
   {
     icon: BriefcaseBusiness,
-    value: "50+",
-    label: "Projects",
+    value: String(projects.length),
+    label: "Capability Concepts",
     description:
       "Websites, AI solutions, automation systems, mobile apps, and digital products.",
   },
   {
     icon: Building2,
-    value: "15+",
-    label: "Industries",
+    value: String(industries.length),
+    label: "Industry Scenarios",
     description:
       "Experience delivering solutions across multiple business sectors.",
   },
   {
     icon: Layers3,
-    value: "20+",
-    label: "Technologies",
+    value: String(categories.length),
+    label: "Capability Categories",
     description:
       "Modern frameworks, cloud platforms, databases, AI, and development tools.",
   },
@@ -47,7 +48,7 @@ export default function ShowcaseStats() {
       <Container>
         <SectionHeading
           title="Our Capabilities"
-          description="A growing portfolio of digital solutions, technologies, and services built to help businesses grow."
+          description="A transparent view of the scenarios we can solve. Items are labeled as concepts or verified work so buyers can judge them accurately."
         />
 
         <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-4">

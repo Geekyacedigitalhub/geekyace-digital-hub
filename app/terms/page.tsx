@@ -2,14 +2,14 @@ import Container from "../components/ui/Container";
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-slate-50 py-20 sm:py-24">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#07110c_0,#07110c_18rem,#f8fafc_18rem)] py-20 sm:py-24">
       <Container>
-        <article className="mx-auto max-w-4xl rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
+        <article className="premium-card mx-auto max-w-4xl rounded-[2rem] p-8 sm:p-12 lg:p-16">
           <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-bold text-green-700">
             Legal
           </span>
 
-          <h1 className="mt-6 text-4xl font-extrabold text-slate-900 sm:text-5xl">
+          <h1 className="mt-6 text-4xl font-black text-slate-950 sm:text-6xl">
             Terms of Service
           </h1>
 

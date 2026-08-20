@@ -44,15 +44,15 @@ export default function TrustedCompanies() {
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-600">
-            Trusted Across Industries
+            Industries We Understand
           </p>
 
           <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
-            Digital Solutions Built for Modern Businesses
+            Specialist thinking for different business realities
           </h2>
 
           <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
-            We create reliable digital experiences and business systems for
+            Our capability concepts and delivery approach cover the needs of
             organizations across different industries.
           </p>
         </div>

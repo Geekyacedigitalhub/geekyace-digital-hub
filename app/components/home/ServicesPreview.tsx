@@ -9,7 +9,9 @@ export default function ServicesPreview() {
   );
 
   return (
-    <section className="bg-gray-50 py-24">
+    <section className="relative overflow-hidden bg-slate-50 py-20 sm:py-28">
+
+      <div aria-hidden="true" className="absolute -right-40 top-10 h-96 w-96 rounded-full bg-green-100/80 blur-3xl" />
 
       <Container>
 
@@ -17,12 +19,10 @@ export default function ServicesPreview() {
 
         <div className="mx-auto max-w-3xl text-center">
 
-          <span className="inline-flex rounded-full bg-green-100 px-5 py-2 text-sm font-semibold text-green-700">
-            Our Services
-          </span>
+          <span className="brand-eyebrow">Our Services</span>
 
 
-          <h2 className="mt-6 text-5xl font-extrabold tracking-tight text-gray-900">
+          <h2 className="text-balance mt-6 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
             Digital Solutions Built Around Your Business
           </h2>
 
@@ -49,34 +49,19 @@ export default function ServicesPreview() {
               <Link
                 key={service.id}
                 href={`/services/${service.slug}`}
-                className="
-                  group
-                  relative
-                  overflow-hidden
-                  rounded-3xl
-                  border
-                  border-gray-200
-                  bg-white
-                  p-8
-                  shadow-sm
-                  transition-all
-                  duration-300
-                  hover:-translate-y-2
-                  hover:border-green-500
-                  hover:shadow-2xl
-                "
+                className="premium-card group rounded-[2rem] p-8 transition-all duration-500 hover:-translate-y-2 hover:border-green-400"
               >
 
                 {/* Number */}
 
-                <div className="absolute right-6 top-6 text-5xl font-black text-gray-100 transition group-hover:text-green-100">
+                <div className="absolute right-6 top-5 text-6xl font-black text-slate-100 transition group-hover:text-green-100">
                   0{index + 1}
                 </div>
 
 
                 {/* Icon */}
 
-                <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-green-100 text-green-700 transition duration-300 group-hover:scale-110">
+                <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-950 text-green-400 transition duration-300 group-hover:scale-110 group-hover:bg-green-600 group-hover:text-white">
 
                   <Icon size={32} />
 
@@ -123,19 +108,7 @@ export default function ServicesPreview() {
 
           <Link
             href="/services"
-            className="
-              inline-flex
-              rounded-xl
-              bg-green-600
-              px-8
-              py-4
-              font-semibold
-              text-white
-              transition
-              hover:-translate-y-1
-              hover:bg-green-700
-              hover:shadow-xl
-            "
+            className="inline-flex rounded-full bg-slate-950 px-8 py-4 font-black text-white shadow-lg transition hover:-translate-y-1 hover:bg-green-600 hover:shadow-xl"
           >
             View All Services
           </Link>

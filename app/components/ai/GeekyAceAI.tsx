@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 type Message = {
   role: "user" | "assistant";
@@ -254,6 +255,7 @@ export default function GeekyAceAI() {
                   setInput(event.target.value)
                 }
                 placeholder="Ask GeekyAce AI..."
+                maxLength={2000}
                 disabled={loading}
                 autoComplete="off"
                 className="min-w-0 flex-1 rounded-xl border border-gray-300 px-3.5 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-100 disabled:cursor-not-allowed disabled:bg-gray-100"
@@ -268,8 +270,8 @@ export default function GeekyAceAI() {
               </button>
             </div>
 
-            <p className="mt-2 text-center text-[10px] text-gray-400">
-              GeekyAce AI can help you find the right digital solution.
+            <p className="mt-2 text-center text-[10px] leading-4 text-gray-400">
+              Messages are processed by our AI provider. Do not share passwords or sensitive information. <Link href="/privacy" className="font-bold underline">Privacy</Link>
             </p>
           </form>
         </div>

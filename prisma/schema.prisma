@@ -9,17 +9,27 @@ datasource db {
 
 model TeamMember {
   id           String   @id @default(cuid())
+  slug         String?  @unique
   name         String
   role         String
+  headline     String?
+  studioId     String?
   bio          String
   location     String?
   availability String   @default("Available")
+  yearsExperience Int?
   skills       String
   expertise    String
   platforms    String
+  languages    String?
+  portfolioUrl String?
   imageUrl     String?
+  featured     Boolean  @default(false)
+  published    Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  @@index([studioId, published])
 }
 
 model Lead {
@@ -36,9 +46,70 @@ model Lead {
   budget              String?
   recommendedService  String?
   conversationSummary String?
+  source               String?
+  serviceSlug          String?
+  studioId             String?
+  referrer             String?
+  consent              Boolean  @default(false)
+  attachments          String?
   status              String   @default("NEW")
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+
+  aceMatchBrief AceMatchBrief?
+
+  @@index([status, createdAt])
+  @@index([source])
+}
+
+model AceMatchBrief {
+  id                    String   @id @default(cuid())
+  goal                  String
+  studioId              String
+  serviceSlug           String?
+  audience              String
+  stage                 String
+  timeline              String
+  budget                String
+  context               String
+  recommendedRoles      String
+  recommendedPhases     String
+  recommendedDeliverables String
+  source                String   @default("WEBSITE")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  leadId String? @unique
+  lead   Lead?   @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
+  @@index([studioId, createdAt])
+  @@index([serviceSlug])
+}
+
+model CaseStudy {
+  id                   String   @id @default(cuid())
+  slug                 String   @unique
+  title                String
+  summary              String
+  challenge            String
+  approach             String
+  outcome              String
+  studioId             String
+  serviceSlugs         String
+  industries           String
+  heroImageUrl         String?
+  mediaUrls            String?
+  proofStatus          String   @default("CONCEPT")
+  proofUrl              String?
+  clientPermission     Boolean  @default(false)
+  clientDisplayName    String?
+  featured             Boolean  @default(false)
+  published            Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([published, featured])
+  @@index([studioId, proofStatus])
 }
 
 model Client {
@@ -72,6 +143,8 @@ model Project {
 
   milestones ProjectMilestone[]
   updates    ProjectUpdate[]
+
+  @@index([clientId, status])
 }
 
 model ProjectMilestone {
@@ -87,6 +160,8 @@ model ProjectMilestone {
 
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, order])
 }
 
 model ProjectUpdate {
@@ -97,4 +172,6 @@ model ProjectUpdate {
 
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, createdAt])
 }

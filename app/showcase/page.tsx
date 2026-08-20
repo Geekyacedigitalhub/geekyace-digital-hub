@@ -4,11 +4,12 @@ import ShowcaseHero from "@/app/components/showcase/ShowcaseHero";
 import ShowcaseStats from "@/app/components/showcase/ShowcaseStats";
 import FeaturedCaseStudy from "@/app/components/showcase/FeaturedCaseStudy";
 import FeaturedProjects from "@/app/components/showcase/FeaturedProjects";
+import ShowcaseProofStandards from "@/app/components/showcase/ShowcaseProofStandards";
 
 export const metadata: Metadata = {
-  title: "Portfolio & Case Studies | Geekyace Digital Hub",
+  title: "Work & Capability Showcase",
   description:
-    "Explore websites, AI solutions, mobile applications, automation systems, and digital products built by Geekyace Digital Hub.",
+    "Explore clearly labeled capability concepts and verified work across websites, AI, mobile applications, automation, branding, and digital products.",
 };
 
 export default function ShowcasePage() {
@@ -16,6 +17,8 @@ export default function ShowcasePage() {
     <main className="min-h-screen bg-white">
       {/* Hero */}
       <ShowcaseHero />
+
+      <ShowcaseProofStandards />
 
       {/* Statistics */}
       <ShowcaseStats />

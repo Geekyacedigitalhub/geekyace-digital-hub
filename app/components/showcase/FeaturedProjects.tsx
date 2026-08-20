@@ -91,7 +91,7 @@ export default function FeaturedProjects() {
         {/* Results Count */}
         <div className="mb-10 flex items-center justify-between">
           <h3 className="text-2xl font-bold text-gray-900">
-            {filteredProjects.length} Project
+            {filteredProjects.length} Showcase Item
             {filteredProjects.length !== 1 && "s"} Found
           </h3>
         </div>

@@ -2,6 +2,9 @@ import dynamic from "next/dynamic";
 
 import Hero from "@/app/components/home/Hero";
 import TrustedCompanies from "@/app/components/home/TrustedCompanies";
+import PlannerTeaser from "@/app/components/home/PlannerTeaser";
+import ExpertStudios from "@/app/components/home/ExpertStudios";
+import BuyerConfidence from "@/app/components/home/BuyerConfidence";
 
 const SectionLoader = () => (
   <div
@@ -51,13 +54,6 @@ const FeaturedCaseStudies = dynamic(
   }
 );
 
-const Testimonials = dynamic(
-  () => import("@/app/components/home/Testimonials"),
-  {
-    loading: () => <SectionLoader />,
-  }
-);
-
 const FinalCTA = dynamic(
   () => import("@/app/components/home/FinalCTA"),
   {
@@ -72,17 +68,21 @@ export default function HomePage() {
 
       <TrustedCompanies />
 
+      <ExpertStudios />
+
+      <PlannerTeaser />
+
       <Services />
 
       <WhyChooseUs />
 
       <Process />
 
-      <TechStack />
-
       <FeaturedCaseStudies />
 
-      <Testimonials />
+      <BuyerConfidence />
+
+      <TechStack />
 
       <FinalCTA />
     </main>

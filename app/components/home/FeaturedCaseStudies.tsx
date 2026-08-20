@@ -15,16 +15,16 @@ export default function FeaturedCaseStudies() {
         {/* Section Heading */}
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
-            Featured Work
+            Capability Showcase
           </span>
 
           <h2 className="mt-5 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
-            Projects Built to Solve Real Business Problems
+            See How We Approach Real Business Scenarios
           </h2>
 
           <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg">
-            Explore selected digital projects created by Geekyace Digital Hub
-            across websites, applications, AI solutions, and business systems.
+            Explore selected capability concepts across websites, applications,
+            AI, and business systems. Verified client work is labeled separately.
           </p>
         </div>
 
@@ -58,7 +58,7 @@ export default function FeaturedCaseStudies() {
             href="/showcase"
             className="inline-flex items-center gap-2 rounded-xl bg-green-600 px-7 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg"
           >
-            View All Case Studies
+            View Full Showcase
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

@@ -1,0 +1,15 @@
+import type { Metadata } from "next";
+import { CalendarClock, CheckCircle2, MessagesSquare, ShieldCheck } from "lucide-react";
+import Container from "@/app/components/ui/Container";
+import BookingForm from "@/app/components/growth/BookingForm";
+
+export const metadata: Metadata = {
+  title: "Book a Project Consultation",
+  description: "Request a focused GeekyAce consultation to clarify scope, team, timing, and the right next step for your digital project.",
+  alternates: { canonical: "/book" },
+};
+
+export default async function BookPage({ searchParams }: { searchParams: Promise<{ service?: string }> }) {
+  const { service = "" } = await searchParams;
+  return <main className="bg-slate-50"><section className="premium-noise relative overflow-hidden bg-[#07110c] py-20 text-white sm:py-24"><div aria-hidden="true" className="premium-grid absolute inset-0 opacity-60" /><Container><div className="relative mx-auto max-w-4xl text-center"><span className="inline-flex items-center gap-2 rounded-full border border-green-300/20 bg-green-300/10 px-5 py-2 text-xs font-black uppercase tracking-[.2em] text-green-300"><CalendarClock className="h-4 w-4" />Human-led discovery</span><h1 className="text-balance mt-7 text-5xl font-black leading-[.98] tracking-[-.05em] sm:text-6xl lg:text-7xl">Use the first call to reduce uncertainty.</h1><p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-slate-300">Bring the goal, context, or difficult decision. We will use the consultation to clarify fit and define a sensible next step—not pressure you into a package.</p></div></Container></section><section className="py-16 sm:py-20"><Container><div className="grid gap-10 lg:grid-cols-[.75fr_1.25fr]"><aside className="space-y-5 lg:sticky lg:top-24 lg:h-fit"><div className="rounded-[1.75rem] bg-[#07110c] p-7 text-white"><h2 className="text-2xl font-black">What this call covers</h2><ul className="mt-6 space-y-4">{["The business outcome and buyer journey", "The right studio or cross-studio squad", "Scope risks, dependencies, and missing decisions", "A practical next step and commercial route"].map((item) => <li key={item} className="flex gap-3 text-sm leading-6 text-slate-300"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-green-400" />{item}</li>)}</ul></div><div className="rounded-[1.75rem] border border-slate-200 bg-white p-7"><MessagesSquare className="h-6 w-6 text-green-700" /><h2 className="mt-4 font-black text-slate-950">You will speak with a person.</h2><p className="mt-2 text-sm leading-6 text-slate-600">The request is reviewed before a time is confirmed, so the right specialist can prepare.</p></div><div className="rounded-[1.75rem] border border-green-200 bg-green-50 p-7"><ShieldCheck className="h-6 w-6 text-green-700" /><h2 className="mt-4 font-black text-slate-950">No invented availability.</h2><p className="mt-2 text-sm leading-6 text-slate-600">Displayed times are request windows. Your confirmed time arrives after a human review.</p></div></aside><BookingForm initialService={service} /></div></Container></section></main>;
+}

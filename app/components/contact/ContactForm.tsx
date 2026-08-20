@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import {
   CheckCircle2,
   Send,
@@ -32,9 +34,7 @@ export default function ContactForm() {
     <div>
       {/* Form Header */}
       <div className="mb-8">
-        <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
-          Project Enquiry
-        </span>
+        <span className="brand-eyebrow">Project Enquiry</span>
 
         <h2 className="mt-5 text-3xl font-extrabold text-slate-900">
           Tell Us About Your Project
@@ -81,6 +81,10 @@ export default function ContactForm() {
         onSubmit={handleSubmit}
         className="space-y-6"
       >
+        <div className="sr-only" aria-hidden="true">
+          <label htmlFor="contact-website">Website</label>
+          <input id="contact-website" name="website" value={formData.website} onChange={handleChange} tabIndex={-1} autoComplete="off" />
+        </div>
         {/* Name + Company */}
         <div className="grid gap-6 md:grid-cols-2">
           <div>
@@ -247,11 +251,19 @@ export default function ContactForm() {
           )}
         </div>
 
+        <div>
+          <label className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">
+            <input type="checkbox" name="consent" checked={formData.consent} onChange={handleChange} className="mt-1 h-4 w-4 accent-green-600" />
+            <span>I agree that GeekyAce may use these details to respond to this enquiry. <Link href="/privacy" className="font-black text-green-800 underline">Privacy policy</Link>.</span>
+          </label>
+          {errors.consent ? <p className="mt-2 text-sm text-red-600">{errors.consent}</p> : null}
+        </div>
+
         {/* Submit */}
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 py-4 font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-sm"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-green-600 py-4 font-black text-white shadow-lg shadow-green-600/15 transition-all duration-300 hover:-translate-y-1 hover:bg-green-500 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-sm"
         >
           {loading ? (
             <>
