@@ -37,7 +37,12 @@ function sanitizeFilename(value: string): string {
   return cleaned || "merchantos-support-file";
 }
 
-function sanitizeSubject(value: string, fallback: string): string {\n  const cleaned = value.replace(/[\\r\\n]+/g, " ").trim();\n  return cleaned || fallback;\n}\n\nfunction noStoreJson(data: unknown, init?: ResponseInit) {
+function sanitizeSubject(value: string, fallback: string): string {
+  const cleaned = value.replace(/[\r\n]+/g, " ").trim();
+  return cleaned || fallback;
+}
+
+function noStoreJson(data: unknown, init?: ResponseInit) {
   return NextResponse.json(data, {
     ...init,
     headers: { "Cache-Control": "no-store", ...(init?.headers ?? {}) },
@@ -161,31 +166,6 @@ export async function POST(request: Request) {
       return noStoreJson(
         { success: false, message: "We couldn't send your support request. Please try again." },
         { status: 500 }
-      );
-    }
-
-    const receipt = await resend.emails.send({
-      from,
-      to: email,
-      subject: "We received your MerchantOS support request",
-      html: `
-        <div style="font-family:Arial,sans-serif;line-height:1.6;color:#0f172a">
-          <h2 style="color:#16a34a">We received your request</h2>
-          <p>Hi ${safeName},</p>
-          <p>Thanks for contacting MerchantOS support. Your request for <strong>${safeStoreUrl}</strong> has been received.</p>
-          <p>We aim to reply within two business days. Critical confirmed MerchantOS theme bugs are prioritized.</p>
-          <p>You can reply to this email if you need to add useful details.</p>
-          <p>— GeekyAce Digital Hub</p>
-        </div>
-      `,
-      replyTo: supportTo,
-    });
-
-    if (receipt.error) {
-      console.error("MerchantOS support auto-responder failed:", receipt.error);
-      return noStoreJson(
-        { success: false, message: "Your request was received, but the confirmation email could not be sent." },
-        { status: 502 }
       );
     }
 
