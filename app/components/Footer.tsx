@@ -1,157 +1,76 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Mail } from "lucide-react";
-
+import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
 import Container from "./ui/Container";
 
 const services = [
-  { name: "Website Development", href: "/services" },
-  { name: "Mobile Applications", href: "/services" },
-  { name: "AI Solutions", href: "/services" },
-  { name: "Business Automation", href: "/services" },
+  { name: "Website & SaaS Development", href: "/services" },
+  { name: "Shopify Development", href: "/services" },
+  { name: "AI Applications", href: "/services" },
+  { name: "Automation & Integrations", href: "/services" },
 ];
 
 const company = [
-  { name: "About Us", href: "/about" },
+  { name: "About", href: "/about" },
   { name: "Solutions", href: "/solutions" },
   { name: "Showcase", href: "/showcase" },
   { name: "Contact", href: "/contact" },
 ];
 
-const resources = [
-  { name: "Resources", href: "/resources" },
-  { name: "Dashboard", href: "/dashboard" },
-  { name: "Privacy Policy", href: "/privacy" },
-  { name: "Terms of Service", href: "/terms" },
-];
-
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 text-gray-300">
+    <footer className="bg-slate-950 text-slate-300">
       <Container>
-        <div className="grid gap-16 py-20 md:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
+        <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:py-20">
           <div>
-            <Link
-              href="/"
-              className="relative inline-flex h-16 w-[200px] items-center"
-              aria-label="GeekyAce Digital Hub Home"
-            >
-              <Image
-                src="/images/logo.png"
-                alt="GeekyAce Digital Hub"
-                fill
-                sizes="200px"
-                className="object-contain object-left"
-              />
+            <Link href="/" className="relative inline-flex h-14 w-[190px]" aria-label="GeekyAce Digital Hub Home">
+              <Image src="/images/logo.png" alt="GeekyAce Digital Hub" fill sizes="190px" className="object-contain object-left" />
             </Link>
-
-            <p className="mt-6 max-w-sm leading-8 text-gray-400">
-              GeekyAce Digital Hub builds websites, mobile apps, AI
-              solutions, automation systems, and modern digital
-              experiences that help businesses grow.
+            <p className="mt-5 max-w-md leading-7 text-slate-400">
+              Full-stack web development, Shopify engineering, AI products, and
+              automation systems built around real business needs.
             </p>
-
-            {/* Business Email */}
-            <div className="mt-7">
-              <p className="text-sm font-semibold uppercase tracking-wider text-white">
-                Business Email
-              </p>
-
-              <a
-                href="mailto:hello@geekyacedigitalhub.com"
-                className="mt-3 inline-flex items-center gap-2 text-green-400 transition hover:text-green-300"
-              >
-                <Mail size={17} />
-
-                <span>hello@geekyacedigitalhub.com</span>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href="https://github.com/Geekyacedigitalhub" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold transition hover:border-green-500/40 hover:text-green-400">
+                <Github size={16} /> GitHub
+              </a>
+              <a href="https://www.linkedin.com/company/geekyace-digital-hub" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold transition hover:border-green-500/40 hover:text-green-400">
+                <Linkedin size={16} /> LinkedIn
               </a>
             </div>
+            <a href="mailto:hello@geekyacedigitalhub.com" className="mt-6 inline-flex items-center gap-2 text-green-400 hover:text-green-300">
+              <Mail size={17} /> hello@geekyacedigitalhub.com
+            </a>
           </div>
 
-          {/* Services */}
           <div>
-            <h3 className="mb-6 text-lg font-semibold text-white">
-              Services
-            </h3>
-
-            <ul className="space-y-4">
-              {services.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="transition hover:text-green-400"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
+            <h3 className="mb-5 font-bold text-white">Services</h3>
+            <ul className="space-y-3.5">
+              {services.map((item) => <li key={item.name}><Link href={item.href} className="transition hover:text-green-400">{item.name}</Link></li>)}
             </ul>
           </div>
 
-          {/* Company */}
           <div>
-            <h3 className="mb-6 text-lg font-semibold text-white">
-              Company
-            </h3>
-
-            <ul className="space-y-4">
-              {company.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="transition hover:text-green-400"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
+            <h3 className="mb-5 font-bold text-white">Company</h3>
+            <ul className="space-y-3.5">
+              {company.map((item) => <li key={item.name}><Link href={item.href} className="transition hover:text-green-400">{item.name}</Link></li>)}
             </ul>
           </div>
 
-          {/* Resources */}
           <div>
-            <h3 className="mb-6 text-lg font-semibold text-white">
-              Resources
-            </h3>
-
-            <ul className="space-y-4">
-              {resources.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="transition hover:text-green-400"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
+            <h3 className="mb-5 font-bold text-white">Resources</h3>
+            <ul className="space-y-3.5">
+              <li><Link href="/resources" className="transition hover:text-green-400">Resources</Link></li>
+              <li><Link href="/privacy" className="transition hover:text-green-400">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="transition hover:text-green-400">Terms of Service</Link></li>
+              <li><a href="mailto:hello@geekyacedigitalhub.com" className="inline-flex items-center gap-2 transition hover:text-green-400">Contact us <ArrowUpRight size={15}/></a></li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="flex flex-col gap-4 border-t border-white/10 py-8 text-sm text-gray-500 md:flex-row md:items-center md:justify-between">
-          <p>
-            © {new Date().getFullYear()} GeekyAce Digital Hub. All
-            rights reserved.
-          </p>
-
-          <div className="flex flex-wrap gap-5">
-            <Link
-              href="/privacy"
-              className="transition hover:text-green-400"
-            >
-              Privacy Policy
-            </Link>
-
-            <Link
-              href="/terms"
-              className="transition hover:text-green-400"
-            >
-              Terms of Service
-            </Link>
-          </div>
+        <div className="flex flex-col gap-3 border-t border-white/10 py-7 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} GeekyAce Digital Hub. All rights reserved.</p>
+          <p>Built with Next.js, TypeScript & modern web technologies.</p>
         </div>
       </Container>
     </footer>
