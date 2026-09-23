@@ -3,6 +3,10 @@ import { Resend } from "resend";
 import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
 import { hasBodyExceededLimit, JSON_BODY_LIMIT, requestTooLargeResponse } from "@/app/lib/request-limits";
 
+function isValidEmail(value: string): boolean {
+  return value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
 function escapeHtml(value: unknown): string {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -29,34 +33,49 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const body = await request.json();
 
-    const { name, company, email, phone, service, budget, timeline, contactMethod, message } = body;
+    const nameValue = String(name ?? "").trim();
+    const emailValue = String(email ?? "").trim().toLowerCase();
+    const phoneValue = String(phone ?? "").trim();
+    const serviceValue = String(service ?? "").trim();
+    const messageValue = String(message ?? "").trim();
+    const companyValue = String(company ?? "").trim();
+    const budgetValue = String(budget ?? "").trim();
+    const timelineValue = String(timeline ?? "").trim();
+    const contactMethodValue = String(contactMethod ?? "").trim();
 
-    if ([name, company, email, phone, service, budget, timeline, contactMethod, message].some((value) => String(value ?? "").length > 5000)) {
+    if (!isValidEmail(emailValue)) {
+      return NextResponse.json(
+        { success: false, message: "Please enter a valid email address." },
+        { status: 400 }
+      );
+    }
+
+    if ([nameValue, companyValue, emailValue, phoneValue, serviceValue, budgetValue, timelineValue, contactMethodValue, messageValue].some((value) => value.length > 5000)) {
       return NextResponse.json({ success: false, message: "One or more fields are too long." }, { status: 400 });
     }
 
-    if (!name || !email || !phone || !service || !message) {
+    if (!nameValue || !emailValue || !phoneValue || !serviceValue || !messageValue) {
       return NextResponse.json(
         { success: false, message: "Please complete all required fields." },
         { status: 400 }
       );
     }
 
-    const safeName = escapeHtml(name);
-    const safeCompany = escapeHtml(company || "N/A");
-    const safeEmail = escapeHtml(email);
-    const safePhone = escapeHtml(phone);
-    const safeService = escapeHtml(service);
-    const safeBudget = escapeHtml(budget || "N/A");
-    const safeTimeline = escapeHtml(timeline || "N/A");
-    const safeContactMethod = escapeHtml(contactMethod || "N/A");
-    const safeMessage = escapeHtml(message).replace(/\n/g, "<br />");
+    const safeName = escapeHtml(nameValue);
+    const safeCompany = escapeHtml(companyValue || "N/A");
+    const safeEmail = escapeHtml(emailValue);
+    const safePhone = escapeHtml(phoneValue);
+    const safeService = escapeHtml(serviceValue);
+    const safeBudget = escapeHtml(budgetValue || "N/A");
+    const safeTimeline = escapeHtml(timelineValue || "N/A");
+    const safeContactMethod = escapeHtml(contactMethodValue || "N/A");
+    const safeMessage = escapeHtml(messageValue).replace(/\n/g, "<br />");
 
     const result = await resend.emails.send({
       from: "Geekyace Contact Form <onboarding@resend.dev>",
       to: "geekyacedigital@gmail.com",
-      replyTo: email,
-      subject: `New Project Enquiry from ${name}`,
+      replyTo: emailValue,
+      subject: `New Project Enquiry from ${nameValue}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #1e293b; background: #f8fafc; padding: 30px;">
           <div style="max-width: 700px; margin: 0 auto; background: #ffffff; border-radius: 16px; padding: 30px; border: 1px solid #e2e8f0;">
