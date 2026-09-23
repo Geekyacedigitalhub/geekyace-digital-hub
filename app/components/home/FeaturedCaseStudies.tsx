@@ -7,7 +7,7 @@ import ProjectCard from "@/app/components/showcase/ProjectCard";
 import { getFeaturedProjects } from "@/app/data/projects";
 
 export default function FeaturedCaseStudies() {
-  const featuredProjects = getFeaturedProjects(3);
+  const featuredProjects = getFeaturedProjects(6);
 
   return (
     <section className="py-20 sm:py-24 lg:py-28">
@@ -19,7 +19,7 @@ export default function FeaturedCaseStudies() {
           </span>
 
           <h2 className="mt-5 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
-            Projects Built to Solve Real Business Problems
+            Full-Stack Projects Built for Real Business Problems
           </h2>
 
           <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg">
