@@ -37,7 +37,7 @@ function sanitizeFilename(value: string): string {
   return cleaned || "merchantos-support-file";
 }
 
-function noStoreJson(data: unknown, init?: ResponseInit) {
+function sanitizeSubject(value: string, fallback: string): string {\n  const cleaned = value.replace(/[\\r\\n]+/g, " ").trim();\n  return cleaned || fallback;\n}\n\nfunction noStoreJson(data: unknown, init?: ResponseInit) {
   return NextResponse.json(data, {
     ...init,
     headers: { "Cache-Control": "no-store", ...(init?.headers ?? {}) },
@@ -141,7 +141,7 @@ export async function POST(request: Request) {
       from,
       to: supportTo,
       replyTo: email,
-      subject: `[MerchantOS Support] ${name} — ${storeUrl}`,
+      subject: sanitizeSubject(`[MerchantOS Support] ${name} — ${storeUrl}`, "[MerchantOS Support] New Request"),
       html: `
         <div style="font-family:Arial,sans-serif;line-height:1.6;color:#0f172a">
           <h2 style="color:#16a34a">New MerchantOS support request</h2>
