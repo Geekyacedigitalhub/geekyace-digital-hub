@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Github, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { FaGithub } from "react-icons/fa6";
 
 const trustPoints = [
   "Full-stack web applications",
@@ -49,10 +50,10 @@ export default function HeroContent() {
         <a
           href="https://github.com/Geekyacedigitalhub"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-white/5 px-5 py-3.5 text-sm font-bold text-slate-200 transition hover:border-slate-500 hover:bg-white/10"
         >
-          <Github className="h-4 w-4" />
+          <FaGithub className="h-4 w-4" />
           GitHub
         </a>
       </div>
