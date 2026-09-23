@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const MAX_FILE_BYTES = 5 * 1024 * 1024;
 const ALLOWED_TYPES = new Set([
   "image/png",
@@ -42,6 +41,7 @@ export async function POST(request: Request) {
       );
     }
 
+    const resend = new Resend(apiKey);
     const formData = await request.formData();
     const honeypot = String(formData.get("website") || "").trim();
     if (honeypot) return NextResponse.json({ success: true });
