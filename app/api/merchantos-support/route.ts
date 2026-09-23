@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
+import { hasBodyExceededLimit, UPLOAD_BODY_LIMIT, requestTooLargeResponse } from "@/app/lib/request-limits";
 
 const MAX_FILE_BYTES = 5 * 1024 * 1024;
 const ALLOWED_TYPES = new Set([
@@ -30,6 +31,7 @@ function isHttpUrl(value: string): boolean {
 
 export async function POST(request: Request) {
   try {
+    if (hasBodyExceededLimit(request, UPLOAD_BODY_LIMIT)) return requestTooLargeResponse();
     const rate = checkRateLimit(`merchantos-support:${getClientIdentifier(request)}`, 5, 10 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
