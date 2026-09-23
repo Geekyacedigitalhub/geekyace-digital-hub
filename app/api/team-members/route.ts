@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isSameOriginRequest, sameOriginFailureResponse } from "@/app/lib/request-security";
 import { prisma } from "@/app/lib/prisma";
 import { mkdir, unlink, writeFile } from "fs/promises";
 import path from "path";
@@ -157,6 +158,7 @@ export async function POST(request: Request) {
   let uploadedImagePath: string | null = null;
 
   try {
+    if (!isSameOriginRequest(request)) return sameOriginFailureResponse();
     if (hasBodyExceededLimit(request, UPLOAD_BODY_LIMIT)) return requestTooLargeResponse();
 
     const rate = checkRateLimit(`team-members-create:${getClientIdentifier(request)}`, 20, 10 * 60 * 1000);
