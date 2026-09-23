@@ -16,7 +16,7 @@ function escapeHtml(value: unknown): string {
     .replace(/'/g, "&#039;");
 }
 
-function noStoreJson(data: unknown, init?: ResponseInit) {
+function sanitizeSubject(value: string, fallback: string): string {\n  const cleaned = value.replace(/[\\r\\n]+/g, " ").trim();\n  return cleaned || fallback;\n}\n\nfunction noStoreJson(data: unknown, init?: ResponseInit) {
   return NextResponse.json(data, {
     ...init,
     headers: {
@@ -97,7 +97,7 @@ export async function POST(request: Request) {
       from,
       to: "geekyacedigital@gmail.com",
       replyTo: emailValue,
-      subject: `New Project Enquiry from ${nameValue}`,
+      subject: sanitizeSubject(`New Project Enquiry from ${nameValue}`, "New Project Enquiry"),
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #1e293b; background: #f8fafc; padding: 30px;">
           <div style="max-width: 700px; margin: 0 auto; background: #ffffff; border-radius: 16px; padding: 30px; border: 1px solid #e2e8f0;">
