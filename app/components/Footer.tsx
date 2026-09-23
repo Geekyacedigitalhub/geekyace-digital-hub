@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import Container from "./ui/Container";
 
 const services = [
@@ -27,15 +28,14 @@ export default function Footer() {
               <Image src="/images/logo.png" alt="GeekyAce Digital Hub" fill sizes="190px" className="object-contain object-left" />
             </Link>
             <p className="mt-5 max-w-md leading-7 text-slate-400">
-              Full-stack web development, Shopify engineering, AI products, and
-              automation systems built around real business needs.
+              Full-stack web development, Shopify engineering, AI products, and automation systems built around real business needs.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href="https://github.com/Geekyacedigitalhub" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold transition hover:border-green-500/40 hover:text-green-400">
-                <Github size={16} /> GitHub
+                <FaGithub size={16} /> GitHub
               </a>
               <a href="https://www.linkedin.com/company/geekyace-digital-hub" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold transition hover:border-green-500/40 hover:text-green-400">
-                <Linkedin size={16} /> LinkedIn
+                <FaLinkedinIn size={16} /> LinkedIn
               </a>
             </div>
             <a href="mailto:hello@geekyacedigitalhub.com" className="mt-6 inline-flex items-center gap-2 text-green-400 hover:text-green-300">
@@ -45,16 +45,12 @@ export default function Footer() {
 
           <div>
             <h3 className="mb-5 font-bold text-white">Services</h3>
-            <ul className="space-y-3.5">
-              {services.map((item) => <li key={item.name}><Link href={item.href} className="transition hover:text-green-400">{item.name}</Link></li>)}
-            </ul>
+            <ul className="space-y-3.5">{services.map((item) => <li key={item.name}><Link href={item.href} className="transition hover:text-green-400">{item.name}</Link></li>)}</ul>
           </div>
 
           <div>
             <h3 className="mb-5 font-bold text-white">Company</h3>
-            <ul className="space-y-3.5">
-              {company.map((item) => <li key={item.name}><Link href={item.href} className="transition hover:text-green-400">{item.name}</Link></li>)}
-            </ul>
+            <ul className="space-y-3.5">{company.map((item) => <li key={item.name}><Link href={item.href} className="transition hover:text-green-400">{item.name}</Link></li>)}</ul>
           </div>
 
           <div>
