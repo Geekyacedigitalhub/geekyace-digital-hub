@@ -6,6 +6,7 @@ import {
   unlink,
   writeFile,
 } from "fs/promises";
+import { getStoredTeamImagePath, isStoredTeamImageUrl } from "@/app/lib/team-member-images";
 import path from "path";
 import crypto from "crypto";
 import { cookies } from "next/headers";
@@ -168,8 +169,10 @@ export async function PUT(
   request: Request,
   { params }: RouteContext
 ) {
+  let uploadedImagePath: string | null = null;
+
   try {
-    if ((request.method === "PUT") && !isSameOriginRequest(request)) return sameOriginFailureResponse();
+    if (!isSameOriginRequest(request)) return sameOriginFailureResponse();
     const rate = checkRateLimit(`team-member-mutation:${getClientIdentifier(request)}`, 30, 10 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
@@ -373,6 +376,7 @@ export async function PUT(
           filePath,
           buffer
         );
+        uploadedImagePath = filePath;
 
         newImageUrl =
           `/uploads/team-members/${filename}`;
@@ -438,12 +442,14 @@ export async function PUT(
               body.platforms || ""
             ).trim();
 
-      if (
-        body.imageUrl !==
-        undefined
-      ) {
-        newImageUrl =
-          body.imageUrl || null;
+      if (body.imageUrl !== undefined) {
+        newImageUrl = body.imageUrl ? String(body.imageUrl).trim() : null;
+        if (newImageUrl && !isStoredTeamImageUrl(newImageUrl)) {
+          return NextResponse.json(
+            { error: "Invalid team member image URL." },
+            { status: 400 }
+          );
+        }
       }
     }
 
@@ -544,6 +550,14 @@ export async function PUT(
       "Update team member error:",
       error
     );
+
+    if (uploadedImagePath) {
+      try {
+        await unlink(uploadedImagePath);
+      } catch (cleanupError) {
+        console.warn("Unable to clean up uploaded image after update failure:", cleanupError);
+      }
+    }
 
     return NextResponse.json(
       {
