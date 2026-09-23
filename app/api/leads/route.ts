@@ -97,7 +97,7 @@ export async function GET(request: Request) {
 }
 
 function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(value);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
 function limitValue(value: unknown, maxLength: number): string | null {
@@ -109,14 +109,37 @@ function limitValue(value: unknown, maxLength: number): string | null {
 export async function POST(request: Request) {
   try {
     if (hasBodyExceededLimit(request, JSON_BODY_LIMIT)) return requestTooLargeResponse();
+    if (request.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !== "application/json") {
+      return NextResponse.json(
+        { success: false, message: "Content-Type must be application/json." },
+        { status: 415, headers: { "Cache-Control": "no-store" } }
+      );
+    }
+
     const rate = checkRateLimit(`lead:${getClientIdentifier(request)}`, 10, 10 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
-    const body: LeadRequestBody = await request.json();
+    const rawBody: unknown = await request.json();
+    if (!rawBody || typeof rawBody !== "object" || Array.isArray(rawBody)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid request body." },
+        { status: 400, headers: { "Cache-Control": "no-store" } }
+      );
+    }
+    const body = rawBody as LeadRequestBody;
 
     const email = limitValue(body.email, 254);
     if (email && !isValidEmail(email)) {
       return NextResponse.json({ success: false, message: "Please provide a valid email address." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+    }
+
+    const projectType = limitValue(body.projectType, 200);
+    const mainGoal = limitValue(body.mainGoal, 1000);
+    if (!projectType && !mainGoal) {
+      return NextResponse.json(
+        { success: false, message: "Please provide a project type or main goal." },
+        { status: 400, headers: { "Cache-Control": "no-store" } }
+      );
     }
 
     const lead = await prisma.lead.create({
@@ -127,9 +150,8 @@ export async function POST(request: Request) {
           limitValue(body.businessName, 200),
         businessType:
           limitValue(body.businessType, 200),
-        projectType:
-          limitValue(body.projectType, 200),
-        mainGoal: limitValue(body.mainGoal, 1000),
+        projectType,
+        mainGoal,
         features: limitValue(body.features, 2000),
         targetUsers:
           limitValue(body.targetUsers, 500),
@@ -159,7 +181,7 @@ export async function POST(request: Request) {
         success: false,
         message: "Unable to create lead.",
       },
-      { status: 500 }
+      { status: 500, headers: { "Cache-Control": "no-store" } }
     );
   }
 }
