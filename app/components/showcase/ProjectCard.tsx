@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Calendar, Github, Layers3, ExternalLink } from "lucide-react";
+import { ArrowRight, Calendar, Layers3, ExternalLink } from "lucide-react";
+import { FaGithub } from "react-icons/fa6";
 
 import { Project } from "@/app/types/project";
 import ProjectImage from "./ProjectImage";
@@ -20,9 +21,7 @@ export default function ProjectCard({ project, priority = false }: ProjectCardPr
           <ProjectImage src={project.image} alt={project.title} priority={priority} />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/30 to-transparent" />
           <div className="absolute left-5 top-5">
-            <span className="rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-slate-800 shadow-sm backdrop-blur">
-              {project.category}
-            </span>
+            <span className="rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-slate-800 shadow-sm backdrop-blur">{project.category}</span>
           </div>
         </div>
       </Link>
@@ -40,12 +39,8 @@ export default function ProjectCard({ project, priority = false }: ProjectCardPr
         <p className="mt-4 leading-8 text-slate-600">{project.shortDescription}</p>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          {technologies.map((tech) => (
-            <span key={tech} className="rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700">{tech}</span>
-          ))}
-          {remainingTechnologies > 0 && (
-            <span className="rounded-lg bg-green-50 px-3 py-2 text-sm font-semibold text-green-700">+{remainingTechnologies}</span>
-          )}
+          {technologies.map((tech) => <span key={tech} className="rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700">{tech}</span>)}
+          {remainingTechnologies > 0 && <span className="rounded-lg bg-green-50 px-3 py-2 text-sm font-semibold text-green-700">+{remainingTechnologies}</span>}
         </div>
 
         <div className="mt-8 flex items-end justify-between gap-4 border-t border-slate-100 pt-6">
@@ -57,7 +52,7 @@ export default function ProjectCard({ project, priority = false }: ProjectCardPr
           <div className="flex items-center gap-3">
             {project.githubUrl && (
               <a href={project.githubUrl} target="_blank" rel="noreferrer" aria-label={`Open ${project.title} on GitHub`} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 hover:border-green-300 hover:text-green-700">
-                <Github size={16} /> GitHub
+                <FaGithub size={16} /> GitHub
               </a>
             )}
             {project.liveUrl && (
