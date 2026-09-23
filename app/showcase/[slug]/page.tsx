@@ -6,6 +6,7 @@ import {
   ArrowRight,
   CheckCircle2,
   ExternalLink,
+  Github,
   Layers3,
   CalendarDays,
   Building2,
@@ -127,6 +128,17 @@ export default async function ProjectCaseStudyPage({
             <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">
               {project.shortDescription}
             </p>
+
+            <div className="mt-7 flex flex-wrap gap-2">
+              <span className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-slate-300 ring-1 ring-inset ring-white/10">
+                {project.githubUrl ? "Public repository" : "Private repository"}
+              </span>
+              {project.liveUrl && (
+                <span className="rounded-full bg-green-500/10 px-3 py-1.5 text-xs font-semibold text-green-300 ring-1 ring-inset ring-green-500/20">
+                  Live product
+                </span>
+              )}
+            </div>
 
             {/* Project Metadata */}
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -383,22 +395,35 @@ export default async function ProjectCaseStudyPage({
 
                 </div>
 
-                {/* Live Project */}
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-4 font-bold text-white transition hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg"
-                  >
-                    Visit Live Project
+                <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-4 font-bold text-white transition hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg"
+                    >
+                      Visit Live Project
+                      <ExternalLink size={18} aria-hidden="true" />
+                    </a>
+                  )}
 
-                    <ExternalLink
-                      size={18}
-                      aria-hidden="true"
-                    />
-                  </a>
-                )}
+                  {project.githubUrl ? (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-4 font-bold text-slate-800 transition hover:-translate-y-0.5 hover:border-green-300 hover:text-green-700"
+                    >
+                      View Source on GitHub
+                      <Github size={18} aria-hidden="true" />
+                    </a>
+                  ) : (
+                    <div className="rounded-xl border border-slate-200 bg-white px-5 py-4 text-center text-sm font-semibold text-slate-500">
+                      Private repository — implementation protected
+                    </div>
+                  )}
+                </div>
 
               </div>
 
