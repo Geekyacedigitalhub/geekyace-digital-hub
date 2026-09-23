@@ -16,7 +16,12 @@ function escapeHtml(value: unknown): string {
     .replace(/'/g, "&#039;");
 }
 
-function sanitizeSubject(value: string, fallback: string): string {\n  const cleaned = value.replace(/[\\r\\n]+/g, " ").trim();\n  return cleaned || fallback;\n}\n\nfunction noStoreJson(data: unknown, init?: ResponseInit) {
+function sanitizeSubject(value: string, fallback: string): string {
+  const cleaned = value.replace(/[\r\n]+/g, " ").trim();
+  return cleaned || fallback;
+}
+
+function noStoreJson(data: unknown, init?: ResponseInit) {
   return NextResponse.json(data, {
     ...init,
     headers: {
