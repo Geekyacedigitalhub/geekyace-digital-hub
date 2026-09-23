@@ -23,8 +23,8 @@ export default function FeaturedCaseStudies() {
           </h2>
 
           <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg">
-            Explore selected digital projects created by Geekyace Digital Hub
-            across websites, applications, AI solutions, and business systems.
+            Explore production-oriented work across full-stack web apps, Shopify engineering,
+            AI products, commerce intelligence, automation, and developer tooling.
           </p>
         </div>
 
