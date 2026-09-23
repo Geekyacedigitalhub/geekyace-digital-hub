@@ -18,7 +18,7 @@ import {
   isAdminAuthenticated,
 } from "@/app/lib/admin-auth";
 
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;\nconst FIELD_LIMITS = { name: 200, role: 200, bio: 2000, location: 200, availability: 100, skills: 2000, expertise: 2000, platforms: 1000 } as const;\n\nfunction validateFields(fields: Record<string, string>): string | null {\n  for (const [field, value] of Object.entries(fields)) {\n    const limit = FIELD_LIMITS[field as keyof typeof FIELD_LIMITS];\n    if (limit && value.length > limit) return `${field} is too long.`;\n  }\n  return null;\n}
 
 const publicTeamMemberSelect = {
   id: true,
