@@ -17,9 +17,14 @@ export async function GET() {
     const authenticated =
       isAdminAuthenticated(session);
 
-    return NextResponse.json({
-      authenticated,
-    });
+    return NextResponse.json(
+      { authenticated },
+      {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
+    );
   } catch (error) {
     console.error(
       "Admin session check error:",
@@ -32,6 +37,9 @@ export async function GET() {
       },
       {
         status: 500,
+        headers: {
+          "Cache-Control": "no-store",
+        },
       }
     );
   }
