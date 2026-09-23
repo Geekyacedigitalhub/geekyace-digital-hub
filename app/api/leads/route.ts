@@ -93,7 +93,7 @@ export async function GET(request: Request) {
   }
 }
 
-function limitValue(value: unknown, maxLength: number): string | null {
+function isValidEmail(value: string): boolean {\n  return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value);\n}\n\nfunction limitValue(value: unknown, maxLength: number): string | null {
   if (typeof value !== "string") return null;
   const cleaned = value.trim();
   return cleaned ? cleaned.slice(0, maxLength) : null;
@@ -110,7 +110,7 @@ export async function POST(request: Request) {
     const lead = await prisma.lead.create({
       data: {
         name: limitValue(body.name, 200),
-        email: limitValue(body.email, 320),
+        email,
         businessName:
           limitValue(body.businessName, 200),
         businessType:
@@ -137,7 +137,7 @@ export async function POST(request: Request) {
         message: "Lead created successfully.",
         leadId: lead.id,
       },
-      { status: 201 }
+      { status: 201, headers: { "Cache-Control": "no-store" } }
     );
   } catch (error) {
     console.error("CREATE LEAD ERROR:", error);
