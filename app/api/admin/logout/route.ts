@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
+import { isSameOriginRequest, sameOriginFailureResponse } from "@/app/lib/request-security";
 
 import {
   getAdminSessionCookieName,
   getAdminSessionCookieOptions,
 } from "@/app/lib/admin-auth";
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
+    if (!isSameOriginRequest(request)) return sameOriginFailureResponse();
     const response = NextResponse.json({
       success: true,
       message: "Admin logged out successfully.",
