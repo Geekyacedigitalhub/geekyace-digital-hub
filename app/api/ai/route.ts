@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = "gemini-3.5-flash-lite";
@@ -262,6 +263,9 @@ function removeInternalMarkers(reply: string): string {
 
 export async function POST(request: Request) {
   try {
+    const rate = checkRateLimit(`ai:${getClientIdentifier(request)}`, 10, 60 * 1000);
+    if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
+
     if (!GEMINI_API_KEY) {
       return NextResponse.json(
         {
@@ -276,6 +280,10 @@ export async function POST(request: Request) {
     const body: RequestBody = await request.json();
 
     const message = String(body?.message || "").trim();
+
+    if (message.length > 4000) {
+      return NextResponse.json({ success: false, message: "Message is too long." }, { status: 400 });
+    }
 
     const previousInteractionId =
       typeof body?.previousInteractionId === "string" &&
