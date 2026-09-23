@@ -20,6 +20,30 @@ function escapeHtml(value: unknown): string {
     .replace(/'/g, "&#039;");
 }
 
+function isValidEmail(value: string): boolean {
+  return value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function hasValidFileSignature(buffer: Buffer, type: string): boolean {
+  if (type === "image/png") return buffer.length >= 8 && buffer.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+  if (type === "image/jpeg") return buffer.length >= 3 && buffer.subarray(0, 3).equals(Buffer.from([0xff, 0xd8, 0xff]));
+  if (type === "image/webp") return buffer.length >= 12 && buffer.subarray(0, 4).toString("ascii") === "RIFF" && buffer.subarray(8, 12).toString("ascii") === "WEBP";
+  if (type === "application/pdf") return buffer.subarray(0, 5).toString("ascii") === "%PDF-";
+  return false;
+}
+
+function sanitizeFilename(value: string): string {
+  const cleaned = value.normalize("NFKC").replace(/[^a-zA-Z0-9._-]/g, "_").replace(/_+/g, "_").slice(0, 120);
+  return cleaned || "merchantos-support-file";
+}
+
+function noStoreJson(data: unknown, init?: ResponseInit) {
+  return noStoreJson(data, {
+    ...init,
+    headers: { "Cache-Control": "no-store", ...(init?.headers ?? {}) },
+  });
+}
+
 function isHttpUrl(value: string): boolean {
   try {
     const url = new URL(value);
@@ -41,7 +65,7 @@ export async function POST(request: Request) {
 
     if (!apiKey || !from) {
       console.error("MerchantOS support email is not configured.");
-      return NextResponse.json(
+      return noStoreJson(
         { success: false, message: "Support email is not configured yet." },
         { status: 500 }
       );
@@ -50,7 +74,7 @@ export async function POST(request: Request) {
     const resend = new Resend(apiKey);
     const formData = await request.formData();
     const honeypot = String(formData.get("website") || "").trim();
-    if (honeypot) return NextResponse.json({ success: true });
+    if (honeypot) return noStoreJson({ success: true });
 
     const name = String(formData.get("name") || "").trim();
     const email = String(formData.get("email") || "").trim();
@@ -60,21 +84,21 @@ export async function POST(request: Request) {
     const attachment = formData.get("attachment");
 
     if (!name || !email || !storeUrl || !description) {
-      return NextResponse.json(
+      return noStoreJson(
         { success: false, message: "Please complete all required fields." },
         { status: 400 }
       );
     }
 
     if (name.length > 120 || email.length > 254 || storeUrl.length > 500 || description.length > 5000) {
-      return NextResponse.json(
+      return noStoreJson(
         { success: false, message: "One or more fields are too long." },
         { status: 400 }
       );
     }
 
-    if (!/^\S+@\S+\.\S+$/.test(email) || !isHttpUrl(storeUrl)) {
-      return NextResponse.json(
+    if (!isValidEmail(email) || !isHttpUrl(storeUrl)) {
+      return noStoreJson(
         { success: false, message: "Please enter a valid email address and store URL." },
         { status: 400 }
       );
@@ -83,20 +107,27 @@ export async function POST(request: Request) {
     const attachments: { filename: string; content: Buffer }[] = [];
     if (attachment instanceof File && attachment.size > 0) {
       if (attachment.size > MAX_FILE_BYTES) {
-        return NextResponse.json(
+        return noStoreJson(
           { success: false, message: "The attachment must be 5 MB or smaller." },
           { status: 400 }
         );
       }
       if (!ALLOWED_TYPES.has(attachment.type)) {
-        return NextResponse.json(
+        return noStoreJson(
           { success: false, message: "Upload a PNG, JPG, WebP, or PDF file." },
           { status: 400 }
         );
       }
+      const content = Buffer.from(await attachment.arrayBuffer());
+      if (!hasValidFileSignature(content, attachment.type)) {
+        return noStoreJson(
+          { success: false, message: "The attachment does not match its file type." },
+          { status: 400 }
+        );
+      }
       attachments.push({
-        filename: attachment.name || "merchantos-support-file",
-        content: Buffer.from(await attachment.arrayBuffer()),
+        filename: sanitizeFilename(attachment.name),
+        content,
       });
     }
 
@@ -127,7 +158,7 @@ export async function POST(request: Request) {
 
     if (ticket.error) {
       console.error("MerchantOS support ticket email failed:", ticket.error);
-      return NextResponse.json(
+      return noStoreJson(
         { success: false, message: "We couldn't send your support request. Please try again." },
         { status: 500 }
       );
@@ -152,16 +183,16 @@ export async function POST(request: Request) {
 
     if (receipt.error) {
       console.error("MerchantOS support auto-responder failed:", receipt.error);
-      return NextResponse.json(
+      return noStoreJson(
         { success: false, message: "Your request was received, but the confirmation email could not be sent." },
         { status: 502 }
       );
     }
 
-    return NextResponse.json({ success: true, message: "Support request received." });
+    return noStoreJson({ success: true, message: "Support request received." });
   } catch (error) {
     console.error("MERCHANTOS SUPPORT API ERROR:", error);
-    return NextResponse.json(
+    return noStoreJson(
       { success: false, message: "Something went wrong while sending your support request." },
       { status: 500 }
     );
