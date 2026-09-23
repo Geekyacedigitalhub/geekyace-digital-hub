@@ -23,7 +23,7 @@ type LeadRequestBody = {
   conversationSummary?: string;
 };
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const cookieStore = await cookies();
     const session = cookieStore.get(getAdminSessionCookieName())?.value;
@@ -93,6 +93,12 @@ export async function GET() {
   }
 }
 
+function limitValue(value: unknown, maxLength: number): string | null {
+  if (typeof value !== "string") return null;
+  const cleaned = value.trim();
+  return cleaned ? cleaned.slice(0, maxLength) : null;
+}
+
 export async function POST(request: Request) {
   try {
     if (hasBodyExceededLimit(request, JSON_BODY_LIMIT)) return requestTooLargeResponse();
@@ -103,24 +109,24 @@ export async function POST(request: Request) {
 
     const lead = await prisma.lead.create({
       data: {
-        name: body.name?.trim() || null,
-        email: body.email?.trim() || null,
+        name: limitValue(body.name, 200),
+        email: limitValue(body.email, 320),
         businessName:
           body.businessName?.trim() || null,
         businessType:
           body.businessType?.trim() || null,
         projectType:
           body.projectType?.trim() || null,
-        mainGoal: body.mainGoal?.trim() || null,
-        features: body.features?.trim() || null,
+        mainGoal: limitValue(body.mainGoal, 1000),
+        features: limitValue(body.features, 2000),
         targetUsers:
           body.targetUsers?.trim() || null,
-        timeline: body.timeline?.trim() || null,
-        budget: body.budget?.trim() || null,
+        timeline: limitValue(body.timeline, 200),
+        budget: limitValue(body.budget, 200),
         recommendedService:
           body.recommendedService?.trim() || null,
         conversationSummary:
-          body.conversationSummary?.trim() || null,
+          limitValue(body.conversationSummary, 4000),
         status: "NEW",
       },
     });
