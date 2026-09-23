@@ -203,6 +203,16 @@ type LeadData = {
   conversationSummary?: string | null;
 };
 
+function isValidEmail(value: string): boolean {
+  return value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function cleanInteractionId(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const cleaned = value.trim();
+  return /^[A-Za-z0-9_-]{1,200}$/.test(cleaned) ? cleaned : undefined;
+}
+
 function cleanLeadValue(
   value: unknown,
   maxLength: number
@@ -292,11 +302,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: "Message is too long." }, { status: 400 });
     }
 
-    const previousInteractionId =
-      typeof body?.previousInteractionId === "string" &&
-      body.previousInteractionId.trim().length > 0
-        ? body.previousInteractionId.trim()
-        : undefined;
+    const previousInteractionId = cleanInteractionId(body?.previousInteractionId);
 
     if (!message) {
       return NextResponse.json(
@@ -444,6 +450,8 @@ export async function POST(request: Request) {
       leadReady,
       leadSaved,
       leadId,
+    }, {
+      headers: { "Cache-Control": "no-store" },
     });
   } catch (error) {
     console.error(
