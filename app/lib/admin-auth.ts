@@ -41,7 +41,7 @@ export function getAdminSessionCookieName(): string {
 }
 
 export function getAdminSessionCookieOptions() {
-  return { httpOnly: true, secure: true, sameSite: "lax" as const, path: "/", maxAge: SESSION_MAX_AGE };
+  return { httpOnly: true, secure: true, sameSite: "strict" as const, path: "/", maxAge: SESSION_MAX_AGE };
 }
 
 export function isAdminAuthenticated(session: string | undefined): boolean {
