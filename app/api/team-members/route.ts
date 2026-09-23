@@ -14,6 +14,19 @@ import {
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
+const publicTeamMemberSelect = {
+  id: true,
+  name: true,
+  role: true,
+  bio: true,
+  location: true,
+  availability: true,
+  skills: true,
+  expertise: true,
+  platforms: true,
+  imageUrl: true,
+} as const;
+
 const ALLOWED_IMAGE_TYPES = {
   "image/jpeg": "jpg",
   "image/png": "png",
@@ -105,9 +118,11 @@ function isValidImageSignature(
 export async function GET() {
   try {
     const members = await prisma.teamMember.findMany({
+      select: publicTeamMemberSelect,
       orderBy: {
         createdAt: "desc",
       },
+      take: 100,
     });
 
     return NextResponse.json({
