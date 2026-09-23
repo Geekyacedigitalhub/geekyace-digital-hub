@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
 
 const MAX_FILE_BYTES = 5 * 1024 * 1024;
 const ALLOWED_TYPES = new Set([
@@ -29,6 +30,9 @@ function isHttpUrl(value: string): boolean {
 
 export async function POST(request: Request) {
   try {
+    const rate = checkRateLimit(`merchantos-support:${getClientIdentifier(request)}`, 5, 10 * 60 * 1000);
+    if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
+
     const apiKey = process.env.RESEND_API_KEY;
     const from = process.env.RESEND_FROM_EMAIL;
     const supportTo = process.env.MERCHANTOS_SUPPORT_EMAIL || "hello@geekyacedigitalhub.com";
