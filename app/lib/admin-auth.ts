@@ -5,7 +5,7 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "";
 const ADMIN_SESSION_SECRET =
   process.env.ADMIN_SESSION_SECRET ?? "";
 
-const SESSION_COOKIE_NAME = "geekyace_admin_session";
+const SESSION_COOKIE_NAME = "__Host-geekyace_admin_session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
 
 function createSignature(value: string): string {
@@ -54,7 +54,7 @@ export function getAdminSessionCookieName(): string {
 export function getAdminSessionCookieOptions() {
   return {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     sameSite: "lax" as const,
     path: "/",
     maxAge: SESSION_MAX_AGE,
