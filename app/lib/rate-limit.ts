@@ -6,6 +6,21 @@ type RateLimitResult = {
 };
 
 const buckets = new Map<string, RateLimitEntry>();
+const MAX_BUCKETS = 10_000;
+
+function pruneExpiredBuckets(now: number): void {
+  for (const [key, entry] of buckets) {
+    if (entry.resetAt <= now) buckets.delete(key);
+  }
+
+  if (buckets.size <= MAX_BUCKETS) return;
+
+  const oldest = [...buckets.entries()]
+    .sort(([, a], [, b]) => a.resetAt - b.resetAt)
+    .slice(0, buckets.size - MAX_BUCKETS);
+
+  for (const [key] of oldest) buckets.delete(key);
+}
 
 export function getClientIdentifier(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for");
@@ -19,6 +34,7 @@ export function checkRateLimit(
   windowMs: number
 ): RateLimitResult {
   const now = Date.now();
+  if (buckets.size >= MAX_BUCKETS) pruneExpiredBuckets(now);
   const current = buckets.get(key);
 
   if (!current || current.resetAt <= now) {
