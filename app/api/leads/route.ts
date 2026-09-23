@@ -107,7 +107,7 @@ export async function POST(request: Request) {
 
     const body: LeadRequestBody = await request.json();
 
-    const lead = await prisma.lead.create({
+    const email = limitValue(body.email, 254);\n    if (email && !isValidEmail(email)) {\n      return NextResponse.json({ success: false, message: "Please provide a valid email address." }, { status: 400, headers: { "Cache-Control": "no-store" } });\n    }\n\n    const lead = await prisma.lead.create({
       data: {
         name: limitValue(body.name, 200),
         email,
