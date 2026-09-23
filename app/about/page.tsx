@@ -78,13 +78,13 @@ const values = [
 
 const experienceStats = [
   {
-    value: "15+",
+    value: "10+",
     label: "Digital Services",
     description: "Technology and creative solutions",
     icon: Layers3,
   },
   {
-    value: "5+",
+    value: "6+",
     label: "Core Areas",
     description: "Development, AI, automation and more",
     icon: Cpu,
@@ -283,14 +283,14 @@ const socialPlatforms = [
     category: "Messaging",
     description:
       "Chat directly with GeekyAce Digital Hub about your project or service.",
-    url: "https://wa.me/YOUR_PHONE_NUMBER",
+    url: "mailto:hello@geekyacedigitalhub.com",
     icon: FaWhatsapp,
   },
   {
     name: "Discord",
     category: "Community",
     description: "Connect with our digital and technology community.",
-    url: "https://discord.gg/YOUR_INVITE",
+    url: "https://github.com/Geekyacedigitalhub",
     icon: FaDiscord,
   },
   {
@@ -348,77 +348,77 @@ const freelancingPlatforms = [
     name: "Fiverr",
     description:
       "Hire GeekyAce Digital Hub for websites, AI, automation, design, and digital services.",
-    url: "https://fiverr.com/YOUR_USERNAME",
+    url: "https://www.fiverr.com/",
     short: "fi",
   },
   {
     name: "Upwork",
     description:
       "Work with us on professional technology, development, AI, and digital projects.",
-    url: "https://upwork.com/freelancers/YOUR_USERNAME",
+    url: "https://www.upwork.com/",
     short: "up",
   },
   {
     name: "Freelancer",
     description:
       "Find our freelance services and professional project work.",
-    url: "https://freelancer.com/u/YOUR_USERNAME",
+    url: "https://www.freelancer.com/",
     short: "fr",
   },
   {
     name: "PeoplePerHour",
     description:
       "Hire us for digital projects, development, design, and professional services.",
-    url: "https://peopleperhour.com/freelancer/YOUR_USERNAME",
+    url: "https://www.peopleperhour.com/",
     short: "pp",
   },
   {
     name: "Guru",
     description:
       "Connect with GeekyAce Digital Hub for professional freelance projects.",
-    url: "https://guru.com/freelancers/YOUR_USERNAME",
+    url: "https://www.guru.com/",
     short: "gu",
   },
   {
     name: "Contra",
     description:
       "Explore our independent digital services and professional work.",
-    url: "https://contra.com/YOUR_USERNAME",
+    url: "https://contra.com/",
     short: "co",
   },
   {
     name: "Workana",
     description:
       "Connect with us for digital, technology, and creative projects.",
-    url: "https://workana.com/freelancer/YOUR_USERNAME",
+    url: "https://www.workana.com/",
     short: "wo",
   },
   {
     name: "99designs",
     description:
       "Explore our professional creative and design services.",
-    url: "https://99designs.com/profiles/YOUR_USERNAME",
+    url: "https://99designs.com/",
     short: "99",
   },
   {
     name: "DesignCrowd",
     description:
       "Discover our creative, branding, and design services.",
-    url: "https://designcrowd.com/profile/YOUR_USERNAME",
+    url: "https://www.designcrowd.com/",
     short: "dc",
   },
   {
     name: "Truelancer",
     description:
       "Hire us for digital, technology, development, and creative projects.",
-    url: "https://truelancer.com/freelancer/YOUR_USERNAME",
+    url: "https://www.truelancer.com/",
     short: "tr",
   },
   {
     name: "Hubstaff Talent",
     description:
       "Find GeekyAce Digital Hub for remote digital and technology projects.",
-    url: "https://talent.hubstaff.com/YOUR_USERNAME",
+    url: "https://talent.hubstaff.com/",
     short: "ht",
   },
   {
@@ -432,7 +432,7 @@ const freelancingPlatforms = [
     name: "Malt",
     description:
       "Connect with us for professional freelance and technology projects.",
-    url: "https://malt.com/profile/YOUR_USERNAME",
+    url: "https://www.malt.com/",
     short: "ma",
   },
   {
