@@ -5,8 +5,10 @@ import { mobile } from "./mobile";
 import { ai } from "./ai";
 import { automation } from "./automation";
 import { branding } from "./branding";
+import githubProjects from "./github";
 
 export const projects: Project[] = [
+  ...githubProjects,
   ...websites,
   ...mobile,
   ...ai,
@@ -14,9 +16,7 @@ export const projects: Project[] = [
   ...branding,
 ];
 
-export const featuredProjects = projects.filter(
-  (project) => project.featured
-);
+export const featuredProjects = projects.filter((project) => project.featured);
 
 export const industries = [...new Set(projects.map((p) => p.industry))].sort();
 export const services = [...new Set(projects.map((p) => p.service))].sort();
