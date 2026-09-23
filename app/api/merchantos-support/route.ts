@@ -38,7 +38,7 @@ function sanitizeFilename(value: string): string {
 }
 
 function noStoreJson(data: unknown, init?: ResponseInit) {
-  return noStoreJson(data, {
+  return NextResponse.json(data, {
     ...init,
     headers: { "Cache-Control": "no-store", ...(init?.headers ?? {}) },
   });
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (name.length > 120 || email.length > 254 || storeUrl.length > 500 || description.length > 5000) {
+    if (name.length > 120 || email.length > 254 || storeUrl.length > 500 || description.length > 5000 || themeName.length > 120) {
       return noStoreJson(
         { success: false, message: "One or more fields are too long." },
         { status: 400 }
