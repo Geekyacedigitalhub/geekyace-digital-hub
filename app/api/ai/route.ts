@@ -203,12 +203,15 @@ type LeadData = {
   conversationSummary?: string | null;
 };
 
-function cleanLeadValue(value: unknown): string | null {
+function cleanLeadValue(
+  value: unknown,
+  maxLength: number
+): string | null {
   if (typeof value !== "string") {
     return null;
   }
 
-  const cleaned = value.trim();
+  const cleaned = value.trim().slice(0, maxLength);
 
   return cleaned.length > 0 ? cleaned : null;
 }
@@ -232,21 +235,23 @@ function extractLeadData(reply: string): LeadData | null {
     const parsed = JSON.parse(jsonText);
 
     return {
-      name: cleanLeadValue(parsed?.name),
-      email: cleanLeadValue(parsed?.email),
-      businessName: cleanLeadValue(parsed?.businessName),
-      businessType: cleanLeadValue(parsed?.businessType),
-      projectType: cleanLeadValue(parsed?.projectType),
-      mainGoal: cleanLeadValue(parsed?.mainGoal),
-      features: cleanLeadValue(parsed?.features),
-      targetUsers: cleanLeadValue(parsed?.targetUsers),
-      timeline: cleanLeadValue(parsed?.timeline),
-      budget: cleanLeadValue(parsed?.budget),
+      name: cleanLeadValue(parsed?.name, 200),
+      email: cleanLeadValue(parsed?.email, 320),
+      businessName: cleanLeadValue(parsed?.businessName, 200),
+      businessType: cleanLeadValue(parsed?.businessType, 200),
+      projectType: cleanLeadValue(parsed?.projectType, 200),
+      mainGoal: cleanLeadValue(parsed?.mainGoal, 1000),
+      features: cleanLeadValue(parsed?.features, 2000),
+      targetUsers: cleanLeadValue(parsed?.targetUsers, 500),
+      timeline: cleanLeadValue(parsed?.timeline, 200),
+      budget: cleanLeadValue(parsed?.budget, 200),
       recommendedService: cleanLeadValue(
-        parsed?.recommendedService
+        parsed?.recommendedService,
+        200
       ),
       conversationSummary: cleanLeadValue(
-        parsed?.conversationSummary
+        parsed?.conversationSummary,
+        4000
       ),
     };
   } catch (error) {
