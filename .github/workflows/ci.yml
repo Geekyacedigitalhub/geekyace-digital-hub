@@ -53,5 +53,8 @@ jobs:
       - name: Apply Prisma migrations
         run: npm run db:deploy
 
+      - name: Lint
+        run: npm run lint
+
       - name: Build
         run: npm run build
