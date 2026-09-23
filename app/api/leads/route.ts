@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/app/lib/prisma";
 import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
+import { hasBodyExceededLimit, JSON_BODY_LIMIT, requestTooLargeResponse } from "@/app/lib/request-limits";
 import {
   getAdminSessionCookieName,
   isAdminAuthenticated,
@@ -59,6 +60,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    if (hasBodyExceededLimit(request, JSON_BODY_LIMIT)) return requestTooLargeResponse();
     const rate = checkRateLimit(`lead:${getClientIdentifier(request)}`, 10, 10 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
