@@ -333,8 +333,7 @@ export async function POST(request: Request) {
         {
           success: false,
           message:
-            data?.error?.message ||
-            "The GeekyAce AI service could not process your request.",
+            "The GeekyAce AI service could not process your request. Please try again.",
         },
         { status: geminiResponse.status }
       );
@@ -449,9 +448,7 @@ export async function POST(request: Request) {
       {
         success: false,
         message:
-          error instanceof Error
-            ? error.message
-            : "Something went wrong with the GeekyAce AI service.",
+          "Something went wrong with the GeekyAce AI service. Please try again.",
       },
       { status: 500 }
     );
