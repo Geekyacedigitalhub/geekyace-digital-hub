@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
 
 function escapeHtml(value: unknown): string {
   return String(value ?? "")
@@ -12,6 +13,9 @@ function escapeHtml(value: unknown): string {
 
 export async function POST(request: Request) {
   try {
+    const rate = checkRateLimit(`contact:${getClientIdentifier(request)}`, 5, 10 * 60 * 1000);
+    if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
+
     if (!process.env.RESEND_API_KEY) {
       console.error("RESEND_API_KEY is not configured.");
       return NextResponse.json(
@@ -24,6 +28,10 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     const { name, company, email, phone, service, budget, timeline, contactMethod, message } = body;
+
+    if ([name, company, email, phone, service, budget, timeline, contactMethod, message].some((value) => String(value ?? "").length > 5000)) {
+      return NextResponse.json({ success: false, message: "One or more fields are too long." }, { status: 400 });
+    }
 
     if (!name || !email || !phone || !service || !message) {
       return NextResponse.json(
