@@ -270,6 +270,17 @@ function extractLeadData(reply: string): LeadData | null {
   }
 }
 
+const ALLOWED_SERVICES = new Set([
+  "Website Development",
+  "AI Solutions",
+  "Business Automation",
+  "Mobile Applications",
+  "UI / UX Design",
+  "Cloud Solutions",
+  "Branding",
+  "Modern Digital Experiences",
+]);
+
 function removeInternalMarkers(reply: string): string {
   return reply
     .replace(/\[LEAD_READY\]/g, "")
@@ -348,7 +359,7 @@ export async function POST(request: Request) {
           message:
             "The GeekyAce AI service could not process your request. Please try again.",
         },
-        { status: geminiResponse.status }
+        { status: 502 }
       );
     }
 
@@ -397,11 +408,42 @@ export async function POST(request: Request) {
      * Save qualified lead
      */
     if (leadReady) {
-      const leadData = extractLeadData(reply);\n      const interactionId = cleanInteractionId(data?.id);\n\n      if (leadData?.email && !isValidEmail(leadData.email)) {\n        leadData.email = null;\n      }
+      const leadData = extractLeadData(reply);
+      const interactionId = cleanInteractionId(data?.id);
 
-      if (leadData) {
+      if (leadData?.email && !isValidEmail(leadData.email)) {
+        leadData.email = null;
+      }
+
+      if (
+        leadData &&
+        leadData.recommendedService &&
+        ALLOWED_SERVICES.has(leadData.recommendedService) &&
+        (leadData.projectType || leadData.mainGoal)
+      ) {
         try {
-          const savedLead = await prisma.lead.create({
+          const savedLead = interactionId
+            ? await prisma.lead.upsert({
+                where: { aiInteractionId: interactionId },
+                update: {},
+                create: {
+                  name: leadData.name,
+                  email: leadData.email,
+                  businessName: leadData.businessName,
+                  businessType: leadData.businessType,
+                  projectType: leadData.projectType,
+                  mainGoal: leadData.mainGoal,
+                  features: leadData.features,
+                  targetUsers: leadData.targetUsers,
+                  timeline: leadData.timeline,
+                  budget: leadData.budget,
+                  recommendedService: leadData.recommendedService,
+                  conversationSummary: leadData.conversationSummary,
+                  status: "NEW",
+                  aiInteractionId: interactionId,
+                },
+              })
+            : await prisma.lead.create({
             data: {
               name: leadData.name,
               email: leadData.email,
@@ -435,7 +477,7 @@ export async function POST(request: Request) {
         }
       } else {
         console.warn(
-          "Lead was marked ready, but valid LEAD_DATA was not found."
+          "Lead was marked ready, but the lead data did not meet validation requirements."
         );
       }
     }
