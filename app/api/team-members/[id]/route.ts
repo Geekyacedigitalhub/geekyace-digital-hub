@@ -7,6 +7,12 @@ import {
 } from "fs/promises";
 import path from "path";
 import crypto from "crypto";
+import { cookies } from "next/headers";
+
+import {
+  getAdminSessionCookieName,
+  isAdminAuthenticated,
+} from "@/app/lib/admin-auth";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
@@ -146,6 +152,23 @@ export async function PUT(
   { params }: RouteContext
 ) {
   try {
+    const cookieStore = await cookies();
+    const session = cookieStore.get(
+      getAdminSessionCookieName()
+    )?.value;
+
+    if (!isAdminAuthenticated(session)) {
+      return NextResponse.json(
+        {
+          error:
+            "Unauthorized. Administrator access required.",
+        },
+        {
+          status: 401,
+        }
+      );
+    }
+
     const { id } = await params;
 
     const result =
@@ -521,6 +544,23 @@ export async function DELETE(
   { params }: RouteContext
 ) {
   try {
+    const cookieStore = await cookies();
+    const session = cookieStore.get(
+      getAdminSessionCookieName()
+    )?.value;
+
+    if (!isAdminAuthenticated(session)) {
+      return NextResponse.json(
+        {
+          error:
+            "Unauthorized. Administrator access required.",
+        },
+        {
+          status: 401,
+        }
+      );
+    }
+
     const { id } = await params;
 
     const result =
