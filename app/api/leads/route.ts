@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { prisma } from "@/app/lib/prisma";
+import {
+  getAdminSessionCookieName,
+  isAdminAuthenticated,
+} from "@/app/lib/admin-auth";
 
 type LeadRequestBody = {
   name?: string;
@@ -18,6 +23,16 @@ type LeadRequestBody = {
 
 export async function GET() {
   try {
+    const cookieStore = await cookies();
+    const session = cookieStore.get(getAdminSessionCookieName())?.value;
+
+    if (!isAdminAuthenticated(session)) {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized." },
+        { status: 401 }
+      );
+    }
+
     const leads = await prisma.lead.findMany({
       orderBy: {
         createdAt: "desc",
