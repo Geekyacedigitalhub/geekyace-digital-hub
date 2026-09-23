@@ -112,19 +112,19 @@ export async function POST(request: Request) {
         name: limitValue(body.name, 200),
         email: limitValue(body.email, 320),
         businessName:
-          body.businessName?.trim() || null,
+          limitValue(body.businessName, 200),
         businessType:
-          body.businessType?.trim() || null,
+          limitValue(body.businessType, 200),
         projectType:
-          body.projectType?.trim() || null,
+          limitValue(body.projectType, 200),
         mainGoal: limitValue(body.mainGoal, 1000),
         features: limitValue(body.features, 2000),
         targetUsers:
-          body.targetUsers?.trim() || null,
+          limitValue(body.targetUsers, 500),
         timeline: limitValue(body.timeline, 200),
         budget: limitValue(body.budget, 200),
         recommendedService:
-          body.recommendedService?.trim() || null,
+          limitValue(body.recommendedService, 200),
         conversationSummary:
           limitValue(body.conversationSummary, 4000),
         status: "NEW",
