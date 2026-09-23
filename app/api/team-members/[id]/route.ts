@@ -623,34 +623,13 @@ export async function DELETE(
     const member =
       asTeamMemberWithImage(result);
 
-    /*
-     * Delete profile image
-     */
-    if (
-      member.imageUrl &&
-      member.imageUrl.startsWith(
-        "/uploads/team-members/"
-      )
-    ) {
-      const imagePath =
-        path.join(
-          process.cwd(),
-          "public",
-          member.imageUrl.replace(
-            /^\/+/,
-            ""
-          )
-        );
-
+    /* Delete profile image using a validated generated filename only. */
+    const imagePath = getStoredTeamImagePath(member.imageUrl);
+    if (imagePath) {
       try {
-        await unlink(
-          imagePath
-        );
+        await unlink(imagePath);
       } catch (error) {
-        console.warn(
-          "Unable to remove profile image:",
-          error
-        );
+        console.warn("Unable to remove profile image:", error);
       }
     }
 
