@@ -139,10 +139,13 @@ export async function GET(
     const member =
       asTeamMemberWithImage(result);
 
-    return NextResponse.json({
-      success: true,
-      member,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        member,
+      },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
     console.error(
       "Get team member error:",
@@ -571,6 +574,8 @@ export async function DELETE(
 ) {
   try {
     if (!isSameOriginRequest(request)) return sameOriginFailureResponse();
+    const rate = checkRateLimit(`team-member-delete:${getClientIdentifier(request)}`, 20, 10 * 60 * 1000);
+    if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
     const cookieStore = await cookies();
     const session = cookieStore.get(
       getAdminSessionCookieName()
