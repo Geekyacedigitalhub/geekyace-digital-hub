@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isSameOriginRequest, sameOriginFailureResponse } from "@/app/lib/request-security";
 import { prisma } from "@/app/lib/prisma";
 import {
   mkdir,
@@ -168,6 +169,7 @@ export async function PUT(
   { params }: RouteContext
 ) {
   try {
+    if ((request.method === "PUT") && !isSameOriginRequest(request)) return sameOriginFailureResponse();
     const rate = checkRateLimit(`team-member-mutation:${getClientIdentifier(request)}`, 30, 10 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
@@ -561,10 +563,11 @@ export async function PUT(
  * their profile image
  */
 export async function DELETE(
-  _request: Request,
+  request: Request,
   { params }: RouteContext
 ) {
   try {
+    if (!isSameOriginRequest(request)) return sameOriginFailureResponse();
     const cookieStore = await cookies();
     const session = cookieStore.get(
       getAdminSessionCookieName()
