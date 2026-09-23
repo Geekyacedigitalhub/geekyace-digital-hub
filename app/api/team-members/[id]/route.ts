@@ -511,26 +511,15 @@ export async function PUT(
     if (
       shouldRemoveOldImage &&
       existingMember.imageUrl &&
-      existingMember.imageUrl !==
-        newImageUrl &&
-      existingMember.imageUrl.startsWith(
-        "/uploads/team-members/"
-      )
+      existingMember.imageUrl !== newImageUrl &&
+      isStoredTeamImageUrl(existingMember.imageUrl)
     ) {
-      const oldImagePath =
-        path.join(
-          process.cwd(),
-          "public",
-          existingMember.imageUrl.replace(
-            /^\/+/,
-            ""
-          )
-        );
+      const oldImagePath = getStoredTeamImagePath(existingMember.imageUrl);
 
       try {
-        await unlink(
-          oldImagePath
-        );
+        if (oldImagePath) {
+          await unlink(oldImagePath);
+        }
       } catch (error) {
         console.warn(
           "Unable to remove old profile image:",
