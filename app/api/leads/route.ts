@@ -70,16 +70,19 @@ export async function GET(request: Request) {
       prisma.lead.count(),
     ]);
 
-    return NextResponse.json({
-      success: true,
-      leads,
-      pagination: {
-        page,
-        pageSize,
-        total,
-        totalPages: Math.ceil(total / pageSize),
+    return NextResponse.json(
+      {
+        success: true,
+        leads,
+        pagination: {
+          page,
+          pageSize,
+          total,
+          totalPages: Math.ceil(total / pageSize),
+        },
       },
-    });
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
     console.error("GET LEADS ERROR:", error);
 
@@ -93,7 +96,11 @@ export async function GET(request: Request) {
   }
 }
 
-function isValidEmail(value: string): boolean {\n  return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value);\n}\n\nfunction limitValue(value: unknown, maxLength: number): string | null {
+function isValidEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(value);
+}
+
+function limitValue(value: unknown, maxLength: number): string | null {
   if (typeof value !== "string") return null;
   const cleaned = value.trim();
   return cleaned ? cleaned.slice(0, maxLength) : null;
@@ -107,7 +114,12 @@ export async function POST(request: Request) {
 
     const body: LeadRequestBody = await request.json();
 
-    const email = limitValue(body.email, 254);\n    if (email && !isValidEmail(email)) {\n      return NextResponse.json({ success: false, message: "Please provide a valid email address." }, { status: 400, headers: { "Cache-Control": "no-store" } });\n    }\n\n    const lead = await prisma.lead.create({
+    const email = limitValue(body.email, 254);
+    if (email && !isValidEmail(email)) {
+      return NextResponse.json({ success: false, message: "Please provide a valid email address." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+    }
+
+    const lead = await prisma.lead.create({
       data: {
         name: limitValue(body.name, 200),
         email,
