@@ -8,6 +8,8 @@ import {
 import path from "path";
 import crypto from "crypto";
 import { cookies } from "next/headers";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
+import { hasBodyExceededLimit, UPLOAD_BODY_LIMIT, requestTooLargeResponse } from "@/app/lib/request-limits";
 
 import {
   getAdminSessionCookieName,
@@ -152,6 +154,9 @@ export async function PUT(
   { params }: RouteContext
 ) {
   try {
+    const rate = checkRateLimit(`team-member-mutation:${getClientIdentifier(request)}`, 30, 10 * 60 * 1000);
+    if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
+
     const cookieStore = await cookies();
     const session = cookieStore.get(
       getAdminSessionCookieName()
@@ -192,6 +197,8 @@ export async function PUT(
 
     const existingMember =
       asTeamMemberWithImage(result);
+
+    if (hasBodyExceededLimit(request, UPLOAD_BODY_LIMIT)) return requestTooLargeResponse();
 
     const contentType =
       request.headers.get("content-type") || "";
