@@ -94,18 +94,6 @@ const githubProjects: Project[] = [
     technologies: ["Next.js","TypeScript","Full-Stack"],
   },
   {
-    id: 1009, slug: "storescout-operations", title: "StoreScout Operations", client: "GeekyAce Digital Hub",
-    category: "Commerce Intelligence", industry: "E-commerce", service: "SaaS Development",
-    year: "2026", duration: "Ongoing", featured: false, image: "", gallery: [],
-    shortDescription: "Commerce discovery, store intelligence, team workflow, and outreach operations system.",
-    overview: "StoreScout combines public-signal discovery, Shopify verification, contact enrichment, opportunity scoring, follow-up workflows, mailbox isolation, and provider observability.",
-    challenge: "Coordinate discovery, qualification, ownership, follow-ups, and outreach evidence without mixing teammates or inventing provider results.",
-    solution: "Built a PostgreSQL-backed operations platform with discovery checkpoints, scoring, daily work queues, Gmail and Zoho connections, Resend event tracking, and production reliability tooling.",
-    results: ["Searchable store intelligence","Daily sales work queues","Team and mailbox isolation","Email observability"],
-    technologies: ["Next.js","PostgreSQL","Prisma","Gmail OAuth","Zoho","Resend","Railway"],
-    liveUrl: "https://storescout.geekyacedigitalhub.com",
-  },
-  {
     id: 1010, slug: "trustlens", title: "TrustLens", client: "GeekyAce Digital Hub",
     category: "Web Application", industry: "Trust & Conversion", service: "Full-Stack Development",
     year: "2026", duration: "Ongoing", featured: false, image: "", gallery: [],
