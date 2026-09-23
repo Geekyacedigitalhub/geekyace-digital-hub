@@ -35,15 +35,50 @@ export async function GET() {
       );
     }
 
-    const leads = await prisma.lead.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const url = new URL(request.url);
+    const pageParam = Number.parseInt(url.searchParams.get("page") || "1", 10);
+    const pageSizeParam = Number.parseInt(url.searchParams.get("pageSize") || "50", 10);
+    const page = Number.isFinite(pageParam) ? Math.max(1, Math.min(pageParam, 100000)) : 1;
+    const pageSize = Number.isFinite(pageSizeParam) ? Math.max(1, Math.min(pageSizeParam, 50)) : 50;
+
+    const [leads, total] = await Promise.all([
+      prisma.lead.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          businessName: true,
+          businessType: true,
+          projectType: true,
+          mainGoal: true,
+          features: true,
+          targetUsers: true,
+          timeline: true,
+          budget: true,
+          recommendedService: true,
+          conversationSummary: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.lead.count(),
+    ]);
 
     return NextResponse.json({
       success: true,
       leads,
+      pagination: {
+        page,
+        pageSize,
+        total,
+        totalPages: Math.ceil(total / pageSize),
+      },
     });
   } catch (error) {
     console.error("GET LEADS ERROR:", error);
@@ -94,7 +129,7 @@ export async function POST(request: Request) {
       {
         success: true,
         message: "Lead created successfully.",
-        lead,
+        leadId: lead.id,
       },
       { status: 201 }
     );
