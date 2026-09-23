@@ -88,7 +88,7 @@ export async function GET(request: Request) {
         success: false,
         message: "Unable to load leads.",
       },
-      { status: 500 }
+      { status: 500, headers: { "Cache-Control": "no-store" } }
     );
   }
 }
