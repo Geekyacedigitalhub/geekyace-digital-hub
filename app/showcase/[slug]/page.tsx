@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FaGithub } from "react-icons/fa6";
 import {
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
   ExternalLink,
-  Github,
   Layers3,
   CalendarDays,
   Building2,
@@ -416,7 +416,7 @@ export default async function ProjectCaseStudyPage({
                       className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-4 font-bold text-slate-800 transition hover:-translate-y-0.5 hover:border-green-300 hover:text-green-700"
                     >
                       View Source on GitHub
-                      <Github size={18} aria-hidden="true" />
+                      <FaGithub size={18} aria-hidden="true" />
                     </a>
                   ) : (
                     <div className="rounded-xl border border-slate-200 bg-white px-5 py-4 text-center text-sm font-semibold text-slate-500">
