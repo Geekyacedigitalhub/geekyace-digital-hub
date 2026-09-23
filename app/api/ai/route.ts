@@ -397,7 +397,7 @@ export async function POST(request: Request) {
      * Save qualified lead
      */
     if (leadReady) {
-      const leadData = extractLeadData(reply);
+      const leadData = extractLeadData(reply);\n      const interactionId = cleanInteractionId(data?.id);\n\n      if (leadData?.email && !isValidEmail(leadData.email)) {\n        leadData.email = null;\n      }
 
       if (leadData) {
         try {
