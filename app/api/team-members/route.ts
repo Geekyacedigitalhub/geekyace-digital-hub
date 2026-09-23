@@ -127,10 +127,13 @@ export async function GET() {
       take: 100,
     });
 
-    return NextResponse.json({
-      success: true,
-      members,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        members,
+      },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
     console.error(
       "Get team members error:",
