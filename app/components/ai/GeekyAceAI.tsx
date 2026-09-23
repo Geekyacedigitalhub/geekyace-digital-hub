@@ -256,6 +256,7 @@ export default function GeekyAceAI() {
                 placeholder="Ask GeekyAce AI..."
                 disabled={loading}
                 autoComplete="off"
+                maxLength={4000}
                 className="min-w-0 flex-1 rounded-xl border border-gray-300 px-3.5 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-green-500 focus:ring-2 focus:ring-green-100 disabled:cursor-not-allowed disabled:bg-gray-100"
               />
 
@@ -268,8 +269,9 @@ export default function GeekyAceAI() {
               </button>
             </div>
 
-            <p className="mt-2 text-center text-[10px] text-gray-400">
+            <p className="mt-2 text-center text-[10px] leading-4 text-gray-400">
               GeekyAce AI can help you find the right digital solution.
+              Messages are processed by our AI provider to generate replies.
             </p>
           </form>
         </div>
