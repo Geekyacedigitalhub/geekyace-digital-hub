@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { isSameOriginRequest, sameOriginFailureResponse } from "@/app/lib/request-security";
 import { prisma } from "@/app/lib/prisma";
 import { mkdir, unlink, writeFile } from "fs/promises";
+import { getStoredTeamImagePath, isStoredTeamImageUrl } from "@/app/lib/team-member-images";
 import path from "path";
 import crypto from "crypto";
 import { cookies } from "next/headers";
@@ -409,17 +410,14 @@ export async function POST(request: Request) {
         body.platforms
       );
 
-      /**
-       * JSON requests may optionally provide
-       * an existing image URL.
-       */
-      if (
-        body.imageUrl !== undefined &&
-        body.imageUrl !== null
-      ) {
-        imageUrl =
-          String(body.imageUrl).trim() ||
-          null;
+      if (body.imageUrl !== undefined && body.imageUrl !== null) {
+        imageUrl = String(body.imageUrl).trim() || null;
+        if (imageUrl && !isStoredTeamImageUrl(imageUrl)) {
+          return NextResponse.json(
+            { error: "Invalid team member image URL." },
+            { status: 400 }
+          );
+        }
       }
     }
 
@@ -468,6 +466,7 @@ export async function POST(request: Request) {
      */
     const member =
       await prisma.teamMember.create({
+        select: publicTeamMemberSelect,
         data: {
           name,
           role,
