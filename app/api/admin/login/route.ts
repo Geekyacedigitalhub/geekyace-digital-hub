@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
 
 import {
   createAdminSession,
@@ -9,6 +10,9 @@ import {
 
 export async function POST(request: Request) {
   try {
+    const rate = checkRateLimit(`admin-login:${getClientIdentifier(request)}`, 5, 15 * 60 * 1000);
+    if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
+
     const body = await request.json();
 
     const email = String(body?.email ?? "").trim();
