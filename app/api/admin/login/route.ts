@@ -18,7 +18,14 @@ export async function POST(request: Request) {
     const email = String(body?.email ?? "").trim();
     const password = String(body?.password ?? "");
 
-    const emailRate = checkRateLimit(`admin-login-email:${email.toLowerCase()}`, 10, 15 * 60 * 1000);\n    if (!emailRate.allowed) return rateLimitResponse(emailRate.retryAfterSeconds);\n\n    if (!email || !password) {
+    const emailRate = checkRateLimit(
+      `admin-login-email:${email.toLowerCase()}`,
+      10,
+      15 * 60 * 1000
+    );
+    if (!emailRate.allowed) return rateLimitResponse(emailRate.retryAfterSeconds);
+
+    if (!email || !password) {
       return NextResponse.json({ error: "Email and password are required." }, { status: 400, headers: noStore });
     }
 
