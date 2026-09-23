@@ -4,6 +4,8 @@ import { mkdir, unlink, writeFile } from "fs/promises";
 import path from "path";
 import crypto from "crypto";
 import { cookies } from "next/headers";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
+import { hasBodyExceededLimit, UPLOAD_BODY_LIMIT, requestTooLargeResponse } from "@/app/lib/request-limits";
 
 import {
   getAdminSessionCookieName,
@@ -140,6 +142,11 @@ export async function POST(request: Request) {
   let uploadedImagePath: string | null = null;
 
   try {
+    if (hasBodyExceededLimit(request, UPLOAD_BODY_LIMIT)) return requestTooLargeResponse();
+
+    const rate = checkRateLimit(`team-members-create:${getClientIdentifier(request)}`, 20, 10 * 60 * 1000);
+    if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
+
     /**
      * SECURITY CHECK
      *
