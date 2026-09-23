@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
+import { hasBodyExceededLimit, JSON_BODY_LIMIT, requestTooLargeResponse } from "@/app/lib/request-limits";
 
 function escapeHtml(value: unknown): string {
   return String(value ?? "")
@@ -13,6 +14,7 @@ function escapeHtml(value: unknown): string {
 
 export async function POST(request: Request) {
   try {
+    if (hasBodyExceededLimit(request, JSON_BODY_LIMIT)) return requestTooLargeResponse();
     const rate = checkRateLimit(`contact:${getClientIdentifier(request)}`, 5, 10 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
