@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
+import { hasBodyExceededLimit, AUTH_BODY_LIMIT, requestTooLargeResponse } from "@/app/lib/request-limits";
 
 import {
   createAdminSession,
@@ -10,6 +11,7 @@ import {
 
 export async function POST(request: Request) {
   try {
+    if (hasBodyExceededLimit(request, AUTH_BODY_LIMIT)) return requestTooLargeResponse();
     const rate = checkRateLimit(`admin-login:${getClientIdentifier(request)}`, 5, 15 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
