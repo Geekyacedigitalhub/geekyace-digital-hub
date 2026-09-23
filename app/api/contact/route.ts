@@ -17,7 +17,7 @@ function escapeHtml(value: unknown): string {
 }
 
 function noStoreJson(data: unknown, init?: ResponseInit) {
-  return noStoreJson(data, {
+  return NextResponse.json(data, {
     ...init,
     headers: {
       "Cache-Control": "no-store",
