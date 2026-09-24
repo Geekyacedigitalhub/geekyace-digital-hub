@@ -481,6 +481,17 @@ export async function PUT(
       !skills ||
       !expertise
     ) {
+      if (uploadedImagePath) {
+        try {
+          await unlink(uploadedImagePath);
+        } catch (cleanupError) {
+          console.warn(
+            "Unable to clean up uploaded image after validation failure:",
+            cleanupError
+          );
+        }
+      }
+
       return NextResponse.json(
         {
           error:
@@ -630,24 +641,25 @@ export async function DELETE(
     const member =
       asTeamMemberWithImage(result);
 
-    /* Delete profile image using a validated generated filename only. */
-    const imagePath = getStoredTeamImagePath(member.imageUrl);
-    if (imagePath) {
-      try {
-        await unlink(imagePath);
-      } catch (error) {
-        console.warn("Unable to remove profile image:", error);
-      }
-    }
-
     /*
-     * Delete database record
+     * Delete the database record first. If the database deletion fails,
+     * keep the image so the existing record remains internally consistent.
      */
     await prisma.teamMember.delete({
       where: {
         id,
       },
     });
+
+    /* Delete profile image using a validated generated filename only. */
+    const imagePath = getStoredTeamImagePath(member.imageUrl);
+    if (imagePath) {
+      try {
+        await unlink(imagePath);
+      } catch (error) {
+        console.warn("Unable to remove profile image after database deletion:", error);
+      }
+    }
 
     return NextResponse.json({
       success: true,
