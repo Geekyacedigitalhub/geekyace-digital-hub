@@ -144,9 +144,7 @@ export async function GET() {
       {
         error: "Unable to load team members.",
       },
-      {
-        status: 500,
-      }
+      { status: 500, headers: { "Cache-Control": "no-store" } }
     );
   }
 }
@@ -527,9 +525,7 @@ export async function POST(request: Request) {
         error:
           "Unable to create team member.",
       },
-      {
-        status: 500,
-      }
+      { status: 500, headers: { "Cache-Control": "no-store" } }
     );
   }
 }
