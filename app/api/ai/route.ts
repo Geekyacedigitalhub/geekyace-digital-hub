@@ -266,7 +266,7 @@ function extractLeadData(reply: string): LeadData | null {
       ),
     };
   } catch (error) {
-    console.error("LEAD DATA JSON ERROR:", error);
+    console.error("AI lead-data parsing failed.");
     return null;
   }
 }
@@ -353,7 +353,7 @@ export async function POST(request: Request) {
       await geminiResponse.json();
 
     if (!geminiResponse.ok) {
-      console.error("GEMINI API ERROR:", data);
+      console.error("Gemini API request failed.", { status: geminiResponse.status, providerMessage: data?.error?.message });
 
       return NextResponse.json(
         {
@@ -468,14 +468,9 @@ export async function POST(request: Request) {
           leadSaved = true;
           leadId = savedLead.id;
 
-          console.log(
-            `GeekyAce AI lead saved: ${savedLead.id}`
-          );
+          console.log("GeekyAce AI lead saved.");
         } catch (error) {
-          console.error(
-            "SAVE AI LEAD ERROR:",
-            error
-          );
+          console.error("Saving AI lead failed.");
         }
       } else {
         console.warn(
@@ -498,10 +493,7 @@ export async function POST(request: Request) {
       headers: { "Cache-Control": "no-store" },
     });
   } catch (error) {
-    console.error(
-      "GEEKYACE AI ROUTE ERROR:",
-      error
-    );
+    console.error("GeekyAce AI route failed.");
 
     return NextResponse.json(
       {
