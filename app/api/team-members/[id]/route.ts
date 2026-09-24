@@ -157,9 +157,7 @@ export async function GET(
         error:
           "Unable to load team member.",
       },
-      {
-        status: 500,
-      }
+      { status: 500, headers: { "Cache-Control": "no-store" } }
     );
   }
 }
@@ -556,9 +554,7 @@ export async function PUT(
         error:
           "Unable to update team member.",
       },
-      {
-        status: 500,
-      }
+      { status: 500, headers: { "Cache-Control": "no-store" } }
     );
   }
 }
@@ -652,9 +648,7 @@ export async function DELETE(
         error:
           "Unable to remove team member.",
       },
-      {
-        status: 500,
-      }
+      { status: 500, headers: { "Cache-Control": "no-store" } }
     );
   }
 }
