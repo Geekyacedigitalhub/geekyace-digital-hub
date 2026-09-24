@@ -516,10 +516,7 @@ export async function POST(request: Request) {
       }
     );
   } catch (error) {
-    console.error(
-      "Create team member error:",
-      error
-    );
+    console.error("Create team member request failed.");
 
     /**
      * If database creation fails after the
