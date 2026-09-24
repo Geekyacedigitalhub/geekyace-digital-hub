@@ -156,10 +156,7 @@ export async function GET(
       { headers: { "Cache-Control": "no-store" } }
     );
   } catch (error) {
-    console.error(
-      "Get team member error:",
-      error
-    );
+    console.error("Get team member request failed.");
 
     return NextResponse.json(
       {
@@ -564,10 +561,7 @@ export async function PUT(
         "Team member updated successfully.",
     });
   } catch (error) {
-    console.error(
-      "Update team member error:",
-      error
-    );
+    console.error("Update team member request failed.");
 
     if (uploadedImagePath) {
       try {
@@ -667,10 +661,7 @@ export async function DELETE(
         "Team member removed successfully.",
     });
   } catch (error) {
-    console.error(
-      "Delete team member error:",
-      error
-    );
+    console.error("Delete team member request failed.");
 
     return NextResponse.json(
       {
