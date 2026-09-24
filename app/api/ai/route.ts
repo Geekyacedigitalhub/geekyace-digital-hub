@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
 import { hasBodyExceededLimit, JSON_BODY_LIMIT, requestTooLargeResponse } from "@/app/lib/request-limits";
+import { isSameOriginRequest, sameOriginFailureResponse } from "@/app/lib/request-security";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = "gemini-3.5-flash-lite";
@@ -290,6 +291,7 @@ function removeInternalMarkers(reply: string): string {
 
 export async function POST(request: Request) {
   try {
+    if (!isSameOriginRequest(request)) return sameOriginFailureResponse();
     if (hasBodyExceededLimit(request, JSON_BODY_LIMIT)) return requestTooLargeResponse();
     const rate = checkRateLimit(`ai:${getClientIdentifier(request)}`, 10, 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
@@ -299,7 +301,7 @@ export async function POST(request: Request) {
         {
           success: false,
           message:
-            "GeekyAce AI is not configured yet. Please add GEMINI_API_KEY to .env.local.",
+            "GeekyAce AI is temporarily unavailable. Please try again later.",
         },
         { status: 500 }
       );
