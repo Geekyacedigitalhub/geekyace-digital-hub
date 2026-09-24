@@ -164,7 +164,7 @@ export async function POST(request: Request) {
     });
 
     if (ticket.error) {
-      console.error("MerchantOS support ticket email failed:", ticket.error);
+      console.error("MerchantOS support ticket email failed.");
       return noStoreJson(
         { success: false, message: "We couldn't send your support request. Please try again." },
         { status: 500 }
@@ -173,7 +173,7 @@ export async function POST(request: Request) {
 
     return noStoreJson({ success: true, message: "Support request received." });
   } catch (error) {
-    console.error("MERCHANTOS SUPPORT API ERROR:", error);
+    console.error("MerchantOS support API request failed.");
     return noStoreJson(
       { success: false, message: "Something went wrong while sending your support request." },
       { status: 500 }
