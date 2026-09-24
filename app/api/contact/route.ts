@@ -135,7 +135,7 @@ export async function POST(request: Request) {
     });
 
     if (result.error) {
-      console.error("RESEND ERROR:", result.error);
+      console.error("Resend contact email failed.");
       return noStoreJson(
         { success: false, message: "We couldn't send your enquiry right now. Please try again." },
         { status: 500 }
@@ -144,7 +144,7 @@ export async function POST(request: Request) {
 
     return noStoreJson({ success: true, message: "Email sent successfully." });
   } catch (error) {
-    console.error("CONTACT API ERROR:", error);
+    console.error("Contact API request failed.");
     return noStoreJson(
       { success: false, message: "Something went wrong while sending your enquiry." },
       { status: 500 }
