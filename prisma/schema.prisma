@@ -39,6 +39,7 @@ model Lead {
   status              String   @default("NEW")
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+  aiInteractionId     String?  @unique
 
   @@index([createdAt])
   @@index([status, createdAt])
