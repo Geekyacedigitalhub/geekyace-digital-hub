@@ -12,6 +12,8 @@ export async function POST(request: Request) {
     const response = NextResponse.json({
       success: true,
       message: "Admin logged out successfully.",
+    }, {
+      headers: { "Cache-Control": "no-store" },
     });
 
     response.cookies.set(
