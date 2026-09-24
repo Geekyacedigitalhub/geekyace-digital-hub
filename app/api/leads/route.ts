@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { prisma } from "@/app/lib/prisma";
 import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "@/app/lib/rate-limit";
 import { hasBodyExceededLimit, JSON_BODY_LIMIT, requestTooLargeResponse } from "@/app/lib/request-limits";
+import { isSameOriginRequest, sameOriginFailureResponse } from "@/app/lib/request-security";
 import {
   getAdminSessionCookieName,
   isAdminAuthenticated,
@@ -108,6 +109,7 @@ function limitValue(value: unknown, maxLength: number): string | null {
 
 export async function POST(request: Request) {
   try {
+    if (!isSameOriginRequest(request)) return sameOriginFailureResponse();
     if (hasBodyExceededLimit(request, JSON_BODY_LIMIT)) return requestTooLargeResponse();
     if (request.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !== "application/json") {
       return NextResponse.json(
