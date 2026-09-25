@@ -39,7 +39,10 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const pageParam = Number.parseInt(url.searchParams.get("page") || "1", 10);
     const pageSizeParam = Number.parseInt(url.searchParams.get("pageSize") || "50", 10);
-    const page = Number.isFinite(pageParam) ? Math.max(1, Math.min(pageParam, 100000)) : 1;
+    // Keep offset pagination bounded so a hostile page value cannot force
+    // an unnecessarily large database skip.
+    const MAX_PAGE = 1000;
+    const page = Number.isFinite(pageParam) ? Math.max(1, Math.min(pageParam, MAX_PAGE)) : 1;
     const pageSize = Number.isFinite(pageSizeParam) ? Math.max(1, Math.min(pageSizeParam, 50)) : 50;
 
     const [leads, total] = await Promise.all([
@@ -121,7 +124,12 @@ export async function POST(request: Request) {
     const rate = checkRateLimit(`lead:${getClientIdentifier(request)}`, 10, 10 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
-    const rawBody: unknown = await request.json();
+    let rawBody: unknown;
+    try {
+      rawBody = await request.json();
+    } catch {
+      return NextResponse.json({ success: false, message: "Invalid JSON request body." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+    }
     if (!rawBody || typeof rawBody !== "object" || Array.isArray(rawBody)) {
       return NextResponse.json(
         { success: false, message: "Invalid request body." },

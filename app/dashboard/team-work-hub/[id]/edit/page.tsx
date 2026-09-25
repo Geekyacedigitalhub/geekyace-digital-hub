@@ -141,24 +141,6 @@ export default function EditTeamMemberPage({
     loadMember();
   }, [memberId]);
 
-  /*
-   * Create local preview for newly selected image.
-   */
-  useEffect(() => {
-    if (!image) {
-      setImagePreview("");
-      return;
-    }
-
-    const previewUrl = URL.createObjectURL(image);
-
-    setImagePreview(previewUrl);
-
-    return () => {
-      URL.revokeObjectURL(previewUrl);
-    };
-  }, [image]);
-
   function handleImageChange(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
@@ -198,10 +180,13 @@ export default function EditTeamMemberPage({
     }
 
     setRemoveExistingImage(false);
+    setImagePreview(URL.createObjectURL(selectedFile));
     setImage(selectedFile);
   }
 
   function removeSelectedImage() {
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImagePreview("");
     setImage(null);
 
     const imageInput = document.getElementById(
@@ -214,6 +199,8 @@ export default function EditTeamMemberPage({
   }
 
   function removeExistingProfileImage() {
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImagePreview("");
     setRemoveExistingImage(true);
     setImage(null);
 

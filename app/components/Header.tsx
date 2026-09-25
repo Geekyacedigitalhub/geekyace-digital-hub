@@ -27,10 +27,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
   return (
     <header
       className={`sticky top-0 z-50 border-b transition-all duration-300 ${
@@ -50,6 +46,7 @@ export default function Header() {
             return (
               <Link
                 key={item.href}
+                onClick={() => setMenuOpen(false)}
                 href={item.href}
                 className={`relative py-2 text-sm font-semibold transition-colors ${
                   active ? "text-green-600" : "text-slate-600 hover:text-green-600"
@@ -100,7 +97,7 @@ export default function Header() {
                 </Link>
               );
             })}
-            <Link href="/contact" className="mt-3 rounded-xl bg-green-600 px-4 py-3.5 text-center font-bold text-white">
+            <Link href="/contact" onClick={() => setMenuOpen(false)} className="mt-3 rounded-xl bg-green-600 px-4 py-3.5 text-center font-bold text-white">
               Start Your Project
             </Link>
           </nav>

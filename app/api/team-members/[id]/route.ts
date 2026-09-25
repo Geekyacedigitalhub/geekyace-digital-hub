@@ -200,6 +200,8 @@ export async function PUT(
       );
     }
 
+    if (hasBodyExceededLimit(request, UPLOAD_BODY_LIMIT)) return requestTooLargeResponse();
+
     const { id } = await params;
 
     const result =
@@ -223,8 +225,6 @@ export async function PUT(
 
     const existingMember =
       asTeamMemberWithImage(result);
-
-    if (hasBodyExceededLimit(request, UPLOAD_BODY_LIMIT)) return requestTooLargeResponse();
 
     const contentType =
       request.headers.get("content-type") || "";
@@ -251,8 +251,15 @@ export async function PUT(
         "multipart/form-data"
       )
     ) {
-      const formData =
-        await request.formData();
+      let formData: FormData;
+      try {
+        formData = await request.formData();
+      } catch {
+        return NextResponse.json(
+          { error: "Invalid multipart request body." },
+          { status: 400, headers: { "Cache-Control": "no-store" } }
+        );
+      }
 
       name = String(
         formData.get("name") || ""
@@ -400,8 +407,14 @@ export async function PUT(
       /*
        * JSON request
        */
-      const body =
-        await request.json();
+      let body: Record<string, unknown>;
+      try {
+        const rawBody: unknown = await request.json();
+        if (!rawBody || typeof rawBody !== "object" || Array.isArray(rawBody)) return NextResponse.json({ error: "Invalid request body." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+        body = rawBody as Record<string, unknown>;
+      } catch {
+        return NextResponse.json({ error: "Invalid JSON request body." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+      }
 
       name = String(
         body.name || ""

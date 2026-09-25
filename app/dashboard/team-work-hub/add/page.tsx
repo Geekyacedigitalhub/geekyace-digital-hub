@@ -32,23 +32,6 @@ export default function AddTeamMemberPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  /*
-   * Create and clean up the local image preview.
-   */
-  useEffect(() => {
-    if (!image) {
-      setImagePreview("");
-      return;
-    }
-
-    const previewUrl = URL.createObjectURL(image);
-    setImagePreview(previewUrl);
-
-    return () => {
-      URL.revokeObjectURL(previewUrl);
-    };
-  }, [image]);
-
   function handleImageChange(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
@@ -87,10 +70,13 @@ export default function AddTeamMemberPage() {
       return;
     }
 
+    setImagePreview(URL.createObjectURL(selectedFile));
     setImage(selectedFile);
   }
 
   function removeImage() {
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImagePreview("");
     setImage(null);
 
     const imageInput = document.getElementById(
@@ -173,6 +159,8 @@ export default function AddTeamMemberPage() {
       setSkills("");
       setExpertise("");
       setPlatforms("");
+      if (imagePreview) URL.revokeObjectURL(imagePreview);
+      setImagePreview("");
       setImage(null);
 
       const imageInput = document.getElementById(
