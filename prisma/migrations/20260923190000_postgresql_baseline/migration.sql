@@ -16,6 +16,8 @@ CREATE TABLE "TeamMember" (
     CONSTRAINT "TeamMember_pkey" PRIMARY KEY ("id")
 );
 
+CREATE INDEX "TeamMember_createdAt_idx" ON "TeamMember"("createdAt");
+
 CREATE TABLE "Lead" (
     "id" TEXT NOT NULL,
     "name" TEXT,
