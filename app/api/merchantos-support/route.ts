@@ -43,6 +43,8 @@ function sanitizeSubject(value: string, fallback: string): string {
   return cleaned || fallback;
 }
 
+const RESEND_TIMEOUT_MS = 15_000;
+
 function noStoreJson(data: unknown, init?: ResponseInit) {
   return NextResponse.json(data, {
     ...init,
@@ -159,7 +161,7 @@ export async function POST(request: Request) {
     const safeDescription = escapeHtml(description).replace(/\n/g, "<br />");
     const safeThemeName = escapeHtml(themeName);
 
-    const ticket = await resend.emails.send({
+    const emailPromise = resend.emails.send({
       from,
       to: supportTo,
       replyTo: email,
@@ -178,6 +180,11 @@ export async function POST(request: Request) {
       attachments: attachments.length ? attachments : undefined,
     });
 
+    const ticket = await Promise.race([
+      emailPromise,
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error("RESEND_TIMEOUT")), RESEND_TIMEOUT_MS)),
+    ]);
+
     if (ticket.error) {
       console.error("MerchantOS support ticket email failed.");
       return noStoreJson(
@@ -188,6 +195,13 @@ export async function POST(request: Request) {
 
     return noStoreJson({ success: true, message: "Support request received." });
   } catch (error) {
+    if (error instanceof Error && error.message === "RESEND_TIMEOUT") {
+      console.error("MerchantOS support email request timed out.");
+      return noStoreJson(
+        { success: false, message: "The email service is taking too long to respond. Please try again." },
+        { status: 504 }
+      );
+    }
     console.error("MerchantOS support API request failed.");
     return noStoreJson(
       { success: false, message: "Something went wrong while sending your support request." },
