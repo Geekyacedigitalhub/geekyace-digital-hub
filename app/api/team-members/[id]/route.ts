@@ -400,8 +400,14 @@ export async function PUT(
       /*
        * JSON request
        */
-      const body =
-        await request.json();
+      let body: Record<string, unknown>;
+      try {
+        const rawBody: unknown = await request.json();
+        if (!rawBody || typeof rawBody !== "object" || Array.isArray(rawBody)) return NextResponse.json({ error: "Invalid request body." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+        body = rawBody as Record<string, unknown>;
+      } catch {
+        return NextResponse.json({ error: "Invalid JSON request body." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+      }
 
       name = String(
         body.name || ""
