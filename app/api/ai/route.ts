@@ -353,21 +353,178 @@ export async function POST(request: Request) {
     let geminiResponse: Response;
     try {
       geminiResponse = await fetch(GEMINI_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": GEMINI_API_KEY,
-      },
-      body: JSON.stringify(requestBody),
-      cache: "no-store",
-      signal: controller.signal,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": GEMINI_API_KEY,
+        },
+        body: JSON.stringify(requestBody),
+        cache: "no-store",
+        signal: controller.signal,
       });
+
+      const data: GeminiResponse = await geminiResponse.json();
+
+      if (!geminiResponse.ok) {
+        console.error("Gemini API request failed.", {
+          status: geminiResponse.status,
+          providerMessage: data?.error?.message,
+        });
+
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "The GeekyAce AI service could not process your request. Please try again.",
+          },
+          { status: 502 }
+        );
+      }
+
+      const modelOutputSteps = Array.isArray(data?.steps)
+        ? data.steps.filter(
+            (step) => step?.type === "model_output"
+          )
+        : [];
+
+      const lastModelOutput =
+        modelOutputSteps[modelOutputSteps.length - 1];
+
+      let reply = Array.isArray(
+        lastModelOutput?.content
+      )
+        ? lastModelOutput.content
+            .filter(
+              (part) =>
+                part?.type === "text" &&
+                part?.text
+            )
+            .map((part) => part.text)
+            .join("")
+            .trim()
+        : "";
+
+      if (!reply) {
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "GeekyAce AI did not return a response. Please try again.",
+          },
+          { status: 502 }
+        );
+      }
+
+      const leadReady = reply.includes(
+        "[LEAD_READY]"
+      );
+
+      let leadSaved = false;
+      let leadId: string | null = null;
+
+      /*
+       * Save qualified lead
+       */
+      if (leadReady) {
+        const leadData = extractLeadData(reply);
+        const interactionId = cleanInteractionId(data?.id);
+
+        if (leadData?.email && !isValidEmail(leadData.email)) {
+          leadData.email = null;
+        }
+
+        if (
+          leadData &&
+          leadData.recommendedService &&
+          ALLOWED_SERVICES.has(leadData.recommendedService) &&
+          (leadData.projectType || leadData.mainGoal)
+        ) {
+          try {
+            const savedLead = interactionId
+              ? await prisma.lead.upsert({
+                  where: { aiInteractionId: interactionId },
+                  update: {},
+                  create: {
+                    name: leadData.name,
+                    email: leadData.email,
+                    businessName: leadData.businessName,
+                    businessType: leadData.businessType,
+                    projectType: leadData.projectType,
+                    mainGoal: leadData.mainGoal,
+                    features: leadData.features,
+                    targetUsers: leadData.targetUsers,
+                    timeline: leadData.timeline,
+                    budget: leadData.budget,
+                    recommendedService: leadData.recommendedService,
+                    conversationSummary: leadData.conversationSummary,
+                    status: "NEW",
+                    aiInteractionId: interactionId,
+                  },
+                })
+              : await prisma.lead.create({
+              data: {
+                name: leadData.name,
+                email: leadData.email,
+                businessName: leadData.businessName,
+                businessType: leadData.businessType,
+                projectType: leadData.projectType,
+                mainGoal: leadData.mainGoal,
+                features: leadData.features,
+                targetUsers: leadData.targetUsers,
+                timeline: leadData.timeline,
+                budget: leadData.budget,
+                recommendedService:
+                  leadData.recommendedService,
+                conversationSummary:
+                  leadData.conversationSummary,
+                status: "NEW",
+              },
+            });
+
+            leadSaved = true;
+            leadId = savedLead.id;
+
+            console.log("GeekyAce AI lead saved.");
+          } catch (error) {
+            console.error("Saving AI lead failed.");
+          }
+        } else {
+          console.warn(
+            "Lead was marked ready, but the lead data did not meet validation requirements."
+          );
+        }
+      }
+
+      // Never expose internal markers to the visitor.
+      reply = removeInternalMarkers(reply);
+
+      return NextResponse.json({
+        success: true,
+        message: reply,
+        interactionId: data?.id || null,
+        leadReady,
+        leadSaved,
+        leadId,
+      }, {
+        headers: { "Cache-Control": "no-store" },
+      });
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        console.error("Gemini API request timed out.");
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "The GeekyAce AI service is taking too long to respond. Please try again.",
+          },
+          { status: 504, headers: { "Cache-Control": "no-store" } }
+        );
+      }
+
+      throw error;
     } finally {
       clearTimeout(timeout);
     }
-
-    const data: GeminiResponse =
-      await geminiResponse.json();
 
     if (!geminiResponse.ok) {
       console.error("Gemini API request failed.", { status: geminiResponse.status, providerMessage: data?.error?.message });
