@@ -121,7 +121,12 @@ export async function POST(request: Request) {
     const rate = checkRateLimit(`lead:${getClientIdentifier(request)}`, 10, 10 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
-    const rawBody: unknown = await request.json();
+    let rawBody: unknown;
+    try {
+      rawBody = await request.json();
+    } catch {
+      return NextResponse.json({ success: false, message: "Invalid JSON request body." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+    }
     if (!rawBody || typeof rawBody !== "object" || Array.isArray(rawBody)) {
       return NextResponse.json(
         { success: false, message: "Invalid request body." },
