@@ -55,7 +55,9 @@ export async function POST(request: Request) {
     }
 
     const resend = new Resend(apiKey);
-    const body = await request.json();
+    let body: unknown;
+    try { body = await request.json(); } catch { return noStoreJson({ success: false, message: "Invalid JSON request body." }, { status: 400 }); }
+    if (!body || typeof body !== "object" || Array.isArray(body)) return noStoreJson({ success: false, message: "Invalid request body." }, { status: 400 });
 
     const nameValue = String(body?.name ?? "").trim();
     const emailValue = String(body?.email ?? "").trim().toLowerCase();
