@@ -180,10 +180,18 @@ export async function POST(request: Request) {
       attachments: attachments.length ? attachments : undefined,
     });
 
+    let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
     const ticket = await Promise.race([
       emailPromise,
-      new Promise<never>((_, reject) => setTimeout(() => reject(new Error("RESEND_TIMEOUT")), RESEND_TIMEOUT_MS)),
-    ]);
+      new Promise<never>((_, reject) => {
+        timeoutHandle = setTimeout(
+          () => reject(new Error("RESEND_TIMEOUT")),
+          RESEND_TIMEOUT_MS
+        );
+      }),
+    ]).finally(() => {
+      if (timeoutHandle) clearTimeout(timeoutHandle);
+    });
 
     if (ticket.error) {
       console.error("MerchantOS support ticket email failed.");
