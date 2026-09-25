@@ -308,7 +308,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const body: RequestBody = await request.json();
+    let body: RequestBody;
+    try {
+      const rawBody: unknown = await request.json();
+      if (!rawBody || typeof rawBody !== "object" || Array.isArray(rawBody)) return NextResponse.json({ success: false, message: "Invalid request body." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+      body = rawBody as RequestBody;
+    } catch {
+      return NextResponse.json({ success: false, message: "Invalid JSON request body." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+    }
 
     const message = String(body?.message || "").trim();
 
