@@ -163,29 +163,3 @@ export async function POST(request: Request) {
       if (timeoutHandle) clearTimeout(timeoutHandle);
     }
 
-    /*
-
-    if (result.error) {
-      console.error("Resend contact email failed.");
-      return noStoreJson(
-        { success: false, message: "We couldn't send your enquiry right now. Please try again." },
-        { status: 500 }
-      );
-    }
-
-    return noStoreJson({ success: true, message: "Email sent successfully." });
-  } catch (error) {
-    if (error instanceof Error && error.message === "RESEND_TIMEOUT") {
-      console.error("Contact email request timed out.");
-      return noStoreJson(
-        { success: false, message: "The email service is taking too long to respond. Please try again." },
-        { status: 504 }
-      );
-    }
-    console.error("Contact API request failed.");
-    return noStoreJson(
-      { success: false, message: "Something went wrong while sending your enquiry." },
-      { status: 500 }
-    );
-  }
-}
