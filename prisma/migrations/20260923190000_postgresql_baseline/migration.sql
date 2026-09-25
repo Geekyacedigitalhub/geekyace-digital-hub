@@ -57,6 +57,7 @@ CREATE TABLE "Client" (
 );
 
 CREATE UNIQUE INDEX "Client_email_key" ON "Client"("email");
+CREATE INDEX "Client_createdAt_idx" ON "Client"("createdAt");
 
 CREATE TABLE "Project" (
     "id" TEXT NOT NULL,
@@ -74,6 +75,9 @@ CREATE TABLE "Project" (
     CONSTRAINT "Project_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE INDEX "Project_clientId_idx" ON "Project"("clientId");
+CREATE INDEX "Project_createdAt_idx" ON "Project"("createdAt");
+
 CREATE TABLE "ProjectMilestone" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -89,6 +93,9 @@ CREATE TABLE "ProjectMilestone" (
     CONSTRAINT "ProjectMilestone_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE INDEX "ProjectMilestone_projectId_idx" ON "ProjectMilestone"("projectId");
+CREATE INDEX "ProjectMilestone_projectId_order_idx" ON "ProjectMilestone"("projectId", "order");
+
 CREATE TABLE "ProjectUpdate" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -98,3 +105,5 @@ CREATE TABLE "ProjectUpdate" (
     CONSTRAINT "ProjectUpdate_pkey" PRIMARY KEY ("id"),
     CONSTRAINT "ProjectUpdate_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE INDEX "ProjectUpdate_projectId_createdAt_idx" ON "ProjectUpdate"("projectId", "createdAt");
