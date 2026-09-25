@@ -220,7 +220,15 @@ export async function POST(request: Request) {
         "multipart/form-data"
       )
     ) {
-      const formData = await request.formData();
+      let formData: FormData;
+      try {
+        formData = await request.formData();
+      } catch {
+        return NextResponse.json(
+          { error: "Invalid multipart request body." },
+          { status: 400, headers: { "Cache-Control": "no-store" } }
+        );
+      }
 
       name = String(
         formData.get("name") || ""
