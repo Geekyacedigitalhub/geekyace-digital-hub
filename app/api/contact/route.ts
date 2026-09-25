@@ -138,10 +138,32 @@ export async function POST(request: Request) {
       `,
     });
 
-    const result = await Promise.race([
-      emailPromise,
-      new Promise<never>((_, reject) => setTimeout(() => reject(new Error("RESEND_TIMEOUT")), RESEND_TIMEOUT_MS)),
-    ]);
+    let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const result = await Promise.race([
+        emailPromise,
+        new Promise<never>((_, reject) => {
+          timeoutHandle = setTimeout(
+            () => reject(new Error("RESEND_TIMEOUT")),
+            RESEND_TIMEOUT_MS
+          );
+        }),
+      ]);
+
+      if (result.error) {
+        console.error("Resend contact email failed.");
+        return noStoreJson(
+          { success: false, message: "We couldn't send your enquiry right now. Please try again." },
+          { status: 500 }
+        );
+      }
+
+      return noStoreJson({ success: true, message: "Email sent successfully." });
+    } finally {
+      if (timeoutHandle) clearTimeout(timeoutHandle);
+    }
+
+    /*
 
     if (result.error) {
       console.error("Resend contact email failed.");
