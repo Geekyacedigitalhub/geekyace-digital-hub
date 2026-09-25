@@ -297,6 +297,13 @@ export async function POST(request: Request) {
     const rate = checkRateLimit(`ai:${getClientIdentifier(request)}`, 10, 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
+    if (request.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !== "application/json") {
+      return NextResponse.json(
+        { success: false, message: "Content-Type must be application/json." },
+        { status: 415, headers: { "Cache-Control": "no-store" } }
+      );
+    }
+
     if (!GEMINI_API_KEY) {
       return NextResponse.json(
         {
