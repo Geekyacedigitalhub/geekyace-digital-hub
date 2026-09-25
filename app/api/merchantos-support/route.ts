@@ -78,8 +78,23 @@ export async function POST(request: Request) {
       );
     }
 
+    if (request.headers.get("content-type")?.toLowerCase().startsWith("multipart/form-data") !== true) {
+      return noStoreJson(
+        { success: false, message: "Content-Type must be multipart/form-data." },
+        { status: 415 }
+      );
+    }
+
     const resend = new Resend(apiKey);
-    const formData = await request.formData();
+    let formData: FormData;
+    try {
+      formData = await request.formData();
+    } catch {
+      return noStoreJson(
+        { success: false, message: "Invalid multipart request body." },
+        { status: 400 }
+      );
+    }
     const honeypot = String(formData.get("website") || "").trim();
     if (honeypot) return noStoreJson({ success: true });
 
