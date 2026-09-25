@@ -14,7 +14,9 @@ export async function POST(request: Request) {
     const rate = checkRateLimit(`admin-login:${getClientIdentifier(request)}`, 5, 15 * 60 * 1000);
     if (!rate.allowed) return rateLimitResponse(rate.retryAfterSeconds);
 
-    const body = await request.json();
+    let body: unknown;
+    try { body = await request.json(); } catch { return NextResponse.json({ error: "Invalid JSON request body." }, { status: 400, headers: noStore }); }
+    if (!body || typeof body !== "object" || Array.isArray(body)) return NextResponse.json({ error: "Invalid request body." }, { status: 400, headers: noStore });
     const email = String(body?.email ?? "").trim();
     const password = String(body?.password ?? "");
 
