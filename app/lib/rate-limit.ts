@@ -7,6 +7,7 @@ type RateLimitResult = {
 
 const buckets = new Map<string, RateLimitEntry>();
 const MAX_BUCKETS = 10_000;
+const MAX_CLIENT_IDENTIFIER_LENGTH = 100;
 
 function pruneExpiredBuckets(now: number): void {
   for (const [key, entry] of buckets) {
@@ -22,10 +23,22 @@ function pruneExpiredBuckets(now: number): void {
   for (const [key] of oldest) buckets.delete(key);
 }
 
+function normalizeClientIdentifier(value: string | null): string | null {
+  const normalized = value?.trim();
+  if (!normalized || normalized.length > MAX_CLIENT_IDENTIFIER_LENGTH) {
+    return null;
+  }
+
+  return normalized;
+}
+
 export function getClientIdentifier(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for");
   const realIp = request.headers.get("x-real-ip");
-  return (forwarded?.split(",")[0]?.trim() || realIp || "unknown").slice(0, 100);
+  const forwardedIp = normalizeClientIdentifier(forwarded?.split(",")[0] ?? null);
+  const realIpValue = normalizeClientIdentifier(realIp);
+
+  return forwardedIp || realIpValue || "unknown";
 }
 
 export function checkRateLimit(
