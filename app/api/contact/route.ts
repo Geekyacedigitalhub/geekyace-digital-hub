@@ -22,6 +22,8 @@ function sanitizeSubject(value: string, fallback: string): string {
   return cleaned || fallback;
 }
 
+const RESEND_TIMEOUT_MS = 15_000;
+
 function noStoreJson(data: unknown, init?: ResponseInit) {
   return NextResponse.json(data, {
     ...init,
@@ -106,7 +108,7 @@ export async function POST(request: Request) {
     const safeContactMethod = escapeHtml(contactMethodValue || "N/A");
     const safeMessage = escapeHtml(messageValue).replace(/\n/g, "<br />");
 
-    const result = await resend.emails.send({
+    const emailPromise = resend.emails.send({
       from,
       to: "geekyacedigital@gmail.com",
       replyTo: emailValue,
@@ -136,6 +138,11 @@ export async function POST(request: Request) {
       `,
     });
 
+    const result = await Promise.race([
+      emailPromise,
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error("RESEND_TIMEOUT")), RESEND_TIMEOUT_MS)),
+    ]);
+
     if (result.error) {
       console.error("Resend contact email failed.");
       return noStoreJson(
@@ -146,6 +153,13 @@ export async function POST(request: Request) {
 
     return noStoreJson({ success: true, message: "Email sent successfully." });
   } catch (error) {
+    if (error instanceof Error && error.message === "RESEND_TIMEOUT") {
+      console.error("Contact email request timed out.");
+      return noStoreJson(
+        { success: false, message: "The email service is taking too long to respond. Please try again." },
+        { status: 504 }
+      );
+    }
     console.error("Contact API request failed.");
     return noStoreJson(
       { success: false, message: "Something went wrong while sending your enquiry." },
