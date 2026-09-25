@@ -9,6 +9,7 @@ const GEMINI_MODEL = "gemini-3.5-flash-lite";
 
 const GEMINI_URL =
   "https://generativelanguage.googleapis.com/v1beta/interactions";
+const GEMINI_TIMEOUT_MS = 30_000;
 
 const SYSTEM_PROMPT = `
 You are GeekyAce AI, the official AI assistant for GeekyAce Digital Hub.
@@ -339,7 +340,12 @@ export async function POST(request: Request) {
         previousInteractionId;
     }
 
-    const geminiResponse = await fetch(GEMINI_URL, {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), GEMINI_TIMEOUT_MS);
+
+    let geminiResponse: Response;
+    try {
+      geminiResponse = await fetch(GEMINI_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -347,7 +353,11 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify(requestBody),
       cache: "no-store",
-    });
+      signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
 
     const data: GeminiResponse =
       await geminiResponse.json();
