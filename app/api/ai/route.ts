@@ -542,7 +542,7 @@ export async function POST(request: Request) {
         message:
           "Something went wrong with the GeekyAce AI service. Please try again.",
       },
-      { status: 500 }
+      { status: 500, headers: { "Cache-Control": "no-store" } }
     );
   }
 }
