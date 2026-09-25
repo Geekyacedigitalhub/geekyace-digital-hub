@@ -200,6 +200,8 @@ export async function PUT(
       );
     }
 
+    if (hasBodyExceededLimit(request, UPLOAD_BODY_LIMIT)) return requestTooLargeResponse();
+
     const { id } = await params;
 
     const result =
@@ -223,8 +225,6 @@ export async function PUT(
 
     const existingMember =
       asTeamMemberWithImage(result);
-
-    if (hasBodyExceededLimit(request, UPLOAD_BODY_LIMIT)) return requestTooLargeResponse();
 
     const contentType =
       request.headers.get("content-type") || "";
