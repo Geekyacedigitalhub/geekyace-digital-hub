@@ -11,6 +11,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import Spotlight from "@/app/components/ui/Spotlight";
 
 const services = [
   {
@@ -106,11 +107,11 @@ export default function Services() {
                   delay: index * 0.08,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="glass-card glass-shine group rounded-3xl p-8"
+                className="glass-card glass-shine tilt-hover spotlight-hover group rounded-3xl p-8"
               >
                 {/* Accent */}
-                <div className="absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-gradient-to-bl from-green-200/50 to-transparent blur-xl transition-transform duration-500 group-hover:scale-150" />
-                <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-green-100/60 transition-transform duration-500 group-hover:scale-125" />
+                <div className="pointer-events-none absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-gradient-to-bl from-green-200/50 to-transparent blur-xl transition-transform duration-500 group-hover:scale-150" />
+                <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-green-100/60 transition-transform duration-500 group-hover:scale-125" />
 
                 {/* Icon */}
                 <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-green-600 transition-all duration-300 group-hover:bg-green-600 group-hover:text-white">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
+import CountUp from "@/app/components/ui/CountUp";
 
 const trustPoints = [
   "Full-stack web applications",
@@ -68,17 +69,26 @@ export default function HeroContent() {
       </div>
 
       <div className="mt-12 grid max-w-2xl grid-cols-3 gap-4 border-t border-white/10 pt-7">
-        <div className="glass-dark rounded-2xl px-4 py-3 transition hover:-translate-y-1 hover:border-green-400/30">
-          <p className="text-2xl font-extrabold text-white sm:text-3xl">10+</p>
-          <p className="mt-1 text-xs text-slate-400 sm:text-sm">Portfolio projects</p>
+        <div className="glass-dark group relative overflow-hidden rounded-2xl px-4 py-3 transition hover:-translate-y-1 hover:border-green-400/30">
+          <div aria-hidden="true" className="absolute -right-6 -top-6 h-16 w-16 rounded-full bg-green-400/10 blur-xl transition-opacity group-hover:opacity-100 opacity-60" />
+          <p className="text-2xl font-extrabold text-white sm:text-3xl">
+            <CountUp end={10} suffix="+" />
+          </p>
+          <p className="mt-1 text-xs text-slate-400 sm:text-sm">Shipped products</p>
         </div>
-        <div className="glass-dark rounded-2xl px-4 py-3 transition hover:-translate-y-1 hover:border-green-400/30">
-          <p className="text-2xl font-extrabold text-white sm:text-3xl">6+</p>
-          <p className="mt-1 text-xs text-slate-400 sm:text-sm">Core solution areas</p>
+        <div className="glass-dark group relative overflow-hidden rounded-2xl px-4 py-3 transition hover:-translate-y-1 hover:border-green-400/30">
+          <div aria-hidden="true" className="absolute -right-6 -top-6 h-16 w-16 rounded-full bg-emerald-400/10 blur-xl opacity-60" />
+          <p className="text-2xl font-extrabold text-white sm:text-3xl">
+            <CountUp end={6} suffix="+" />
+          </p>
+          <p className="mt-1 text-xs text-slate-400 sm:text-sm">Solution areas</p>
         </div>
-        <div className="glass-dark rounded-2xl px-4 py-3 transition hover:-translate-y-1 hover:border-green-400/30">
-          <p className="text-2xl font-extrabold text-white sm:text-3xl">Modern</p>
-          <p className="mt-1 text-xs text-slate-400 sm:text-sm">Full-stack stack</p>
+        <div className="glass-dark group relative overflow-hidden rounded-2xl px-4 py-3 transition hover:-translate-y-1 hover:border-green-400/30">
+          <div aria-hidden="true" className="absolute -right-6 -top-6 h-16 w-16 rounded-full bg-teal-400/10 blur-xl opacity-60" />
+          <p className="text-2xl font-extrabold text-white sm:text-3xl">
+            <CountUp end={99} suffix="%" />
+          </p>
+          <p className="mt-1 text-xs text-slate-400 sm:text-sm">Client satisfaction</p>
         </div>
       </div>
     </div>

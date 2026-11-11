@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import GeekyAceAI from "./components/ai/GeekyAceAI";
+import CursorGlow from "./components/layout/CursorGlow";
+import ScrollProgress from "./components/layout/ScrollProgress";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://geekyacedigitalhub.com"),
@@ -53,9 +55,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="relative">
+        <ScrollProgress />
+        <CursorGlow />
         <Header />
-        {children}
+        <main className="relative">{children}</main>
         <Footer />
         <GeekyAceAI />
       </body>
