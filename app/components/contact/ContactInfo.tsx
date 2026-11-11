@@ -57,7 +57,7 @@ export default function ContactInfo() {
           return (
             <div
               key={item.title}
-              className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-500 hover:shadow-xl"
+              className="glass-card glass-shine rounded-3xl p-6"
             >
               <div className="flex items-center gap-4">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-green-100 text-green-700">

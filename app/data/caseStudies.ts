@@ -51,7 +51,7 @@ export const caseStudies = [
     gallery: [
       "/images/showcase/websites/construction-01.webp",
       "/images/showcase/websites/medical-01.webp",
-      "/images/showcase/websites/restaurant-01.webp",
+      "/images/showcase/websites/Restaurant-01.webp",
     ],
   },
 ];

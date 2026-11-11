@@ -15,8 +15,8 @@ export default function CTASection({
   description,
   primaryLabel = "Start Your Project",
   primaryHref = "/contact",
-  secondaryLabel = "Explore Showcase",
-  secondaryHref = "/showcase",
+  secondaryLabel = "Explore Portfolio",
+  secondaryHref = "/portfolio",
 }: CTASectionProps) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-green-700 via-green-600 to-emerald-700 py-24 text-white">

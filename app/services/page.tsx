@@ -122,7 +122,7 @@ export default function ServicesPage() {
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <Link
-                href="/showcase"
+                href="/portfolio"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-7 py-4 font-bold text-white transition hover:bg-white/10"
               >
                 Explore the Work
@@ -194,7 +194,7 @@ export default function ServicesPage() {
               </h2>
             </div>
             <Link
-              href="/showcase"
+              href="/portfolio"
               className="inline-flex shrink-0 items-center gap-2 font-bold text-green-700 hover:text-green-600"
             >
               See project examples <ArrowRight className="h-4 w-4" />

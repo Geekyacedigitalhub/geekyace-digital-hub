@@ -15,8 +15,6 @@ export const mobile: Project[] = [
     image: "/images/showcase/mobile/food-delivery-01.jpg",
     gallery: [
       "/images/showcase/mobile/food-delivery-01.jpg",
-      "/images/showcase/mobile/food-delivery-02.jpg",
-      "/images/showcase/mobile/food-delivery-03.jpg",
     ],
     shortDescription:
       "Food delivery application with live order tracking and online payments.",
@@ -54,7 +52,6 @@ export const mobile: Project[] = [
     image: "/images/showcase/mobile/hotel-app-01.jpg",
     gallery: [
       "/images/showcase/mobile/hotel-app-01.jpg",
-      "/images/showcase/mobile/hotel-app-02.jpg",
     ],
     shortDescription:
       "Hotel reservation app with digital check-in and booking management.",
@@ -161,7 +158,6 @@ export const mobile: Project[] = [
     image: "/images/showcase/mobile/fitness-app-01.jpg",
     gallery: [
       "/images/showcase/mobile/fitness-app-01.jpg",
-      "/images/showcase/mobile/fitness-app-02.jpg",
     ],
     shortDescription:
       "Fitness tracking application with workout plans and progress analytics.",

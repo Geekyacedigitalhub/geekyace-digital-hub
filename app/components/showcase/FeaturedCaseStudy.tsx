@@ -111,7 +111,7 @@ export default function FeaturedCaseStudy() {
 
             {/* CTA */}
             <Link
-              href={`/showcase/${featuredProject.slug}`}
+              href={`/portfolio/${featuredProject.slug}`}
               className="mt-10 inline-flex items-center rounded-xl bg-green-600 px-7 py-4 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-xl"
             >
               View Full Case Study →

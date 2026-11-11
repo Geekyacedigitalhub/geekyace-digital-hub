@@ -18,9 +18,10 @@ const categories = [
 
 export default function ShowcaseHero() {
   return (
-    <section className="relative overflow-hidden bg-slate-950 py-20 text-white sm:py-24 lg:py-28">
-      <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-0 h-96 w-96 rounded-full bg-green-500/15 blur-3xl" />
-      <div aria-hidden="true" className="pointer-events-none absolute -right-32 bottom-0 h-[32rem] w-[32rem] rounded-full bg-emerald-400/10 blur-3xl" />
+    <section className="section-ambient relative overflow-hidden bg-slate-950 py-20 text-white sm:py-24 lg:py-28">
+      <div aria-hidden="true" className="glass-blob animate-blob pointer-events-none -left-32 top-0 h-96 w-96 bg-green-500/30" />
+      <div aria-hidden="true" className="glass-blob animate-float-slow pointer-events-none -right-32 bottom-0 h-[32rem] w-[32rem] bg-emerald-400/25" />
+      <div aria-hidden="true" className="glass-blob animate-float-reverse pointer-events-none left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 bg-teal-400/15" />
 
       <Container>
         <div className="relative grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
@@ -49,11 +50,12 @@ export default function ShowcaseHero() {
             </div>
           </div>
 
-          <div className="rounded-[32px] border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur sm:p-8">
+          <div className="glass-dark glass-shine relative rounded-[32px] p-6 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] sm:p-8">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.08] to-transparent" />
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-300">Portfolio snapshot</p>
             <div className="mt-6 grid grid-cols-2 gap-3">
               {stats.map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+                <div key={stat.label} className="glass-dark glass-shine rounded-2xl p-5 transition hover:-translate-y-1 hover:border-green-400/30">
                   <p className="text-3xl font-black text-white sm:text-4xl">{stat.number}</p>
                   <p className="mt-2 text-sm text-slate-400">{stat.label}</p>
                 </div>

@@ -22,7 +22,7 @@ export default function Hero() {
         </Link>
 
         <Link
-          href="/showcase"
+          href="/portfolio"
           className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-8 py-4 font-semibold text-slate-700 transition hover:border-green-600 hover:text-green-700"
         >
           View Our Work

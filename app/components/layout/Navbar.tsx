@@ -21,8 +21,8 @@ const links = [
     href: "/solutions",
   },
   {
-    name: "Our Work",
-    href: "/showcase",
+    name: "Portfolio",
+    href: "/portfolio",
   },
   {
     name: "Contact",

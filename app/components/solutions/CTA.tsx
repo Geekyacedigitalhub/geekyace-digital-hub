@@ -48,7 +48,7 @@ export default function CTA() {
             </Button>
 
             <Button
-              href="/showcase"
+              href="/portfolio"
               variant="outline"
               size="lg"
               className="border-white text-white hover:border-white hover:bg-white hover:text-green-700"

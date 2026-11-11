@@ -30,7 +30,7 @@ export default function ResourcesPage() {
             <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">Practical checklists and planning frameworks for websites, SaaS products, AI workflows, Shopify systems, and other digital projects.</p>
             <div className="mt-9 flex flex-wrap justify-center gap-3">
               <Link href="/contact" className="inline-flex items-center gap-2 rounded-xl bg-green-500 px-7 py-4 font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-green-400">Discuss a Project <ArrowRight size={18}/></Link>
-              <Link href="/showcase" className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-7 py-4 font-bold text-white transition hover:bg-white/10">See the Work</Link>
+              <Link href="/portfolio" className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-7 py-4 font-bold text-white transition hover:bg-white/10">See the Work</Link>
             </div>
           </div>
         </Container>

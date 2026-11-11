@@ -19,7 +19,7 @@ export default function HeroContent() {
 
       <h1 className="mt-7 max-w-4xl text-4xl font-extrabold leading-[1.04] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
         I build
-        <span className="block bg-gradient-to-r from-green-300 via-emerald-400 to-green-500 bg-clip-text text-transparent">
+        <span className="gradient-text-animated block">
           digital products
         </span>
         that solve real problems.
@@ -34,24 +34,24 @@ export default function HeroContent() {
       <div className="mt-9 flex flex-wrap gap-4">
         <Link
           href="/contact"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-500 px-6 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-green-500/20 transition hover:-translate-y-0.5 hover:bg-green-400"
+          className="btn-glass glass-shine inline-flex items-center justify-center gap-2 rounded-xl bg-green-500 px-6 py-3.5 text-sm font-bold text-slate-950 shadow-[0_12px_32px_-8px_rgba(34,197,94,0.55)] transition hover:-translate-y-0.5 hover:bg-green-400 hover:shadow-[0_20px_48px_-12px_rgba(34,197,94,0.7)]"
         >
           Start a Project
           <ArrowRight className="h-4 w-4" />
         </Link>
 
         <Link
-          href="/showcase"
-          className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-white/5 px-6 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition hover:border-green-400/40 hover:bg-white/10"
+          href="/portfolio"
+          className="glass-dark glass-shine inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:border-green-400/40 hover:bg-white/10"
         >
-          Explore My Work
+          Explore My Portfolio
         </Link>
 
         <a
           href="https://github.com/Geekyacedigitalhub"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-white/5 px-5 py-3.5 text-sm font-bold text-slate-200 transition hover:border-slate-500 hover:bg-white/10"
+          className="glass-dark glass-shine inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 px-5 py-3.5 text-sm font-bold text-slate-200 transition hover:-translate-y-0.5 hover:border-slate-400/40 hover:bg-white/10"
         >
           <FaGithub className="h-4 w-4" />
           GitHub
@@ -67,16 +67,16 @@ export default function HeroContent() {
         ))}
       </div>
 
-      <div className="mt-12 grid max-w-2xl grid-cols-3 gap-4 border-t border-slate-800 pt-7">
-        <div>
+      <div className="mt-12 grid max-w-2xl grid-cols-3 gap-4 border-t border-white/10 pt-7">
+        <div className="glass-dark rounded-2xl px-4 py-3 transition hover:-translate-y-1 hover:border-green-400/30">
           <p className="text-2xl font-extrabold text-white sm:text-3xl">10+</p>
-          <p className="mt-1 text-xs text-slate-400 sm:text-sm">Showcase projects</p>
+          <p className="mt-1 text-xs text-slate-400 sm:text-sm">Portfolio projects</p>
         </div>
-        <div>
+        <div className="glass-dark rounded-2xl px-4 py-3 transition hover:-translate-y-1 hover:border-green-400/30">
           <p className="text-2xl font-extrabold text-white sm:text-3xl">6+</p>
           <p className="mt-1 text-xs text-slate-400 sm:text-sm">Core solution areas</p>
         </div>
-        <div>
+        <div className="glass-dark rounded-2xl px-4 py-3 transition hover:-translate-y-1 hover:border-green-400/30">
           <p className="text-2xl font-extrabold text-white sm:text-3xl">Modern</p>
           <p className="mt-1 text-xs text-slate-400 sm:text-sm">Full-stack stack</p>
         </div>

@@ -97,7 +97,7 @@ export default async function ProjectCaseStudyPage({
 
             {/* Back Link */}
             <Link
-              href="/showcase"
+              href="/portfolio"
               className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 transition hover:text-green-400"
             >
               <ArrowLeft
@@ -105,7 +105,7 @@ export default async function ProjectCaseStudyPage({
                 aria-hidden="true"
               />
 
-              Back to Showcase
+              Back to Portfolio
             </Link>
 
             {/* Category */}
@@ -474,7 +474,7 @@ export default async function ProjectCaseStudyPage({
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
 
             <Link
-              href="/showcase"
+              href="/portfolio"
               className="inline-flex items-center gap-2 font-semibold text-slate-700 transition hover:text-green-600"
             >
               <ArrowLeft
@@ -482,7 +482,7 @@ export default async function ProjectCaseStudyPage({
                 aria-hidden="true"
               />
 
-              Back to All Projects
+              Back to Portfolio
             </Link>
 
             <Link

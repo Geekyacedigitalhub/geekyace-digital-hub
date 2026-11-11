@@ -39,7 +39,7 @@ export default function ShowcaseFilters({
   return (
     <section
       aria-label="Project filters"
-      className="mb-12 rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6"
+      className="glass-strong glass-shine mb-12 rounded-3xl p-5 shadow-[0_16px_40px_-20px_rgba(15,23,42,0.12)] sm:p-6"
     >
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {/* Search */}

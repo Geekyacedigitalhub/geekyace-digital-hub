@@ -10,11 +10,11 @@ export default function FeaturedCaseStudies() {
   const featuredProjects = getFeaturedProjects(6);
 
   return (
-    <section className="py-20 sm:py-24 lg:py-28">
+    <section className="section-ambient relative py-20 sm:py-24 lg:py-28">
       <Container>
         {/* Section Heading */}
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
+          <span className="glass-shine inline-flex items-center rounded-full border border-green-200/60 bg-white/70 px-4 py-2 text-sm font-semibold text-green-700 shadow-sm backdrop-blur-xl">
             Featured Work
           </span>
 
@@ -55,8 +55,8 @@ export default function FeaturedCaseStudies() {
         {/* View All */}
         <div className="mt-14 flex justify-center">
           <Link
-            href="/showcase"
-            className="inline-flex items-center gap-2 rounded-xl bg-green-600 px-7 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg"
+            href="/portfolio"
+            className="btn-glass glass-shine inline-flex items-center gap-2 rounded-xl bg-green-600 px-7 py-3.5 text-sm font-bold text-white shadow-[0_12px_30px_-10px_rgba(22,163,74,0.55)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-[0_20px_40px_-12px_rgba(22,163,74,0.7)]"
           >
             View All Case Studies
             <ArrowRight className="h-4 w-4" />

@@ -47,7 +47,7 @@ const reasons = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="overflow-hidden bg-white py-24 sm:py-28">
+    <section className="section-ambient relative overflow-hidden bg-gradient-to-b from-white via-slate-50/60 to-white py-24 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
           {/* Left */}
@@ -67,7 +67,7 @@ export default function WhyChooseUs() {
             </p>
 
             {/* Main highlight */}
-            <div className="mt-10 rounded-3xl border border-green-100 bg-green-50 p-6 sm:p-8">
+            <div className="glass-strong glass-shine mt-10 rounded-3xl border border-green-200/50 bg-gradient-to-br from-green-50/80 via-white/70 to-emerald-50/80 p-6 shadow-[0_16px_40px_-20px_rgba(22,163,74,0.3)] sm:p-8">
               <div className="flex gap-4">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-600 text-white">
                   <CheckCircle2 className="h-6 w-6" />
@@ -89,7 +89,7 @@ export default function WhyChooseUs() {
 
             <Link
               href="/about"
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800"
+              className="btn-glass glass-shine mt-8 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-bold text-white shadow-[0_12px_30px_-10px_rgba(15,23,42,0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[0_20px_40px_-10px_rgba(15,23,42,0.6)]"
             >
               Learn More About Us
               <ArrowRight className="h-4 w-4" />
@@ -101,7 +101,11 @@ export default function WhyChooseUs() {
             {/* Background decoration */}
             <div
               aria-hidden="true"
-              className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-green-100/70 blur-3xl"
+              className="glass-blob animate-blob absolute -right-20 -top-20 h-64 w-64 bg-green-300/25"
+            />
+            <div
+              aria-hidden="true"
+              className="glass-blob animate-float-slow absolute -bottom-20 -left-10 h-56 w-56 bg-emerald-300/20"
             />
 
             <div className="relative space-y-4">
@@ -115,10 +119,11 @@ export default function WhyChooseUs() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{
-                      duration: 0.45,
-                      delay: index * 0.07,
+                      duration: 0.55,
+                      delay: index * 0.08,
+                      ease: [0.22, 1, 0.36, 1],
                     }}
-                    className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-x-1 hover:border-green-200 hover:shadow-lg sm:p-6"
+                    className="glass-card glass-shine group rounded-2xl p-5 sm:p-6"
                   >
                     <div className="flex gap-4">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors duration-200 group-hover:bg-green-100 group-hover:text-green-600">

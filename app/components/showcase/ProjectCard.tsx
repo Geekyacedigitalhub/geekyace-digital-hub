@@ -15,8 +15,8 @@ export default function ProjectCard({ project, priority = false }: ProjectCardPr
   const remainingTechnologies = project.technologies.length - technologies.length;
 
   return (
-    <article className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-green-500 hover:shadow-2xl">
-      <Link href={`/showcase/${project.slug}`} className="block" aria-label={`View ${project.title} case study`}>
+    <article className="glass-card glass-shine group rounded-3xl">
+      <Link href={`/portfolio/${project.slug}`} className="block" aria-label={`View ${project.title} case study`}>
         <div className="relative h-64 overflow-hidden bg-slate-100 sm:h-72">
           <ProjectImage src={project.image} alt={project.title} priority={priority} />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/30 to-transparent" />
@@ -32,7 +32,7 @@ export default function ProjectCard({ project, priority = false }: ProjectCardPr
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">{project.service}</span>
         </div>
 
-        <Link href={`/showcase/${project.slug}`}>
+        <Link href={`/portfolio/${project.slug}`}>
           <h3 className="mt-6 text-2xl font-bold text-slate-900 transition-colors duration-200 group-hover:text-green-700">{project.title}</h3>
         </Link>
 
@@ -60,7 +60,7 @@ export default function ProjectCard({ project, priority = false }: ProjectCardPr
                 <ExternalLink size={16} /> Live
               </a>
             )}
-            <Link href={`/showcase/${project.slug}`} className="inline-flex items-center gap-2 font-semibold text-green-600 hover:gap-3 hover:text-green-700">
+            <Link href={`/portfolio/${project.slug}`} className="inline-flex items-center gap-2 font-semibold text-green-600 hover:gap-3 hover:text-green-700">
               <span className="hidden sm:inline">Case Study</span><ArrowRight size={18} />
             </Link>
           </div>

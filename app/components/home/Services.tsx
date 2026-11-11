@@ -72,7 +72,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="bg-slate-50 py-24 sm:py-28">
+    <section className="section-ambient relative bg-gradient-to-b from-slate-50 via-white to-slate-50 py-24 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center">
@@ -102,13 +102,15 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{
-                  duration: 0.45,
-                  delay: index * 0.06,
+                  duration: 0.55,
+                  delay: index * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
-                className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-xl"
+                className="glass-card glass-shine group rounded-3xl p-8"
               >
                 {/* Accent */}
-                <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-green-50 transition-transform duration-300 group-hover:scale-125" />
+                <div className="absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-gradient-to-bl from-green-200/50 to-transparent blur-xl transition-transform duration-500 group-hover:scale-150" />
+                <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-green-100/60 transition-transform duration-500 group-hover:scale-125" />
 
                 {/* Icon */}
                 <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-green-600 transition-all duration-300 group-hover:bg-green-600 group-hover:text-white">
@@ -154,7 +156,7 @@ export default function Services() {
         <div className="mt-14 text-center">
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 rounded-xl border border-green-200 bg-white px-6 py-3.5 text-sm font-bold text-green-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-green-300 hover:bg-green-50 hover:shadow-md"
+            className="btn-glass glass-shine inline-flex items-center gap-2 rounded-xl border border-green-200/70 bg-white/70 px-6 py-3.5 text-sm font-bold text-green-700 shadow-[0_8px_24px_-12px_rgba(22,163,74,0.35)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-green-300 hover:bg-green-50/80 hover:shadow-[0_16px_32px_-12px_rgba(22,163,74,0.45)]"
           >
             View All Services
             <ArrowRight className="h-4 w-4" />

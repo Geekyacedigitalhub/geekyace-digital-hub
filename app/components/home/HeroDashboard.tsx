@@ -68,7 +68,11 @@ export default function HeroDashboard() {
         />
 
         {/* Main dashboard */}
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/95 shadow-2xl shadow-black/30">
+        <div className="relative overflow-hidden rounded-3xl border border-white/20 bg-slate-900/50 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] backdrop-blur-2xl backdrop-saturate-150">
+          {/* glossy highlight */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.06] to-transparent" />
+          <div aria-hidden="true" className="pointer-events-none absolute -left-10 top-10 h-40 w-40 rounded-full bg-green-400/10 blur-3xl" />
+          <div aria-hidden="true" className="pointer-events-none absolute -right-10 bottom-0 h-40 w-40 rounded-full bg-teal-400/10 blur-3xl" />
           {/* Dashboard header */}
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
             <div className="flex items-center gap-3">
