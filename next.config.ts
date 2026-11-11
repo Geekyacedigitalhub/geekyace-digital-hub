@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
+// Fixed cache-busting build id so Vercel/CDNs serve a fresh asset bundle.
+const BUILD_ID = "geekyace-glass-v2";
+
 const nextConfig: NextConfig = {
+  generateBuildId: async () => BUILD_ID,
+
   images: {
     unoptimized: true,
     qualities: [70, 75, 80],
@@ -36,6 +41,13 @@ const nextConfig: NextConfig = {
         source: "/dashboard/:path*",
         headers: [
           { key: "Cache-Control", value: "no-store, max-age=0" },
+        ],
+      },
+      {
+        // HTML pages — revalidate on each request so visitors always get the latest shell.
+        source: "/((?!_next/static|_next/image|favicon.ico|Images/|images/|uploads/|api/).*)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
         ],
       },
       {
