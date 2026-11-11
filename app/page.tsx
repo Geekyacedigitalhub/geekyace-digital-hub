@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 
 import Hero from "@/app/components/home/Hero";
+import Marquee from "@/app/components/home/Marquee";
 import TrustedCompanies from "@/app/components/home/TrustedCompanies";
 
 const SectionLoader = () => (
@@ -69,6 +70,13 @@ export default function HomePage() {
   return (
     <main>
       <Hero />
+
+      {/* Infinite tech marquee — premium touch under hero */}
+      <section className="section-ambient relative border-y border-slate-200/60 bg-gradient-to-b from-white to-slate-50/60">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <Marquee />
+        </div>
+      </section>
 
       <TrustedCompanies />
 
