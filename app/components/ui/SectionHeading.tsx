@@ -14,7 +14,7 @@ export default function SectionHeading({
   return (
     <div className={centered ? "mx-auto max-w-3xl text-center" : ""}>
       {badge && (
-        <span className="inline-flex rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
+        <span className="glass-shine inline-flex items-center rounded-full border border-green-200/60 bg-white/70 px-4 py-2 text-sm font-semibold text-green-700 shadow-sm backdrop-blur-xl">
           {badge}
         </span>
       )}

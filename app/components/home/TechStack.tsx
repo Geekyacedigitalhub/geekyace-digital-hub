@@ -57,7 +57,7 @@ const technologies = [
 
 export default function TechStack() {
   return (
-    <section className="bg-white py-24 sm:py-28">
+    <section className="section-ambient relative bg-gradient-to-b from-slate-50/60 via-white to-slate-50/60 py-24 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center">
@@ -91,9 +91,9 @@ export default function TechStack() {
                   duration: 0.4,
                   delay: index * 0.05,
                 }}
-                className="group rounded-2xl border border-slate-200 bg-slate-50 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-green-200 hover:bg-green-50 hover:shadow-lg"
+                className="glass-card glass-shine group rounded-2xl p-6"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-slate-600 shadow-sm transition-colors duration-300 group-hover:bg-green-600 group-hover:text-white">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/80 text-slate-600 shadow-sm backdrop-blur transition-colors duration-300 group-hover:bg-green-600 group-hover:text-white">
                   <Icon className="h-6 w-6" />
                 </div>
 

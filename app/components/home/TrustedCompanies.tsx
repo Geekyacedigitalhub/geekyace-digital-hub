@@ -39,7 +39,7 @@ const industries = [
 
 export default function TrustedCompanies() {
   return (
-    <section className="border-b border-slate-200 bg-white py-14 sm:py-16">
+    <section className="relative border-b border-white/40 bg-gradient-to-b from-white to-slate-50/60 py-14 sm:py-16">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
@@ -72,7 +72,7 @@ export default function TrustedCompanies() {
                   duration: 0.4,
                   delay: index * 0.05,
                 }}
-                className="group flex min-h-[120px] flex-col items-center justify-center rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-6 text-center transition-all duration-200 hover:-translate-y-1 hover:border-green-200 hover:bg-green-50 hover:shadow-md"
+                className="glass-card glass-shine group flex min-h-[120px] flex-col items-center justify-center rounded-2xl px-4 py-6 text-center"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-slate-500 shadow-sm transition-colors duration-200 group-hover:bg-green-100 group-hover:text-green-600">
                   <Icon className="h-5 w-5" />

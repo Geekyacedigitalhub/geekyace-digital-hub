@@ -20,7 +20,9 @@ const company = [
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 text-slate-300">
+    <footer className="relative overflow-hidden bg-slate-950 text-slate-300">
+      <div aria-hidden="true" className="pointer-events-none absolute -left-40 top-10 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
       <Container>
         <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:py-20">
           <div>
@@ -31,10 +33,10 @@ export default function Footer() {
               Full-stack web development, Shopify engineering, AI products, and automation systems built around real business needs.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="https://github.com/Geekyacedigitalhub" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold transition hover:border-green-500/40 hover:text-green-400">
+              <a href="https://github.com/Geekyacedigitalhub" target="_blank" rel="noreferrer" className="glass-dark glass-shine inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-green-500/40 hover:text-green-400">
                 <FaGithub size={16} /> GitHub
               </a>
-              <a href="https://www.linkedin.com/company/geekyace-digital-hub" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold transition hover:border-green-500/40 hover:text-green-400">
+              <a href="https://www.linkedin.com/company/geekyace-digital-hub" target="_blank" rel="noreferrer" className="glass-dark glass-shine inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-green-500/40 hover:text-green-400">
                 <FaLinkedinIn size={16} /> LinkedIn
               </a>
             </div>
