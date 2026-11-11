@@ -10,7 +10,7 @@ const navigation = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
   { name: "Solutions", href: "/solutions" },
-  { name: "Showcase", href: "/showcase" },
+  { name: "Portfolio", href: "/portfolio" },
   { name: "About", href: "/about" },
   { name: "Resources", href: "/resources" },
 ];
@@ -33,10 +33,10 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-xl"
-          : "border-transparent bg-white/75 backdrop-blur-md"
+          ? "border-b border-white/40 bg-white/60 shadow-[0_8px_32px_-8px_rgba(15,23,42,0.12)] backdrop-blur-2xl backdrop-saturate-150"
+          : "border-b border-transparent bg-white/40 backdrop-blur-xl backdrop-saturate-120"
       }`}
     >
       <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
@@ -65,7 +65,7 @@ export default function Header() {
 
           <Link
             href="/contact"
-            className="ml-2 inline-flex items-center gap-2 rounded-xl bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg"
+            className="btn-glass glass-shine ml-2 inline-flex items-center gap-2 rounded-xl bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-[0_8px_24px_-8px_rgba(22,163,74,0.6)] transition hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-[0_16px_40px_-12px_rgba(22,163,74,0.7)]"
           >
             Start Project
             <ArrowUpRight className="h-4 w-4" />
@@ -84,7 +84,7 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-        <div className="border-t border-slate-200 bg-white lg:hidden">
+        <div className="border-t border-white/40 bg-white/75 backdrop-blur-2xl backdrop-saturate-150 lg:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-5 sm:px-6">
             {navigation.map((item) => {
               const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));

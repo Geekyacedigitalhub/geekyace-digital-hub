@@ -47,7 +47,7 @@ export default function CTA() {
             </Link>
 
             <Link
-              href="/showcase"
+              href="/portfolio"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800 px-7 py-4 font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:border-green-500 hover:bg-slate-700"
             >
               Explore Our Work

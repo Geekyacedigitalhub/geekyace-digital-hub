@@ -15,7 +15,6 @@ export const automation: Project[] = [
     image: "/images/showcase/automation/crm-01.jpg",
     gallery: [
       "/images/showcase/automation/crm-01.jpg",
-      "/images/showcase/automation/crm-02.jpg",
     ],
     shortDescription:
       "Customer relationship management platform with sales pipeline automation.",

@@ -23,13 +23,13 @@ export default function Button({
 
   const variants = {
     primary:
-      "bg-green-600 text-white hover:bg-green-700 hover:-translate-y-0.5 shadow-lg hover:shadow-xl",
+      "btn-glass glass-shine bg-green-600 text-white hover:bg-green-700 hover:-translate-y-0.5 shadow-[0_12px_30px_-10px_rgba(22,163,74,0.55)] hover:shadow-[0_20px_40px_-12px_rgba(22,163,74,0.7)]",
 
     secondary:
-      "border border-green-600 bg-white text-green-600 hover:bg-green-50 hover:-translate-y-0.5",
+      "glass glass-shine border border-green-200/60 text-green-700 hover:-translate-y-0.5 hover:border-green-300 hover:shadow-[0_12px_30px_-12px_rgba(22,163,74,0.25)]",
 
     outline:
-      "border border-gray-300 bg-transparent text-gray-700 hover:border-green-600 hover:text-green-600 hover:bg-green-50",
+      "glass glass-shine border border-white/30 text-white hover:-translate-y-0.5 hover:border-green-300 hover:bg-white/15",
   };
 
   const sizes = {

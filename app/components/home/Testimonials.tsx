@@ -45,7 +45,7 @@ export default function Testimonials() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Link href="/showcase" className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-slate-800">
+          <Link href="/portfolio" className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-slate-800">
             Inspect the Portfolio <ArrowRight size={17} />
           </Link>
         </div>

@@ -15,7 +15,6 @@ export const ai: Project[] = [
     image: "/images/showcase/ai/support-ai-01.jpg",
     gallery: [
       "/images/showcase/ai/support-ai-01.jpg",
-      "/images/showcase/ai/support-ai-02.jpg",
     ],
     shortDescription:
       "AI-powered customer support chatbot available 24/7.",

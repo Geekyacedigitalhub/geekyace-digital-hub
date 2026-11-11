@@ -7,7 +7,7 @@ import ContactInfo from "./ContactInfo";
 
 export default function Contact() {
   return (
-    <section className="bg-slate-50 py-20 md:py-28">
+    <section className="section-ambient relative bg-gradient-to-b from-slate-50 via-white to-slate-50 py-20 md:py-28">
       <Container>
         {/* Section Heading */}
         <div className="mx-auto max-w-3xl text-center">
@@ -35,7 +35,7 @@ export default function Contact() {
           {/* Contact Form */}
           <div
             id="contact-form"
-            className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10"
+            className="glass-strong glass-shine rounded-3xl p-6 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.15)] sm:p-8 lg:p-10"
           >
             <ContactForm />
           </div>

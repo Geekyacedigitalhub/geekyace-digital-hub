@@ -16,9 +16,11 @@ export default function PageHero({
   children,
 }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-slate-50 py-28">
-      {/* Background Glow */}
-      <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-green-300/20 blur-3xl" />
+    <section className="section-ambient relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white py-28">
+      {/* Animated glass blobs */}
+      <div aria-hidden="true" className="glass-blob animate-blob absolute left-1/4 top-0 h-[500px] w-[500px] bg-green-300/25" />
+      <div aria-hidden="true" className="glass-blob animate-float-slow absolute right-0 top-20 h-[400px] w-[400px] bg-emerald-300/20" />
+      <div aria-hidden="true" className="glass-blob animate-float-reverse absolute bottom-0 left-1/2 h-[350px] w-[350px] -translate-x-1/2 bg-teal-200/25" />
 
       <Container>
         <div

@@ -63,7 +63,7 @@ export default function ServiceHero({
             </Link>
 
             <Link
-              href="/showcase"
+              href="/portfolio"
               className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-7 py-4 font-bold text-slate-800 transition-all duration-300 hover:-translate-y-1 hover:border-green-500 hover:text-green-600 hover:shadow-lg"
             >
               Explore Our Work

@@ -16,8 +16,8 @@ export const hero = {
   },
 
   secondaryButton: {
-    label: "Explore Showcase",
-    href: "/showcase",
+    label: "Explore Portfolio",
+    href: "/portfolio",
   },
 
   highlights: [

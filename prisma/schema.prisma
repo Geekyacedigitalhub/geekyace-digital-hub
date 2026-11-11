@@ -37,6 +37,7 @@ model Lead {
   recommendedService  String?
   conversationSummary String?
   status              String   @default("NEW")
+  aiInteractionId     String?  @unique
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 

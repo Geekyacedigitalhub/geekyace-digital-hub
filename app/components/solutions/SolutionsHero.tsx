@@ -12,7 +12,7 @@ export default function SolutionsHero() {
         <Button href="/contact" variant="primary" size="lg">
           Start a Project <ArrowRight className="h-4 w-4" />
         </Button>
-        <Button href="/showcase" variant="secondary" size="lg">
+        <Button href="/portfolio" variant="secondary" size="lg">
           Explore the Portfolio
         </Button>
       </div>

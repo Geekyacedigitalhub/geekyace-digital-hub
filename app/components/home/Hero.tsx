@@ -4,21 +4,26 @@ import HeroDashboard from "./HeroDashboard";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-slate-950">
-      {/* Background glow */}
+    <section className="section-ambient relative overflow-hidden bg-slate-950">
+      {/* Animated glass blobs */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-green-500/10 blur-3xl"
+        className="glass-blob animate-blob -left-40 top-20 h-96 w-96 bg-green-500/30"
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-40 top-10 h-[500px] w-[500px] rounded-full bg-emerald-400/10 blur-3xl"
+        className="glass-blob animate-float-slow -right-40 top-10 h-[500px] w-[500px] bg-emerald-400/25"
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-blue-500/5 blur-3xl"
+        className="glass-blob animate-float-reverse bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 bg-teal-400/20"
+      />
+
+      <div
+        aria-hidden="true"
+        className="glass-blob animate-float-slower right-1/3 top-1/2 h-80 w-80 bg-lime-400/15"
       />
 
       {/* Subtle grid */}

@@ -144,9 +144,11 @@ export default function GeekyAceAI() {
             overflow-hidden
             rounded-2xl
             border
-            border-gray-200
-            bg-white
-            shadow-2xl
+            border-white/50
+            bg-white/75
+            shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)]
+            backdrop-blur-2xl
+            backdrop-saturate-180
             sm:right-6
           "
           role="dialog"

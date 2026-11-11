@@ -15,7 +15,7 @@ export default function ContactHero() {
           Start a Conversation
           <ArrowRight className="h-4 w-4" />
         </Button>
-        <Button href="/showcase" variant="secondary" size="lg">
+        <Button href="/portfolio" variant="secondary" size="lg">
           Inspect the Work
         </Button>
       </div>

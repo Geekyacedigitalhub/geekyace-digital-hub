@@ -15,6 +15,21 @@ const nextConfig: NextConfig = {
 
   compress: true,
 
+  async redirects() {
+    return [
+      {
+        source: "/showcase",
+        destination: "/portfolio",
+        permanent: true,
+      },
+      {
+        source: "/showcase/:slug",
+        destination: "/portfolio/:slug",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
