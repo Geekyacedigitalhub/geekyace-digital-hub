@@ -15,6 +15,7 @@ import ScrollSpy from "./components/layout/ScrollSpy";
 import SideDots from "./components/layout/SideDots";
 import MobileStickyCTA from "./components/layout/MobileStickyCTA";
 import Confetti from "./components/ui/Confetti";
+import LoadingScreen from "./components/ui/LoadingScreen";
 import { ThemeProvider } from "./components/layout/ThemeProvider";
 
 export const metadata: Metadata = {
@@ -71,13 +72,14 @@ export default function RootLayout({
           <ScrollAmbient />
 
           {/* Global UI chrome */}
-          <ScrollProgress />
-          <CursorGlow />
-          <CustomCursor />
-          <Noise />
-          <ScrollSpy />
-          <SideDots />
-          <Confetti />
+        <LoadingScreen />
+        <ScrollProgress />
+        <CursorGlow />
+        <CustomCursor />
+        <Noise />
+        <ScrollSpy />
+        <SideDots />
+        <Confetti />
 
           <Header />
           <main className="relative">{children}</main>

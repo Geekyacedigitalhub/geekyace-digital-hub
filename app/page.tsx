@@ -6,6 +6,7 @@ import TrustedCompanies from "@/app/components/home/TrustedCompanies";
 import AutoFixConsole from "@/app/components/home/AutoFixConsole";
 import Transformation from "@/app/components/home/Transformation";
 import MetricsRibbon from "@/app/components/home/MetricsRibbon";
+import Lighthouse from "@/app/components/home/Lighthouse";
 
 const SectionLoader = () => (
   <div
@@ -95,7 +96,11 @@ export default function HomePage() {
 
       <div id="tech"><TechStack /></div>
 
-      <div id="work"><FeaturedCaseStudies /></div>
+      <Lighthouse />
+
+      <div id="work">
+        <FeaturedCaseStudies />
+      </div>
 
       <div id="testimonials"><Testimonials /></div>
 

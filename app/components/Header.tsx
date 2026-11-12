@@ -86,8 +86,8 @@ export default function Header() {
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
           {scrolled && <div aria-hidden="true" className="pointer-events-none absolute -top-20 left-1/2 h-40 w-80 -translate-x-1/2 rounded-full bg-green-400/20 blur-3xl dark:bg-green-400/15" />}
 
-          <Link href="/" className="relative z-10 flex h-10 w-[148px] items-center" aria-label="GeekyAce Digital Hub Home">
-            <Image src="/images/logo.png" alt="GeekyAce Digital Hub" fill sizes="148px" className="object-contain object-left dark:brightness-110" priority />
+          <Link href="/" className="logo-shine relative z-10 flex h-10 w-[148px] items-center rounded-lg" aria-label="GeekyAce Digital Hub Home">
+            <Image src="/images/logo.png" alt="GeekyAce Digital Hub" fill sizes="148px" className="object-contain object-left transition-transform duration-500 hover:scale-105 dark:brightness-110" priority />
           </Link>
 
           <nav ref={navRef} className="relative hidden items-center gap-1 rounded-full border border-slate-200/70 bg-white/60 p-1.5 shadow-inner shadow-black/5 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 lg:flex">

@@ -91,6 +91,12 @@ export function useContactForm() {
       setSuccess(true);
       setFormData(initialFormData);
       setErrors({});
+      // Fire confetti on success
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("confetti-burst"));
+        window.dispatchEvent(new CustomEvent("confetti-burst")); // double burst
+        setTimeout(() => window.dispatchEvent(new CustomEvent("confetti-burst")), 250);
+      }
     } catch (error) {
       console.error("Contact form error:", error);
 
