@@ -49,8 +49,8 @@ const TechStack = dynamic(
   }
 );
 
-const FeaturedCaseStudies = dynamic(
-  () => import("@/app/components/home/FeaturedCaseStudies"),
+const FeaturedReel = dynamic(
+  () => import("@/app/components/home/FeaturedReel"),
   {
     loading: () => <SectionLoader />,
   }
@@ -99,7 +99,7 @@ export default function HomePage() {
       <Lighthouse />
 
       <div id="work">
-        <FeaturedCaseStudies />
+        <FeaturedReel />
       </div>
 
       <div id="testimonials"><Testimonials /></div>
