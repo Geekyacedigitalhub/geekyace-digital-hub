@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, CalendarDays, Clock } from "lucide-react";
 import { getAllPosts } from "@/lib/posts";
 import Container from "@/app/components/ui/Container";
+import Newsletter from "@/app/components/home/Newsletter";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -44,6 +45,10 @@ export default function BlogIndex() {
               </span>
             </Link>
           ))}
+        </div>
+
+        <div className="mx-auto mt-16 max-w-4xl">
+          <Newsletter />
         </div>
       </Container>
       <div className="h-24" />
