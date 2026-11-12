@@ -1,76 +1,48 @@
-import Button from "../Button";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import Container from "../ui/Container";
-import { ArrowRight, Code2, Layers3, ShoppingBag, Sparkles } from "lucide-react";
-
-const stats = [
-  { number: "10+", label: "Featured builds" },
-  { number: "6+", label: "Solution areas" },
-  { number: "20+", label: "Technologies used" },
-  { number: "1", label: "Unified portfolio" },
-];
-
-const categories = [
-  { label: "Full-Stack", icon: Layers3 },
-  { label: "Shopify", icon: ShoppingBag },
-  { label: "AI", icon: Sparkles },
-  { label: "Developer Tools", icon: Code2 },
-];
 
 export default function ShowcaseHero() {
   return (
-    <section className="section-ambient relative overflow-hidden bg-slate-950 py-20 text-white sm:py-24 lg:py-28">
-      <div aria-hidden="true" className="glass-blob animate-blob pointer-events-none -left-32 top-0 h-96 w-96 bg-green-500/30" />
-      <div aria-hidden="true" className="glass-blob animate-float-slow pointer-events-none -right-32 bottom-0 h-[32rem] w-[32rem] bg-emerald-400/25" />
-      <div aria-hidden="true" className="glass-blob animate-float-reverse pointer-events-none left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 bg-teal-400/15" />
-
+    <section className="border-b border-slate-900/10 bg-white pt-28 pb-20 sm:pt-36 sm:pb-24">
       <Container>
-        <div className="relative grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+        <div className="grid items-end gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-400/10 px-4 py-2 text-sm font-bold text-green-300">
-              <Sparkles className="h-4 w-4" />
-              Full-Stack Portfolio
-            </span>
-
-            <h1 className="mt-7 max-w-4xl text-4xl font-black tracking-tight sm:text-5xl lg:text-7xl">
+            <span className="text-[11px] font-bold uppercase tracking-[0.28em] text-green-700">Selected work</span>
+            <h1 className="mt-6 max-w-4xl font-serif text-5xl font-black italic leading-[1.02] tracking-tight text-slate-950 sm:text-6xl lg:text-[5.5rem]">
               Real projects.
-              <span className="block text-green-400">Real engineering.</span>
+              <span className="block not-italic text-green-700">Real engineering.</span>
             </h1>
-
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-              Explore production-oriented web apps, SaaS products, Shopify
-              systems, AI applications, and developer tools built by GeekyAce
-              Digital Hub.
+            <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-600">
+              A curated selection of production web applications, Shopify themes and apps,
+              AI products, SaaS platforms, and business automation — built for founders
+              and teams around the world.
             </p>
-
-            <div className="mt-9 flex flex-wrap gap-4">
-              <Button href="/contact" size="lg">Start a Project</Button>
-              <a href="#projects" className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3.5 font-bold text-white hover:bg-white/10">
-                Browse Projects <ArrowRight size={17} />
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link href="/contact" className="inline-flex items-center gap-2 rounded-sm bg-slate-950 px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-green-700">
+                Start a project <ArrowRight size={15} />
+              </Link>
+              <a href="#projects" className="inline-flex items-center gap-2 border-b border-slate-950 pb-0.5 text-sm font-bold text-slate-950 transition hover:border-green-700 hover:text-green-700">
+                Browse projects
               </a>
             </div>
           </div>
 
-          <div className="glass-dark glass-shine relative rounded-[32px] p-6 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] sm:p-8">
-            <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.08] to-transparent" />
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-300">Portfolio snapshot</p>
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              {stats.map((stat) => (
-                <div key={stat.label} className="glass-dark glass-shine rounded-2xl p-5 transition hover:-translate-y-1 hover:border-green-400/30">
-                  <p className="text-3xl font-black text-white sm:text-4xl">{stat.number}</p>
-                  <p className="mt-2 text-sm text-slate-400">{stat.label}</p>
+          <div className="border-l border-slate-900/10 pl-0 lg:pl-12">
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-slate-500">Snapshot</p>
+            <dl className="mt-6 grid grid-cols-2 gap-y-6 text-sm">
+              {[
+                ["40+", "Products shipped"],
+                ["6", "Core disciplines"],
+                ["12", "Countries served"],
+                ["5 yr", "In business"],
+              ].map(([v, l]) => (
+                <div key={l}>
+                  <dt className="font-serif text-4xl font-black text-slate-950">{v}</dt>
+                  <dd className="mt-1 text-xs uppercase tracking-widest text-slate-500">{l}</dd>
                 </div>
               ))}
-            </div>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {categories.map((category) => {
-                const Icon = category.icon;
-                return (
-                  <span key={category.label} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300">
-                    <Icon size={14} className="text-green-400" /> {category.label}
-                  </span>
-                );
-              })}
-            </div>
+            </dl>
           </div>
         </div>
       </Container>
