@@ -52,11 +52,9 @@ export default function HeroContent() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.6 }}
-          className="mt-7 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg"
+          className="hero-description mt-7 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg"
         >
-          GeekyAce Digital Hub designs and develops production-ready websites,
-          SaaS platforms, Shopify systems, AI applications, and business
-          automation with modern full-stack technologies.
+          <strong>GeekyAce Digital Hub</strong> is a remote-first worldwide full-stack development agency. We design and build production-ready websites, SaaS platforms, Shopify themes and apps, AI products, and business automation for founders and teams globally using Next.js, React, TypeScript, Prisma, PostgreSQL, and modern AI stacks.
         </motion.p>
       </Parallax>
 

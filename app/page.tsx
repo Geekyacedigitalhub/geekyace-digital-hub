@@ -64,6 +64,9 @@ const TestimonialCarousel = dynamic(
 );
 
 import BlogTeaser from "@/app/components/home/BlogTeaser";
+import HomeFAQ from "@/app/components/home/HomeFAQ";
+import SpeakableSchema from "@/app/components/seo/SpeakableSchema";
+import HowToSchema from "@/app/components/seo/HowToSchema";
 const FinalCTA = dynamic(
   () => import("@/app/components/home/FinalCTA"),
   {
@@ -74,6 +77,17 @@ const FinalCTA = dynamic(
 export default function HomePage() {
   return (
     <main>
+      <SpeakableSchema selectors={["h1", ".hero-description"]} />
+      <HowToSchema
+        name="How to start a project with GeekyAce Digital Hub"
+        description="Four steps to get a proposal and begin building your product with GeekyAce."
+        steps={[
+          { name: "Send a brief", text: "Submit the contact form or book a free strategy call describing your project goals, timeline, and budget.", url: "https://geekyacedigitalhub.com/contact" },
+          { name: "Discovery call", text: "We run a 20-minute call to dig into requirements, users, and success metrics." },
+          { name: "Scoped proposal", text: "Within 3 business days we send a fixed-scope proposal with milestones, timeline, and price." },
+          { name: "Kickoff & build", text: "We kick off with weekly demos, a shared Linear board, and production-ready delivery." },
+        ]}
+      />
       <Hero />
 
       {/* Infinite tech marquee — premium touch under hero */}
@@ -108,6 +122,7 @@ export default function HomePage() {
       <MetricsRibbon />
 
       <BlogTeaser />
+      <HomeFAQ />
       <FinalCTA />
     </main>
   );

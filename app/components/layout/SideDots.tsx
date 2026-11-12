@@ -10,6 +10,7 @@ const sections = [
   { id: "work", label: "Work" },
   { id: "testimonials", label: "Testimonials" },
   { id: "blog", label: "Insights" },
+  { id: "faq", label: "FAQ" },
 ];
 
 export default function SideDots() {

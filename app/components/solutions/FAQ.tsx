@@ -4,49 +4,8 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 import Container from "../ui/Container";
-
-const faqs = [
-  {
-    question: "What digital solutions do you provide?",
-    answer:
-      "We provide website development, AI solutions, business automation, mobile application development, UI/UX design, cloud solutions, and digital transformation services tailored to your business.",
-  },
-  {
-    question: "How long does a typical project take?",
-    answer:
-      "Project timelines depend on the scope and complexity. Small websites may take a few weeks, while larger applications and automation projects can take several months. We'll provide a clear timeline before development begins.",
-  },
-  {
-    question: "Do you offer support after project delivery?",
-    answer:
-      "Yes. We provide ongoing maintenance, updates, technical support, and optimization to help ensure your solution continues to perform reliably after launch.",
-  },
-  {
-    question: "Can you improve an existing website or application?",
-    answer:
-      "Absolutely. We can redesign, optimize, modernize, integrate, or extend your existing website, application, or business system without necessarily starting from scratch.",
-  },
-  {
-    question: "Do you build custom solutions?",
-    answer:
-      "Yes. Every business is different, so we design and develop custom digital solutions around your goals, workflows, users, and long-term growth strategy.",
-  },
-  {
-    question: "Can you work with clients outside Nigeria?",
-    answer:
-      "Yes. Geekyace Digital Hub provides remote digital services to businesses worldwide. We can collaborate with clients across different time zones using online communication and project management tools.",
-  },
-  {
-    question: "How do you handle project communication?",
-    answer:
-      "We maintain clear communication throughout the project. Depending on your preference, we can communicate through email, WhatsApp, Google Meet, or other agreed project channels.",
-  },
-  {
-    question: "How do I get started?",
-    answer:
-      "Simply contact us through our contact page. Tell us about your project, goals, and requirements, and we'll review your needs and recommend the best way forward.",
-  },
-];
+import FAQJsonLd from "@/app/components/seo/FAQJsonLd";
+import { faqs } from "@/app/data/faqs";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -57,6 +16,7 @@ export default function FAQ() {
 
   return (
     <section className="bg-slate-50 py-20 md:py-24">
+      <FAQJsonLd items={faqs} />
       <Container>
         {/* Section Heading */}
         <div className="mx-auto max-w-3xl text-center">
