@@ -4,7 +4,7 @@ excerpt: "Billing, webhook idempotency, embedded App Bridge routing, GDPR webhoo
 tag: "Shopify"
 date: "Oct 10, 2026"
 read: "9 min read"
-cover: "/images/blog/shopify.jpg"
+cover: "/images/blog/shopify.svg"
 ---
 
 After three public listings and a lot of rejected reviews, here's the list we

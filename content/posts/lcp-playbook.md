@@ -4,7 +4,7 @@ excerpt: "The exact bundle, image, and streaming changes that moved a client fro
 tag: "Performance"
 date: "Nov 4, 2026"
 read: "7 min read"
-cover: "/images/blog/lcp.jpg"
+cover: "/images/blog/lcp.svg"
 ---
 
 A Shopify merchant came to us with a 4.1s Largest Contentful Paint on mobile and

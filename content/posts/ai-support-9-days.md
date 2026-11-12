@@ -4,7 +4,7 @@ excerpt: "Using retrieval-augmented generation over a client's existing FAQ + ti
 tag: "AI"
 date: "Oct 22, 2026"
 read: "11 min read"
-cover: "/images/blog/ai.jpg"
+cover: "/images/blog/ai.svg"
 ---
 
 The brief was scary: "Our support team is drowning in DMs during Black Friday.

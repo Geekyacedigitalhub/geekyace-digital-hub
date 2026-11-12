@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c4a6e"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="55%" r="60%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg2)"/>
+  <circle cx="540" cy="270" r="260" fill="url(#glow)"/>
+  <g font-family="ui-sans-serif, system-ui">
+    <text x="50" y="90" font-size="18" font-weight="700" fill="#22d3ee" letter-spacing="4">AI ENGINEERING</text>
+    <text x="50" y="170" font-size="54" font-weight="800" fill="#ffffff">An AI support bot</text>
+    <text x="50" y="230" font-size="54" font-weight="800" fill="#67e8f9">in 9 days.</text>
+    <text x="50" y="280" font-size="20" fill="#94a3b8">RAG over existing tickets. 70% auto-resolution on day one.</text>
+  </g>
+  <g transform="translate(50 360)" font-family="ui-monospace, monospace" font-size="14" fill="#a5f3fc">
+    <rect width="400" height="90" rx="12" fill="#0b1220" stroke="#22d3ee" stroke-opacity="0.4"/>
+    <text x="20" y="30" fill="#67e8f9">› retrieving tickets…</text>
+    <text x="20" y="54" fill="#a7f3d0">› answer drafted (4 chunks, 0.8s)</text>
+    <text x="20" y="78" fill="#fde68a">› sent. ✓ human-handoff ready.</text>
+  </g>
+</svg>
