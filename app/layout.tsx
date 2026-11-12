@@ -102,6 +102,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="antialiased" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" />
+      </head>
       <ThemeProvider>
         <body className="relative min-h-screen overflow-x-hidden">
           <JsonLd site={site} />
