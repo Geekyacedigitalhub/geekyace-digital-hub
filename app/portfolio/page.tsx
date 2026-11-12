@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 
 import ShowcaseHero from "@/app/components/showcase/ShowcaseHero";
-import ShowcaseStats from "@/app/components/showcase/ShowcaseStats";
 import FeaturedCaseStudy from "@/app/components/showcase/FeaturedCaseStudy";
 import FeaturedProjects from "@/app/components/showcase/FeaturedProjects";
 
 export const metadata: Metadata = {
-  title: "Portfolio & Case Studies | Geekyace Digital Hub",
+  title: "Portfolio & Case Studies | GeekyAce Digital Hub",
   description:
-    "Explore websites, AI solutions, mobile applications, automation systems, and digital products built by Geekyace Digital Hub.",
-  alternates: {
+    "A curated index of production web applications, Shopify themes and apps, AI products, SaaS platforms, and business automation built by GeekyAce Digital Hub for founders and teams worldwide.",
+ alternates: {
     canonical: "/portfolio",
   },
 };
@@ -18,7 +17,6 @@ export default function PortfolioPage() {
   return (
     <main className="min-h-screen bg-white">
       <ShowcaseHero />
-      <ShowcaseStats />
       <FeaturedCaseStudy />
       <FeaturedProjects />
     </main>
