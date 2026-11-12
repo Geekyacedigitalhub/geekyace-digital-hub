@@ -14,6 +14,7 @@ import ScrollToTop from "./components/layout/ScrollToTop";
 import ScrollSpy from "./components/layout/ScrollSpy";
 import SideDots from "./components/layout/SideDots";
 import MobileStickyCTA from "./components/layout/MobileStickyCTA";
+import ContactDrawer from "./components/layout/ContactDrawer";
 import Confetti from "./components/ui/Confetti";
 import LoadingScreen from "./components/ui/LoadingScreen";
 import { ThemeProvider } from "./components/layout/ThemeProvider";
@@ -88,6 +89,7 @@ export default function RootLayout({
           <FloatingCTA />
           <ScrollToTop />
           <MobileStickyCTA />
+          <ContactDrawer />
           <GeekyAceAI />
         </body>
       </ThemeProvider>
