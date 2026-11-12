@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   keywords: site.keywords,
   alternates: {
     canonical: "/",
-    languages: { "en-NG": "/", "en-US": "/" },
+    languages: { "en": "/", "x-default": "/" },
     types: {
       "application/rss+xml": [{ url: "/feed.xml", title: "GeekyAce Insights RSS" }],
     },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     url: site.url,
     siteName: site.name,
     type: "website",
-    locale: "en_NG",
+    locale: "en_US",
     images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: site.name }],
   },
   twitter: {
@@ -74,6 +74,17 @@ export const metadata: Metadata = {
     // bing: "YOUR_BING_TOKEN",
   },
   formatDetection: { email: false, address: false, telephone: false },
+  other: {
+    "Content-Language": "en",
+    coverage: "Worldwide",
+    distribution: "Global",
+    rating: "General",
+    "revisit-after": "7 days",
+    "dc.language": "en",
+    "dc.publisher": site.name,
+    "dc.creator": site.name,
+    "dc.source": site.url,
+  },
 };
 
 export default function RootLayout({
