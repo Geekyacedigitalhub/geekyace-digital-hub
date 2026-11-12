@@ -9,6 +9,7 @@ const sections = [
   { id: "tech", label: "Tech" },
   { id: "work", label: "Work" },
   { id: "testimonials", label: "Testimonials" },
+  { id: "blog", label: "Insights" },
 ];
 
 export default function SideDots() {

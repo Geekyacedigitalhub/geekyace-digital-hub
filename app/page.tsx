@@ -56,13 +56,19 @@ const FeaturedReel = dynamic(
   }
 );
 
-const Testimonials = dynamic(
-  () => import("@/app/components/home/Testimonials"),
+const TestimonialCarousel = dynamic(
+  () => import("@/app/components/home/TestimonialCarousel"),
   {
     loading: () => <SectionLoader />,
   }
 );
 
+const BlogTeaser = dynamic(
+  () => import("@/app/components/home/BlogTeaser"),
+  {
+    loading: () => <SectionLoader />,
+  }
+);
 const FinalCTA = dynamic(
   () => import("@/app/components/home/FinalCTA"),
   {
@@ -102,10 +108,11 @@ export default function HomePage() {
         <FeaturedReel />
       </div>
 
-      <div id="testimonials"><Testimonials /></div>
+      <div id="testimonials"><TestimonialCarousel /></div>
 
       <MetricsRibbon />
 
+      <BlogTeaser />
       <FinalCTA />
     </main>
   );

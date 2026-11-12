@@ -1,130 +1,118 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import { Quote, Star } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Quote, Star, ChevronLeft, ChevronRight, User } from "lucide-react";
 
-const items = [
+type T = { q: string; name: string; role: string; img?: string; rating?: number };
+const testimonials: T[] = [
   {
-    name: "Tolu Adebayo",
-    role: "Founder, Bella Vita Restaurant",
-    quote: "Our online reservations doubled in the first month. The site loads instantly on mobile and guests actually complete bookings now — before, people abandoned the form halfway.",
-    rating: 5,
-    color: "from-rose-400 to-orange-400",
+    q: "GeekyAce rebuilt our Shopify stack end-to-end — StoreScout alone changed how we find winners. Loads feel instant and conversions are up materially.",
+    name: "Chidi O.", role: "E-commerce Director, Lagos", img: "/images/testimonials/person-1.jpg", rating: 5,
   },
   {
-    name: "Michael Chen",
-    role: "CTO, StoreScout",
-    quote: "He shipped features faster than two agencies we'd worked with before. The code is clean, the product feels polished, and he actually understands e-commerce operations.",
-    rating: 5,
-    color: "from-blue-400 to-cyan-400",
+    q: "They understood our healthcare brief faster than any agency we'd spoken to. HIPAA-aligned form handling, clean dashboards, zero hand-holding.",
+    name: "Adaeze N.", role: "Product Lead, MedTech startup", img: "/images/testimonials/person-2.jpg", rating: 5,
   },
   {
-    name: "Sarah Okonkwo",
-    role: "Director, Prime Legal",
-    quote: "The AI intake assistant handles 70% of inbound questions after hours. It felt like hiring a second receptionist — without the salary.",
-    rating: 5,
-    color: "from-violet-400 to-fuchsia-400",
+    q: "BuyerReply AI cut our customer-support response time by 70%. The dashboard is a thing of beauty. Can't recommend enough.",
+    name: "Marcus T.", role: "Founder, DTC brand", img: "/images/testimonials/person-3.jpg", rating: 5,
   },
   {
-    name: "David Park",
-    role: "Head of Growth, MerchantOS",
-    quote: "From first call to production launch in 6 weeks. The theme loads sub-1s and conversion is up 38% over our old storefront.",
-    rating: 5,
-    color: "from-emerald-400 to-teal-400",
+    q: "Our site went from a 32 Lighthouse score to 98 across the board, and the design is genuinely gorgeous. Best dev partner we've had.",
+    name: "Sofia R.", role: "CMO, SaaS platform", img: "/images/testimonials/person-4.jpg", rating: 5,
   },
 ];
 
+const AUTOPLAY_MS = 6000;
+
 export default function TestimonialCarousel() {
-  const [idx, setIdx] = useState(0);
-  const [dir, setDir] = useState(1);
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const t = useRef<number | null>(null);
 
   useEffect(() => {
-    const id = setInterval(() => { setDir(1); setIdx((i) => (i + 1) % items.length); }, 6000);
-    return () => clearInterval(id);
-  }, []);
+    if (paused) return;
+    t.current = window.setTimeout(() => setI((x) => (x + 1) % testimonials.length), AUTOPLAY_MS);
+    return () => { if (t.current) clearTimeout(t.current); };
+  }, [i, paused]);
 
-  const go = (n: number) => { setDir(n > idx ? 1 : -1); setIdx((n + items.length) % items.length); };
-  const t = items[idx];
-
-  const variants = {
-    enter: (d: number) => ({ opacity: 0, x: d > 0 ? 40 : -40, filter: "blur(6px)" }),
-    center: { opacity: 1, x: 0, filter: "blur(0px)" },
-    exit: (d: number) => ({ opacity: 0, x: d > 0 ? -40 : 40, filter: "blur(6px)" }),
-  };
+  const next = () => setI((x) => (x + 1) % testimonials.length);
+  const prev = () => setI((x) => (x - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <div className="relative mx-auto max-w-4xl">
-      <div className="glass-dark relative overflow-hidden rounded-[2rem] border border-white/15 bg-slate-900/80 p-8 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] backdrop-blur-2xl sm:p-12">
-        {/* Accent glow */}
-        <div aria-hidden className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-green-500/10 blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-teal-400/10 blur-3xl" />
+    <section
+      className="section-ambient relative py-20 sm:py-28"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="mx-auto max-w-5xl px-5 sm:px-6 lg:px-8">
+        <div className="glass-strong glass-shine relative overflow-hidden rounded-[2rem] p-8 shadow-[0_30px_80px_-30px_rgba(15,23,42,0.25)] sm:p-12">
+          <Quote className="h-12 w-12 text-green-500/80" aria-hidden />
 
-        <Quote className="h-10 w-10 text-green-400/50" aria-hidden />
+          <div className="relative mt-6 min-h-[180px] sm:min-h-[160px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.4, ease: [0.22,1,0.36,1] }}
+              >
+                <p className="text-xl font-medium leading-relaxed text-slate-800 sm:text-2xl dark:text-slate-100">
+                  “{testimonials[i].q}”
+                </p>
+                <div className="mt-6 flex items-center gap-4">
+                  {testimonials[i].img ? (
+                    <Image src={testimonials[i].img} alt={testimonials[i].name} width={48} height={48} className="h-12 w-12 rounded-full object-cover ring-2 ring-green-500/40" />
+                  ) : (
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-600 font-bold text-white">
+                      {testimonials[i].name[0]}
+                    </div>
+                  )}
+                  <div>
+                    <p className="font-bold text-slate-900 dark:text-white">{testimonials[i].name}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">{testimonials[i].role}</p>
+                  </div>
+                  <div className="ml-auto flex gap-0.5">
+                    {Array.from({ length: testimonials[i].rating || 5 }).map((_, k) => (
+                      <Star key={k} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-        <div className="relative mt-6 min-h-[200px]">
-          <AnimatePresence mode="wait" custom={dir}>
-            <motion.div
-              key={idx}
-              custom={dir}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0"
-            >
-              <p className="text-xl leading-relaxed text-white sm:text-2xl">
-                <span className="text-green-400">“</span>
-                {t.quote}
-                <span className="text-green-400">”</span>
-              </p>
-              <div className="mt-8 flex items-center gap-4">
-                <div className={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${t.color} text-white font-bold`}>
-                  <User className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="font-bold text-white">{t.name}</p>
-                  <p className="text-sm text-slate-400">{t.role}</p>
-                </div>
-                <div className="ml-auto flex gap-1">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+          {/* Controls */}
+          <div className="mt-8 flex items-center gap-4">
+            <button onClick={prev} aria-label="Previous testimonial" className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-green-500 hover:text-green-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <div className="flex flex-1 gap-1.5">
+              {testimonials.map((_, k) => (
+                <button
+                  key={k}
+                  aria-label={`Testimonial ${k + 1}`}
+                  onClick={() => setI(k)}
+                  className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-white/10"
+                >
+                  <span
+                    className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 ${k === i && !paused ? "w-full" : k < i ? "w-full" : "w-0"}`}
+                    style={{
+                      transition: k === i && !paused ? `width ${AUTOPLAY_MS}ms linear` : "width 0.3s",
+                    }}
+                  />
+                </button>
+              ))}
+            </div>
+            <button onClick={next} aria-label="Next testimonial" className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-green-500 hover:text-green-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
         </div>
       </div>
-
-      {/* Controls */}
-      <div className="mt-6 flex items-center justify-center gap-4">
-        <button
-          aria-label="Previous testimonial"
-          onClick={() => go(idx - 1)}
-          className="glass-card flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:-translate-y-0.5 hover:text-green-700 dark:text-slate-200 dark:hover:text-green-300"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <div className="flex items-center gap-2">
-          {items.map((_, i) => (
-            <button
-              key={i}
-              aria-label={`Go to testimonial ${i + 1}`}
-              onClick={() => go(i)}
-              className={`h-2 rounded-full transition-all ${i === idx ? "w-8 bg-green-500" : "w-2 bg-slate-300 dark:bg-white/20"}`}
-            />
-          ))}
-        </div>
-        <button
-          aria-label="Next testimonial"
-          onClick={() => go(idx + 1)}
-          className="glass-card flex h-10 w-10 items-center justify-center rounded-full text-slate-700 transition hover:-translate-y-0.5 hover:text-green-700 dark:text-slate-200 dark:hover:text-green-300"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-      </div>
-    </div>
+    </section>
   );
 }

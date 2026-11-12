@@ -76,15 +76,13 @@ export default function Transformation() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <BeforeAfter
-              beforeSrc="/images/showcase/before-after/before-old-site.jpg"
-              afterSrc="/images/showcase/hero-dashboard.jpg"
-              alt="Website transformation"
+              before="/images/showcase/before-after/before-old-site.jpg"
+              after="/images/showcase/hero-dashboard.jpg"
+              beforeAlt="Before: slow outdated website"
+              afterAlt="After: GeekyAce modern product"
               beforeLabel="Before"
               afterLabel="After GeekyAce"
             />
-            <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">
-              ← Drag the handle to see the transformation →
-            </p>
           </motion.div>
         </div>
       </div>
