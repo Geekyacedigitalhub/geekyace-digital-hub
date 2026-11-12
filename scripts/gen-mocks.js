@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const OUT = path.join(__dirname, 'public/images/showcase/github');
+const OUT = path.resolve(__dirname, '..', '..', 'public/images/showcase/github');
 fs.mkdirSync(OUT, { recursive: true });
 
 // Generate a pretty UI-mock SVG for a project
