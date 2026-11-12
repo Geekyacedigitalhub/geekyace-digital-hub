@@ -10,6 +10,10 @@ import ScrollProgress from "./components/layout/ScrollProgress";
 import ScrollAmbient from "./components/layout/ScrollAmbient";
 import Noise from "./components/layout/Noise";
 import FloatingCTA from "./components/layout/FloatingCTA";
+import ScrollToTop from "./components/layout/ScrollToTop";
+import ScrollSpy from "./components/layout/ScrollSpy";
+import Confetti from "./components/ui/Confetti";
+import { ThemeProvider } from "./components/layout/ThemeProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://geekyacedigitalhub.com"),
@@ -58,24 +62,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="antialiased">
-      <body className="relative min-h-screen overflow-x-hidden bg-white text-slate-900">
-        {/* Scroll-timed ambient color wash */}
-        <ScrollAmbient />
+    <html lang="en" className="antialiased" suppressHydrationWarning>
+      <ThemeProvider>
+        <body className="relative min-h-screen overflow-x-hidden">
+          {/* Scroll-timed ambient color wash */}
+          <ScrollAmbient />
 
-        {/* Global UI chrome */}
-        <ScrollProgress />
-        <CursorGlow />
-        <CustomCursor />
-        <Noise />
+          {/* Global UI chrome */}
+          <ScrollProgress />
+          <CursorGlow />
+          <CustomCursor />
+          <Noise />
+          <ScrollSpy />
+          <Confetti />
 
-        <Header />
-        <main className="relative">{children}</main>
-        <Footer />
+          <Header />
+          <main className="relative">{children}</main>
+          <Footer />
 
-        <FloatingCTA />
-        <GeekyAceAI />
-      </body>
+          <FloatingCTA />
+          <ScrollToTop />
+          <GeekyAceAI />
+        </body>
+      </ThemeProvider>
     </html>
   );
 }

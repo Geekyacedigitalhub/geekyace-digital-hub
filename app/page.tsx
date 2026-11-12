@@ -78,19 +78,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      <TrustedCompanies />
+      <div id="solutions"><TrustedCompanies /></div>
 
-      <Services />
+      <div id="services"><Services /></div>
 
       <WhyChooseUs />
 
-      <Process />
+      <div id="process"><Process /></div>
 
-      <TechStack />
+      <div id="tech"><TechStack /></div>
 
-      <FeaturedCaseStudies />
+      <div id="work"><FeaturedCaseStudies /></div>
 
-      <Testimonials />
+      <div id="testimonials"><Testimonials /></div>
 
       <FinalCTA />
     </main>
