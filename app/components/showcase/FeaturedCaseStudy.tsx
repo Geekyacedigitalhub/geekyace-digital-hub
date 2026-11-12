@@ -9,7 +9,7 @@ export default function FeaturedCaseStudy() {
   const [primary, ...others] = featuredProjects.slice(0, 4);
 
   return (
-    <section className="relative border-y border-slate-200/70 bg-white py-20 sm:py-28">
+    <section className="bg-white py-20 sm:py-24">
       <Container>
         {/* Eyebrow */}
         <div className="flex items-end justify-between gap-6">
@@ -31,41 +31,51 @@ export default function FeaturedCaseStudy() {
         </div>
 
         {/* Big editorial hero */}
-        <div className="mt-10 grid gap-8 lg:grid-cols-5">
-          <Link href={`/showcase/${primary.slug}`} className="group relative col-span-3 overflow-hidden rounded-3xl ring-1 ring-slate-200/70 transition hover:ring-green-300">
-            <div className="relative aspect-[4/3] w-full bg-slate-100">
-              <ProjectImage src={primary.image} alt={primary.title} priority />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-6 text-white">
-              <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white/80">
-                <span className="rounded-full bg-white/15 px-2.5 py-1 backdrop-blur">{primary.category}</span>
-                <span>{primary.year} · {primary.duration}</span>
+        <div className="mt-10 grid gap-10 lg:grid-cols-5 lg:gap-12">
+          <Link href={`/showcase/${primary.slug}`} className="group relative col-span-3 block">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-slate-100 ring-1 ring-slate-200 transition group-hover:ring-slate-900">
+              <div className="absolute inset-0 transition duration-700 group-hover:scale-[1.02]">
+                <ProjectImage src={primary.image} alt={primary.title} priority />
               </div>
-              <h3 className="mt-3 text-2xl font-extrabold">{primary.title}</h3>
-              <p className="mt-1 max-w-xl text-sm leading-6 text-white/80 line-clamp-2">{primary.overview}</p>
             </div>
+            <div className="mt-4 flex items-baseline justify-between gap-4 border-b border-slate-900/10 pb-2">
+              <h3 className="font-serif text-3xl font-black italic text-slate-950">{primary.title}</h3>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">{primary.category}</span>
+            </div>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">{primary.overview}</p>
           </Link>
 
-          <div className="col-span-2 flex flex-col justify-between gap-4 rounded-3xl bg-slate-950 p-8 text-white">
+          <div className="col-span-2 flex flex-col justify-between gap-6 border-l border-slate-900/10 pl-8">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-green-400">The approach</p>
-              <p className="mt-4 text-lg leading-8 text-slate-200">{primary.solution || "Modern engineering, considered UX, and production-grade reliability from day one."}</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500">The approach</p>
+              <p className="mt-4 text-[15px] leading-7 text-slate-700">{primary.solution || "Modern engineering, considered UX, and production-grade reliability from day one."}</p>
             </div>
 
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-400">Stack</p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500">Stack</p>
+              <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
                 {primary.technologies.slice(0, 8).map((t) => (
-                  <span key={t} className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-slate-200">{t}</span>
+                  <span key={t} className="text-[11px] font-medium uppercase tracking-wider text-slate-600">{t}</span>
                 ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 border-t border-slate-900/10 pt-5">
+              <div>
+                <p className="font-serif text-3xl font-black text-slate-950">{primary.year}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-widest text-slate-500">Year</p>
+              </div>
+              <div>
+                <p className="font-serif text-3xl font-black text-slate-950">{primary.duration}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-widest text-slate-500">Engagement</p>
               </div>
             </div>
 
             <Link
               href={`/showcase/${primary.slug}`}
-              className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-green-500 px-5 py-3 text-sm font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-green-400"
+              className="inline-flex items-center gap-2 border-b border-slate-950 pb-0.5 text-sm font-bold text-slate-950 transition hover:border-green-700 hover:text-green-700"
             >
-              View case study <ArrowUpRight size={16} />
+              Read the case study <ArrowUpRight size={14} />
             </Link>
           </div>
         </div>
@@ -73,26 +83,21 @@ export default function FeaturedCaseStudy() {
         {/* Secondary featured strip */}
         {others.length > 0 && (
           <>
-            <div className="mt-16 flex items-end justify-between">
-              <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">More shipped work</h3>
-              <Link href="/portfolio" className="inline-flex items-center gap-1 text-xs font-bold text-green-700 hover:gap-2">See all <ArrowUpRight size={13}/></Link>
+            <div className="mt-20 flex items-end justify-between border-t border-slate-900/10 pt-6">
+              <h3 className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">Also shipped</h3>
+              <Link href="/portfolio#projects" className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-widest text-slate-900 hover:gap-2 hover:text-green-700">All projects <ArrowUpRight size={12}/></Link>
             </div>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {others.map((p) => (
+            <div className="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {others.map((p, i) => (
                 <Link key={p.slug} href={`/showcase/${p.slug}`} className="group block">
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200/70 transition group-hover:ring-green-300">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-slate-100 ring-1 ring-slate-200 transition group-hover:ring-slate-900">
                     <ProjectImage src={p.image} alt={p.title} />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                      <span className="rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-800">{p.category}</span>
-                    </div>
                   </div>
-                  <div className="mt-3 flex items-start justify-between gap-4">
-                    <div>
-                      <h4 className="text-base font-bold text-slate-950 group-hover:text-green-700">{p.title}</h4>
-                      <p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-500">{p.shortDescription}</p>
-                    </div>
-                    <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-green-600"/>
+                  <div className="mt-3 flex items-baseline justify-between gap-4 border-b border-slate-900/10 pb-2">
+                    <h4 className="font-serif text-lg font-normal italic text-slate-950 group-hover:text-green-700">{p.title}</h4>
+                    <span className="font-mono text-[10px] text-slate-400">0{i + 2}</span>
                   </div>
+                  <p className="mt-2 line-clamp-2 text-[12px] leading-5 text-slate-600">{p.shortDescription}</p>
                 </Link>
               ))}
             </div>
