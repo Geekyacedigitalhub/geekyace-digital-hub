@@ -321,6 +321,15 @@ a {
 
 .animate-ping-slow { animation: ping-slow 2.2s cubic-bezier(0,0,0.2,1) infinite; }
 
+@keyframes caret-blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+.caret-blink { animation: caret-blink 1s steps(2) infinite; }
+
+.prose :where(h2) { margin-top: 2.2em; }
+.prose :where(h3) { margin-top: 1.8em; }
+.prose :where(p) { line-height: 1.8; color: rgb(51 65 85 / var(--tw-text-opacity, 1)); }
+.dark .prose :where(p) { color: rgb(203 213 225 / var(--tw-text-opacity, 1)); }
+.prose :where(ul) li { margin: 0.4em 0; }
+
 /* Tilt-on-hover card utility (pure CSS, no JS mousemove) */
 .tilt-hover {
   transform-style: preserve-3d;

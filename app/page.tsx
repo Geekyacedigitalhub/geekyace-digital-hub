@@ -63,12 +63,7 @@ const TestimonialCarousel = dynamic(
   }
 );
 
-const BlogTeaser = dynamic(
-  () => import("@/app/components/home/BlogTeaser"),
-  {
-    loading: () => <SectionLoader />,
-  }
-);
+import BlogTeaser from "@/app/components/home/BlogTeaser";
 const FinalCTA = dynamic(
   () => import("@/app/components/home/FinalCTA"),
   {

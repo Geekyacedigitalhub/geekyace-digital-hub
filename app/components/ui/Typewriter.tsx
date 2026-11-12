@@ -39,7 +39,7 @@ export default function Typewriter({
   return (
     <span className={className}>
       {sub}
-      <span className="ml-0.5 inline-block h-[1em] w-[2px] translate-y-[2px] animate-pulse bg-current align-middle" />
+      <span className="caret-blink ml-0.5 inline-block h-[1em] w-[2px] translate-y-[2px] bg-current align-middle" />
     </span>
   );
 }
