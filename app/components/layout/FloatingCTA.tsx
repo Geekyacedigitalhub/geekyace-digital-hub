@@ -61,13 +61,13 @@ export default function FloatingCTA() {
             <p className="mt-2 text-sm text-slate-400">
               Average reply time: under 2 hours.
             </p>
-            <Link
-              href="/contact"
-              onClick={() => setOpen(false)}
+            <button
+              type="button"
+              onClick={() => { setOpen(false); window.dispatchEvent(new CustomEvent("open-contact-drawer")); }}
               className="btn-glass glass-shine mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-green-400 to-green-500 px-4 py-3 text-sm font-bold text-slate-950 shadow-[0_10px_30px_-10px_rgba(34,197,94,0.7)] transition hover:-translate-y-0.5"
             >
               Start a conversation <Send className="h-4 w-4" />
-            </Link>
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
