@@ -8,6 +8,7 @@ import ReadingProgress from "@/app/components/ui/ReadingProgress";
 import PostBody from "@/app/components/ui/PostBody";
 import PostTOC from "@/app/components/ui/PostTOC";
 import ArticleJsonLd from "@/app/components/seo/ArticleJsonLd";
+import BreadcrumbJsonLd from "@/app/components/seo/BreadcrumbJsonLd";
 import { marked } from "marked";
 import { Metadata } from "next";
 import { site } from "@/app/data/site-meta";
@@ -35,6 +36,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="pt-28 sm:pt-36">
+      <BreadcrumbJsonLd items={[
+        { name: "Home", url: site.url },
+        { name: "Insights", url: `${site.url}/blog` },
+        { name: post.title, url: `${site.url}/blog/${post.slug}` },
+      ]} />
       <ArticleJsonLd
         title={post.title}
         description={post.excerpt}

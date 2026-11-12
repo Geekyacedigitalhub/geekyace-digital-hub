@@ -52,7 +52,7 @@ export default async function OG() {
             </span>
           </div>
           <div style={{ fontSize: 28, color: "#94a3b8", maxWidth: 780, lineHeight: 1.4 }}>
-            Full-stack web apps · Shopify systems · AI products · SaaS platforms · Business automation
+            Full-stack development agency · Worldwide · Shopify · AI · SaaS · Automation
           </div>
         </div>
 
