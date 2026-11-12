@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import Hero from "@/app/components/home/Hero";
 import Marquee from "@/app/components/home/Marquee";
 import TrustedCompanies from "@/app/components/home/TrustedCompanies";
+import AutoFixConsole from "@/app/components/home/AutoFixConsole";
 
 const SectionLoader = () => (
   <div
@@ -83,6 +84,8 @@ export default function HomePage() {
       <div id="services"><Services /></div>
 
       <WhyChooseUs />
+
+      <AutoFixConsole />
 
       <div id="process"><Process /></div>
 
