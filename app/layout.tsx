@@ -73,9 +73,13 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   verification: {
-    // Replace with real values from Google / Bing / Yandex search consoles when available.
-    // google: "YOUR_GOOGLE_VERIFICATION_TOKEN",
-    // bing: "YOUR_BING_TOKEN",
+    // Set these env vars in Vercel → Settings → Environment Variables
+    // (e.g. GOOGLE_SITE_VERIFICATION=abc123...). They only emit a meta tag
+    // when present — no tag is rendered while the variable is unset.
+    ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+    ...(process.env.BING_SITE_VERIFICATION  ? { bing:   process.env.BING_SITE_VERIFICATION }  : {}),
+    ...(process.env.YANDEX_SITE_VERIFICATION ? { yandex: process.env.YANDEX_SITE_VERIFICATION } : {}),
+    ...(process.env.PINTEREST_SITE_VERIFICATION ? { pinterest: process.env.PINTEREST_SITE_VERIFICATION } : {}),
   },
   formatDetection: { email: false, address: false, telephone: false },
   other: {
