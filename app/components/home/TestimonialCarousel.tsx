@@ -5,23 +5,23 @@ import Image from "next/image";
 import { Quote, Star } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-type T = { q: string; name: string; role: string; img?: string; rating?: number };
+type T = { q: string; name: string; role: string; img: string; initial: string; bgFrom: string; bgTo: string; rating?: number };
 const testimonials: T[] = [
   {
     q: "GeekyAce rebuilt our Shopify stack end-to-end — StoreScout alone changed how we find winners. Loads feel instant and conversions are up materially.",
-    name: "Chidi O.", role: "E-commerce Director, Lagos", img: "/images/testimonials/person-1.jpg", rating: 5,
+    name: "Chidi O.", role: "E-commerce Director", img: "/images/testimonials/person-1.svg", initial: "C", bgFrom: "from-emerald-400", bgTo: "to-green-600", rating: 5,
   },
   {
     q: "They understood our healthcare brief faster than any agency we'd spoken to. HIPAA-aligned form handling, clean dashboards, zero hand-holding.",
-    name: "Adaeze N.", role: "Product Lead, MedTech startup", img: "/images/testimonials/person-2.jpg", rating: 5,
+    name: "Adaeze N.", role: "Product Lead, MedTech startup", img: "/images/testimonials/person-2.svg", initial: "A", bgFrom: "from-sky-400", bgTo: "to-indigo-600", rating: 5,
   },
   {
     q: "BuyerReply AI cut our customer-support response time by 70%. The dashboard is a thing of beauty. Can't recommend enough.",
-    name: "Marcus T.", role: "Founder, DTC brand", img: "/images/testimonials/person-3.jpg", rating: 5,
+    name: "Marcus T.", role: "Founder, DTC brand", img: "/images/testimonials/person-3.svg", initial: "M", bgFrom: "from-orange-400", bgTo: "to-rose-600", rating: 5,
   },
   {
     q: "Our site went from a 32 Lighthouse score to 98 across the board, and the design is genuinely gorgeous. Best dev partner we've had.",
-    name: "Sofia R.", role: "CMO, SaaS platform", img: "/images/testimonials/person-4.jpg", rating: 5,
+    name: "Sofia R.", role: "CMO, SaaS platform", img: "/images/testimonials/person-4.svg", initial: "S", bgFrom: "from-fuchsia-400", bgTo: "to-pink-600", rating: 5,
   },
 ];
 
@@ -64,13 +64,13 @@ export default function TestimonialCarousel() {
                   “{testimonials[i].q}”
                 </p>
                 <div className="mt-6 flex items-center gap-4">
-                  {testimonials[i].img ? (
-                    <Image src={testimonials[i].img} alt={testimonials[i].name} width={48} height={48} className="h-12 w-12 rounded-full object-cover ring-2 ring-green-500/40" />
-                  ) : (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-600 font-bold text-white">
-                      {testimonials[i].name[0]}
-                    </div>
-                  )}
+                  <Image
+                    src={testimonials[i].img}
+                    alt={testimonials[i].name}
+                    width={48}
+                    height={48}
+                    className="h-12 w-12 rounded-full ring-2 ring-green-500/40"
+                  />
                   <div>
                     <p className="font-bold text-slate-900 dark:text-white">{testimonials[i].name}</p>
                     <p className="text-sm text-slate-500 dark:text-slate-400">{testimonials[i].role}</p>
