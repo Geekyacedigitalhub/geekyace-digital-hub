@@ -4,6 +4,7 @@ import Hero from "@/app/components/home/Hero";
 import Marquee from "@/app/components/home/Marquee";
 import TrustedCompanies from "@/app/components/home/TrustedCompanies";
 import AutoFixConsole from "@/app/components/home/AutoFixConsole";
+import Transformation from "@/app/components/home/Transformation";
 
 const SectionLoader = () => (
   <div
@@ -86,6 +87,8 @@ export default function HomePage() {
       <WhyChooseUs />
 
       <AutoFixConsole />
+
+      <Transformation />
 
       <div id="process"><Process /></div>
 
