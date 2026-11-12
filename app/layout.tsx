@@ -4,8 +4,6 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import GeekyAceAI from "./components/ai/GeekyAceAI";
-import CursorGlow from "./components/layout/CursorGlow";
-import CustomCursor from "./components/layout/CustomCursor";
 import ScrollProgress from "./components/layout/ScrollProgress";
 import ScrollAmbient from "./components/layout/ScrollAmbient";
 import Noise from "./components/layout/Noise";
@@ -75,8 +73,6 @@ export default function RootLayout({
           {/* Global UI chrome */}
         <LoadingScreen />
         <ScrollProgress />
-        <CursorGlow />
-        <CustomCursor />
         <Noise />
         <ScrollSpy />
         <SideDots />

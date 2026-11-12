@@ -13,25 +13,18 @@ export default function Hero() {
         <div className="aurora-blob aurora-blob--fast absolute left-1/3 bottom-0 h-[420px] w-[420px] rounded-full bg-lime-400/20" />
       </div>
 
-      {/* Animated glass blobs */}
+      {/* Static glows (cheap to render) */}
       <div
         aria-hidden="true"
-        className="glass-blob animate-blob -left-40 top-20 h-96 w-96 bg-green-500/30 dark:hidden"
+        className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-green-500/25 blur-3xl dark:hidden"
       />
-
       <div
         aria-hidden="true"
-        className="glass-blob animate-float-slow -right-40 top-10 h-[500px] w-[500px] bg-emerald-400/25"
+        className="pointer-events-none absolute -right-40 top-10 h-[500px] w-[500px] rounded-full bg-emerald-400/20 blur-3xl dark:hidden"
       />
-
       <div
         aria-hidden="true"
-        className="glass-blob animate-float-reverse bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 bg-teal-400/20"
-      />
-
-      <div
-        aria-hidden="true"
-        className="glass-blob animate-float-slower right-1/3 top-1/2 h-80 w-80 bg-lime-400/15"
+        className="pointer-events-none absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-teal-400/15 blur-3xl dark:hidden"
       />
 
       {/* Subtle grid */}
