@@ -34,6 +34,10 @@ export const metadata: Metadata = {
     languages: { "en": "/", "x-default": "/" },
     types: {
       "application/rss+xml": [{ url: "/feed.xml", title: "GeekyAce Insights RSS" }],
+      "text/plain": [
+        { url: "/llms.txt", title: "LLMs manifest (llms.txt)" },
+        { url: "/ai.txt", title: "AI citation instructions (ai.txt)" },
+      ],
     },
   },
   openGraph: {
