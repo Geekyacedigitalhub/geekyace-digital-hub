@@ -49,6 +49,7 @@ body { background: var(--bg); color: var(--fg); transition: background 0.4s ease
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: "Instrument Serif", "Playfair Display", Georgia, "Times New Roman", serif;
   --animate-float-slow: float 14s ease-in-out infinite;
   --animate-float-slower: float 22s ease-in-out infinite;
   --animate-float-reverse: float-reverse 18s ease-in-out infinite;

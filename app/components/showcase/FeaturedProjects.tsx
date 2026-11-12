@@ -101,9 +101,9 @@ export default function FeaturedProjects() {
             </button>
           </motion.div>
         ) : (
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProjects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} priority={index < 3} />
+              <ProjectCard key={project.id} project={project} index={index} priority={index < 3} />
             ))}
           </div>
         )}
