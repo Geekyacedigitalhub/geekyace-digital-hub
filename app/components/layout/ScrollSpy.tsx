@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const HOME_SECTIONS = ["services", "solutions", "process", "tech", "work", "testimonials"];
+const HOME_SECTIONS = ["services", "solutions", "process", "tech", "work", "testimonials", "blog"];
 
 export default function ScrollSpy() {
   const ticking = useRef(false);
