@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+html { scroll-behavior: smooth; }
+
+body.custom-cursor-enabled,
+body.custom-cursor-enabled * { cursor: none !important; }
+
+/* Selection color */
+::selection { background: rgba(74, 222, 128, 0.35); color: #052e16; }
+
+/* Smooth dark-to-light scroll reveal on sections */
+.text-mask-clip {
+  -webkit-mask-image: linear-gradient(180deg, #000 35%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 35%, transparent 100%);
+}
+
+/* Film grain overlay base */
+.grain {
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
 :root {
   --background: #ffffff;
   --foreground: #0f172a;

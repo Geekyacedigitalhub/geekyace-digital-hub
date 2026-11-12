@@ -1,6 +1,7 @@
 import Container from "@/app/components/ui/Container";
 import HeroContent from "./HeroContent";
 import HeroDashboard from "./HeroDashboard";
+import Parallax from "@/app/components/ui/Parallax";
 
 export default function Hero() {
   return (
@@ -42,8 +43,10 @@ export default function Hero() {
           {/* Left side */}
           <HeroContent />
 
-          {/* Right side */}
-          <HeroDashboard />
+          {/* Right side — parallax + tilt feel */}
+          <Parallax strength={-24}>
+            <HeroDashboard />
+          </Parallax>
         </div>
       </Container>
     </section>
