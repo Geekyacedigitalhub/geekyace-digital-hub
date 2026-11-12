@@ -5,6 +5,7 @@ import Marquee from "@/app/components/home/Marquee";
 import TrustedCompanies from "@/app/components/home/TrustedCompanies";
 import AutoFixConsole from "@/app/components/home/AutoFixConsole";
 import Transformation from "@/app/components/home/Transformation";
+import MetricsRibbon from "@/app/components/home/MetricsRibbon";
 
 const SectionLoader = () => (
   <div
@@ -97,6 +98,8 @@ export default function HomePage() {
       <div id="work"><FeaturedCaseStudies /></div>
 
       <div id="testimonials"><Testimonials /></div>
+
+      <MetricsRibbon />
 
       <FinalCTA />
     </main>

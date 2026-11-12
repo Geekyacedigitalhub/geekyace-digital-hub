@@ -3,6 +3,9 @@
 import { ArrowRight, CheckCircle2, Code2, LockKeyhole, Rocket } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const TestimonialCarousel = dynamic(() => import("@/app/components/home/TestimonialCarousel"), { ssr: false });
 
 const proofPoints = [
   {
@@ -60,6 +63,11 @@ export default function Testimonials() {
               </motion.article>
             );
           })}
+        </div>
+
+        <div className="mt-16">
+          <p className="mb-6 text-center text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Client stories</p>
+          <TestimonialCarousel />
         </div>
 
         <div className="mt-10 flex justify-center">

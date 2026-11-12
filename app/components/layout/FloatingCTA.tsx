@@ -39,7 +39,7 @@ export default function FloatingCTA() {
   const circ = 2 * Math.PI * 24;
 
   return (
-    <div className="fixed bottom-5 right-5 z-[55] flex flex-col items-end gap-3 sm:bottom-7 sm:right-7">
+    <div className="fixed bottom-24 right-5 z-[55] flex flex-col items-end gap-3 sm:bottom-7 sm:right-7 md:bottom-7">
       <AnimatePresence>
         {open && (
           <motion.div
