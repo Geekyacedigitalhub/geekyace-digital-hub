@@ -12,6 +12,7 @@ import Noise from "./components/layout/Noise";
 import FloatingCTA from "./components/layout/FloatingCTA";
 import ScrollToTop from "./components/layout/ScrollToTop";
 import ScrollSpy from "./components/layout/ScrollSpy";
+import SideDots from "./components/layout/SideDots";
 import Confetti from "./components/ui/Confetti";
 import { ThemeProvider } from "./components/layout/ThemeProvider";
 
@@ -74,6 +75,7 @@ export default function RootLayout({
           <CustomCursor />
           <Noise />
           <ScrollSpy />
+          <SideDots />
           <Confetti />
 
           <Header />
