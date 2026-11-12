@@ -6,10 +6,17 @@ import Parallax from "@/app/components/ui/Parallax";
 export default function Hero() {
   return (
     <section className="section-ambient relative overflow-hidden bg-slate-950">
+      {/* Dark-mode aurora */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden dark:block">
+        <div className="aurora-blob absolute -left-20 top-0 h-[520px] w-[520px] rounded-full bg-emerald-500/30" />
+        <div className="aurora-blob aurora-blob--slow absolute right-0 top-40 h-[560px] w-[560px] rounded-full bg-teal-400/25" />
+        <div className="aurora-blob aurora-blob--fast absolute left-1/3 bottom-0 h-[420px] w-[420px] rounded-full bg-lime-400/20" />
+      </div>
+
       {/* Animated glass blobs */}
       <div
         aria-hidden="true"
-        className="glass-blob animate-blob -left-40 top-20 h-96 w-96 bg-green-500/30"
+        className="glass-blob animate-blob -left-40 top-20 h-96 w-96 bg-green-500/30 dark:hidden"
       />
 
       <div

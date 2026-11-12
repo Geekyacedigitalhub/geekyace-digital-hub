@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import DrawnProcess from "./DrawnProcess";
 
 const steps = [
   {
@@ -70,12 +71,8 @@ export default function Process() {
         </div>
 
         {/* Process */}
+        <DrawnProcess>
         <div className="relative mt-16">
-          {/* Desktop connector */}
-          <div
-            aria-hidden="true"
-            className="absolute left-[10%] right-[10%] top-10 hidden h-px bg-gradient-to-r from-transparent via-green-300/60 to-transparent lg:block"
-          />
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {steps.map((step, index) => {
@@ -95,7 +92,7 @@ export default function Process() {
                   className="glass-card glass-shine group relative rounded-2xl p-6 pt-10"
                 >
                   {/* Number / Icon */}
-                  <div className="relative z-10 mx-auto flex h-20 w-20 -mt-12 items-center justify-center rounded-2xl border border-green-200/70 bg-white/80 text-green-600 shadow-[0_12px_30px_-10px_rgba(22,163,74,0.4)] backdrop-blur transition-all duration-400 group-hover:-translate-y-1 group-hover:border-green-400 group-hover:bg-green-600 group-hover:text-white group-hover:shadow-[0_20px_40px_-12px_rgba(22,163,74,0.55)]">
+                  <div data-node className="relative z-10 mx-auto flex h-20 w-20 -mt-12 items-center justify-center rounded-2xl border border-green-200/70 bg-white/80 text-green-600 shadow-[0_12px_30px_-10px_rgba(22,163,74,0.4)] backdrop-blur transition-all duration-400 group-hover:-translate-y-1 group-hover:border-green-400 group-hover:bg-green-600 group-hover:text-white group-hover:shadow-[0_20px_40px_-12px_rgba(22,163,74,0.55)]">
                     <Icon className="h-7 w-7" />
                   </div>
 
@@ -117,6 +114,7 @@ export default function Process() {
             })}
           </div>
         </div>
+        </DrawnProcess>
 
         {/* Bottom CTA */}
         <div className="glass-strong glass-shine mt-16 rounded-3xl p-7 shadow-[0_20px_50px_-20px_rgba(22,163,74,0.25)] sm:p-9">
