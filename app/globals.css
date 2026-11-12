@@ -398,6 +398,11 @@ a {
 .dark .bg-green-50 { background: rgba(34,197,94,0.1) !important; }
 .dark .bg-slate-100 { background: rgba(255,255,255,0.06) !important; }
 
+/* Leave room for the mobile sticky CTA bar */
+@media (max-width: 767px) {
+  body { padding-bottom: 72px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
