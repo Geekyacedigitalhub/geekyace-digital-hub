@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import Container from "../ui/Container";
 import ProjectCard from "./ProjectCard";
 import ShowcaseFilters from "./ShowcaseFilters";
@@ -81,10 +82,24 @@ export default function FeaturedProjects() {
         </div>
 
         {filteredProjects.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 py-24 text-center">
-            <h3 className="text-2xl font-bold text-slate-900">No matching projects</h3>
-            <p className="mt-3 text-slate-600">Try another keyword or reset the filters.</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            className="glass-card rounded-3xl py-24 text-center"
+          >
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white">No matching projects — yet</h3>
+            <p className="mt-3 text-slate-600 dark:text-slate-400">Try another keyword, clear a filter, or reset everything.</p>
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="btn-glass glass-shine mt-6 inline-flex items-center gap-2 rounded-xl bg-green-600 px-6 py-3 text-sm font-bold text-white hover:-translate-y-0.5"
+            >
+              Reset filters
+            </button>
+          </motion.div>
         ) : (
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
             {filteredProjects.map((project, index) => (
