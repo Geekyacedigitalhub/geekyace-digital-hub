@@ -8,6 +8,8 @@ import CountUp from "@/app/components/ui/CountUp";
 import SplitReveal from "@/app/components/ui/SplitReveal";
 import Magnetic from "@/app/components/ui/Magnetic";
 import Parallax from "@/app/components/ui/Parallax";
+import Typewriter from "@/app/components/ui/Typewriter";
+import { confettiBurst } from "@/app/components/ui/Confetti";
 
 const trustPoints = [
   "Full-stack web applications",
@@ -26,7 +28,15 @@ export default function HeroContent() {
         className="inline-flex items-center gap-2 rounded-full border border-green-400/25 bg-green-400/10 px-4 py-2 text-sm font-semibold text-green-300 backdrop-blur-sm"
       >
         <Sparkles className="h-4 w-4" />
-        Full-Stack Development • AI • Shopify
+        <Typewriter
+          words={[
+            "Full-Stack Development",
+            "AI Products",
+            "Shopify Systems",
+            "Business Automation",
+            "SaaS Platforms",
+          ]}
+        />
       </motion.div>
 
       <h1 className="mt-7 max-w-4xl text-4xl font-extrabold leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-[4.25rem] xl:text-7xl">
@@ -59,6 +69,7 @@ export default function HeroContent() {
         <Magnetic>
           <Link
             href="/contact"
+            onClick={() => confettiBurst()}
             className="btn-glass glass-shine inline-flex items-center justify-center gap-2 rounded-xl bg-green-500 px-6 py-3.5 text-sm font-bold text-slate-950 shadow-[0_12px_32px_-8px_rgba(34,197,94,0.55)] transition hover:-translate-y-0.5 hover:bg-green-400 hover:shadow-[0_20px_48px_-12px_rgba(34,197,94,0.7)]"
           >
             Start a Project

@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
+import { confettiBurst } from "@/app/components/ui/Confetti";
 
 export default function CTA() {
   return (
@@ -55,6 +57,7 @@ export default function CTA() {
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
+                onClick={() => confettiBurst()}
                 className="btn-glass glass-shine inline-flex items-center gap-2 rounded-xl bg-green-500 px-7 py-3.5 font-bold text-slate-950 shadow-[0_12px_40px_-10px_rgba(34,197,94,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-green-400 hover:shadow-[0_20px_60px_-10px_rgba(34,197,94,0.8)]"
               >
                 Start Your Project
