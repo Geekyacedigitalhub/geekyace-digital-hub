@@ -1,21 +1,32 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Calendar, Layers3, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 import { Project } from "@/app/types/project";
 import ProjectImage from "./ProjectImage";
+import TiltCard from "@/app/components/ui/TiltCard";
 
 interface ProjectCardProps {
   project: Project;
   priority?: boolean;
+  index?: number;
 }
 
-export default function ProjectCard({ project, priority = false }: ProjectCardProps) {
+export default function ProjectCard({ project, priority = false, index = 0 }: ProjectCardProps) {
   const technologies = project.technologies.slice(0, 4);
   const remainingTechnologies = project.technologies.length - technologies.length;
 
   return (
-    <article className="glass-card glass-shine group rounded-3xl">
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <TiltCard className="glass-card glass-shine group rounded-3xl">
       <Link href={`/portfolio/${project.slug}`} className="block" aria-label={`View ${project.title} case study`}>
         <div className="relative h-64 overflow-hidden bg-slate-100 sm:h-72">
           <ProjectImage src={project.image} alt={project.title} priority={priority} />
@@ -66,6 +77,7 @@ export default function ProjectCard({ project, priority = false }: ProjectCardPr
           </div>
         </div>
       </div>
-    </article>
+      </TiltCard>
+    </motion.article>
   );
 }
