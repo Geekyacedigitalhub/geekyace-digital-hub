@@ -21,9 +21,6 @@ html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--fg); transition: background 0.4s ease, color 0.4s ease; }
 .dark body { background: radial-gradient(1200px 800px at 10% -10%, rgba(22,163,74,0.08), transparent 60%), var(--bg); }
 
-body.custom-cursor-enabled,
-body.custom-cursor-enabled * { cursor: none !important; }
-
 ::selection { background: rgba(74, 222, 128, 0.35); color: #052e16; }
 .dark ::selection { background: rgba(74, 222, 128, 0.4); color: #ecfccb; }
 
@@ -324,17 +321,18 @@ a {
 
 .animate-ping-slow { animation: ping-slow 2.2s cubic-bezier(0,0,0.2,1) infinite; }
 
-/* Tilt-on-hover card utility (adds 3D-feel without JS) */
+/* Tilt-on-hover card utility (pure CSS, no JS mousemove) */
 .tilt-hover {
   transform-style: preserve-3d;
   transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.5s;
+  will-change: transform;
 }
 .tilt-hover:hover {
-  transform: perspective(1000px) rotateX(3deg) rotateY(-3deg) translateY(-6px);
+  transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-6px);
 }
 .tilt-hover > * { transform: translateZ(20px); }
 
-/* Soft spotlight on cards when hovered */
+/* Static green-tint highlight on hover (no JS tracking) */
 .spotlight-hover {
   position: relative;
   overflow: hidden;
@@ -343,7 +341,7 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(300px circle at var(--mx,50%) var(--my,50%), rgba(22,163,74,0.12), transparent 40%);
+  background: radial-gradient(420px circle at 30% 0%, rgba(22,163,74,0.12), transparent 55%);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;

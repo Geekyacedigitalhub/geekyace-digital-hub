@@ -1,14 +1,12 @@
 "use client";
 
+// Lighter magnetic pull using CSS transform on hover instead of per-frame
+// mousemove springs. Eliminates rAF work on every primary CTA.
 import { useRef, type ReactNode, type MouseEvent } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
 
-/**
- * Wrap a button/link with <Magnetic> to make it pull toward the cursor.
- */
 export default function Magnetic({
   children,
-  strength = 0.35,
+  strength = 0.25,
   className = "",
 }: {
   children: ReactNode;
@@ -16,34 +14,27 @@ export default function Magnetic({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 180, damping: 15, mass: 0.3 });
-  const sy = useSpring(y, { stiffness: 180, damping: 15, mass: 0.3 });
-
   const onMove = (e: MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
-    const cx = r.left + r.width / 2;
-    const cy = r.top + r.height / 2;
-    x.set((e.clientX - cx) * strength);
-    y.set((e.clientY - cy) * strength);
+    const x = (e.clientX - (r.left + r.width / 2)) * strength;
+    const y = (e.clientY - (r.top + r.height / 2)) * strength;
+    el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
   };
   const onLeave = () => {
-    x.set(0);
-    y.set(0);
+    const el = ref.current;
+    if (el) el.style.transform = "translate3d(0,0,0)";
   };
-
   return (
-    <motion.div
+    <div
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      style={{ x: sx, y: sy }}
+      style={{ transition: "transform 0.25s cubic-bezier(0.22,1,0.36,1)", willChange: "transform" }}
       className={`inline-block ${className}`}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
