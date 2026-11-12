@@ -4,11 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight, Clock3 } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Magnetic from "@/app/components/ui/Magnetic";
 import ThemeToggle from "@/app/components/ui/ThemeToggle";
-import LiveClock from "@/app/components/layout/LiveClock";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -118,12 +117,6 @@ export default function Header() {
           </nav>
 
           <div className="hidden items-center gap-2.5 lg:flex">
-            {/* Live Lagos clock */}
-            <div className="glass-card hidden items-center gap-2 rounded-full border border-slate-200/60 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:border-white/10 dark:text-slate-300 xl:flex">
-              <Clock3 className="h-3.5 w-3.5 text-green-600 dark:text-green-400" />
-              <LiveClock />
-            </div>
-
             {/* Available badge */}
             <Link
               href="/contact"
