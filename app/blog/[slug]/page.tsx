@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight, CalendarDays, Clock } from "lucide-react";
 import { getAllPosts, getAllSlugs, getPost } from "@/lib/posts";
 import Container from "@/app/components/ui/Container";
 import ReadingProgress from "@/app/components/ui/ReadingProgress";
+import PostBody from "@/app/components/ui/PostBody";
 import { marked } from "marked";
 import { Metadata } from "next";
 
@@ -52,10 +53,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             </div>
           )}
 
-          <div
-            className="prose prose-slate mt-12 max-w-none dark:prose-invert prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-green-600 prose-a:no-underline hover:prose-a:underline prose-pre:rounded-xl prose-pre:bg-slate-900"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          <div className="mt-12">
+            <PostBody html={html} />
+          </div>
 
           <div className="mt-16 rounded-3xl border border-slate-200/60 bg-gradient-to-br from-green-50 to-emerald-50 p-8 dark:border-green-400/20 dark:from-green-500/10 dark:to-emerald-500/5">
             <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">Want us to run this playbook on your product?</h3>
