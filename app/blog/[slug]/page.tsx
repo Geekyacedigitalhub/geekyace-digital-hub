@@ -1,8 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, CalendarDays, Clock } from "lucide-react";
 import { getAllPosts, getAllSlugs, getPost } from "@/lib/posts";
 import Container from "@/app/components/ui/Container";
+import ReadingProgress from "@/app/components/ui/ReadingProgress";
 import { marked } from "marked";
 import { Metadata } from "next";
 
@@ -29,6 +31,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="pt-28 sm:pt-36">
+      <ReadingProgress />
       <Container>
         <article className="mx-auto max-w-3xl">
           <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-green-600 dark:text-slate-400">
@@ -42,6 +45,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <span className="inline-flex items-center gap-1"><CalendarDays className="h-4 w-4" />{post.date}</span>
             <span className="inline-flex items-center gap-1"><Clock className="h-4 w-4" />{post.read}</span>
           </div>
+
+          {post.cover && (
+            <div className="mt-10 overflow-hidden rounded-2xl border border-slate-200/60 shadow-xl dark:border-white/10">
+              <Image src={post.cover} alt={post.title} width={1200} height={750} className="h-auto w-full" priority />
+            </div>
+          )}
 
           <div
             className="prose prose-slate mt-12 max-w-none dark:prose-invert prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-green-600 prose-a:no-underline hover:prose-a:underline prose-pre:rounded-xl prose-pre:bg-slate-900"

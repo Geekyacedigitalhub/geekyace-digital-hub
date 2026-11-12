@@ -37,6 +37,9 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "/",
+    types: {
+      "application/rss+xml": [{ url: "/feed.xml", title: "GeekyAce Insights RSS" }],
+    },
   },
   openGraph: {
     title: "GeekyAce Digital Hub | Full-Stack Developer",
