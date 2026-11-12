@@ -71,7 +71,7 @@ const githubProjects: Project[] = [
   {
     id: 1006, slug: "bugify", title: "Bugify", client: "GeekyAce Digital Hub",
     category: "Web Application", industry: "Fintech", service: "Full-Stack Development",
-    year: "2026", duration: "Project", featured: false, image: "", gallery: [],
+    year: "2026", duration: "Project", featured: false, image: "/images/showcase/github/bugify.svg", gallery: [],
     shortDescription: "Modern personal finance tracker for expenses, budgets, spending trends, and financial overview.",
     overview: "A responsive finance application focused on personal expense management, budgeting, authentication, and financial visualization.",
     challenge: "Make everyday finance tracking simple enough for repeated use while still giving users useful spending and budget visibility.",
@@ -83,7 +83,7 @@ const githubProjects: Project[] = [
   {
     id: 1007, slug: "geekyace-web-scraper-toolkit", title: "GeekyAce Web Scraper Toolkit", client: "GeekyAce Digital Hub",
     category: "Developer Tool", industry: "Developer Productivity", service: "Backend Development",
-    year: "2026", duration: "Project", featured: false, image: "", gallery: [],
+    year: "2026", duration: "Project", featured: false, image: "/images/showcase/github/geekyace-web-scraper-toolkit.svg", gallery: [],
     shortDescription: "Responsible Node.js crawler for public webpage metadata and links with robots.txt compliance and structured exports.",
     overview: "A lightweight educational crawling toolkit designed around legitimate public-page extraction, rate limiting, domain restriction, and structured JSON or CSV output.",
     challenge: "Create a practical crawler while keeping requests controlled and respecting website crawling rules.",
@@ -95,7 +95,7 @@ const githubProjects: Project[] = [
   {
     id: 1008, slug: "gig-rank-studio", title: "GigRank Studio", client: "GeekyAce Digital Hub",
     category: "SaaS", industry: "Freelance Commerce", service: "Full-Stack Development",
-    year: "2026", duration: "Ongoing", featured: false, image: "", gallery: [],
+    year: "2026", duration: "Ongoing", featured: false, image: "/images/showcase/github/gig-rank-studio.svg", gallery: [],
     shortDescription: "Private product workspace for improving and managing freelance-service listings.",
     overview: "A private GeekyAce product project focused on turning freelance listing research and optimization into a dedicated workflow.",
     challenge: "Bring listing strategy and seller workflows into one controlled product environment.",
@@ -106,7 +106,7 @@ const githubProjects: Project[] = [
   {
     id: 1010, slug: "trustlens", title: "TrustLens", client: "GeekyAce Digital Hub",
     category: "Web Application", industry: "Trust & Conversion", service: "Full-Stack Development",
-    year: "2026", duration: "Ongoing", featured: false, image: "", gallery: [],
+    year: "2026", duration: "Ongoing", featured: false, image: "/images/showcase/github/trustlens.svg", gallery: [],
     shortDescription: "Private Next.js product focused on trust-oriented digital experiences and analysis.",
     overview: "A private GeekyAce project currently maintained as a protected Next.js codebase.",
     challenge: "Develop a focused product while keeping its implementation private during active development.",
@@ -117,7 +117,7 @@ const githubProjects: Project[] = [
   {
     id: 1011, slug: "crobadiam", title: "Crobadiam", client: "GeekyAce Digital Hub",
     category: "Web Project", industry: "Digital Products", service: "Web Development",
-    year: "2026", duration: "Project", featured: false, image: "", gallery: [],
+    year: "2026", duration: "Project", featured: false, image: "/images/showcase/github/crobadiam.svg", gallery: [],
     shortDescription: "Public GeekyAce web project maintained as part of the development portfolio.",
     overview: "A public repository in the GeekyAce GitHub portfolio representing additional web development work.",
     challenge: "Build and maintain a focused web project with a clean public codebase.",
