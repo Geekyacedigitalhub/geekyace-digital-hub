@@ -14,8 +14,8 @@ const navigation = [
   { name: "Services", href: "/services", anchor: "services" },
   { name: "Solutions", href: "/solutions" },
   { name: "Portfolio", href: "/portfolio", anchor: "work" },
+  { name: "Insights", href: "/blog", anchor: "blog" },
   { name: "About", href: "/about" },
-  { name: "Resources", href: "/resources" },
 ];
 
 export default function Header() {
