@@ -6,6 +6,7 @@ import { getAllPosts, getAllSlugs, getPost } from "@/lib/posts";
 import Container from "@/app/components/ui/Container";
 import ReadingProgress from "@/app/components/ui/ReadingProgress";
 import PostBody from "@/app/components/ui/PostBody";
+import PostTOC from "@/app/components/ui/PostTOC";
 import { marked } from "marked";
 import { Metadata } from "next";
 
@@ -34,6 +35,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     <main className="pt-28 sm:pt-36">
       <ReadingProgress />
       <Container>
+        <div className="relative grid gap-10 xl:grid-cols-[1fr_240px]">
+          <PostTOC />
         <article className="mx-auto max-w-3xl">
           <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-green-600 dark:text-slate-400">
             <ArrowLeft className="h-4 w-4" /> Back to insights
@@ -65,6 +68,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             </Link>
           </div>
         </article>
+        </div>
 
         {others.length > 0 && (
           <div className="mx-auto mt-20 max-w-5xl">

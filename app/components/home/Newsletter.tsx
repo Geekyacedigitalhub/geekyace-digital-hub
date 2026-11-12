@@ -15,10 +15,21 @@ export default function Newsletter({ compact = false }: { compact?: boolean }) {
       setStatus("err"); setMsg("Please enter a valid email."); return;
     }
     setStatus("loading"); setMsg("");
-    // No backend yet — simulate success for now. Swaps to POST /api/newsletter later.
-    await new Promise((r) => setTimeout(r, 900));
-    setStatus("ok"); setMsg("You're in. Check your inbox for a confirmation.");
-    setEmail("");
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({ message: "Something went wrong." }));
+      if (!res.ok || !data.success) {
+        setStatus("err"); setMsg(data.message || "Something went wrong."); return;
+      }
+      setStatus("ok"); setMsg(data.message || "You're in!");
+      setEmail("");
+    } catch {
+      setStatus("err"); setMsg("Network error. Try again.");
+    }
   };
 
   return (

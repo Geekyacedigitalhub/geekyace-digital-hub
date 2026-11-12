@@ -1,17 +1,21 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
   ArrowRight,
   Mail,
   MapPin,
   Phone,
+  Rss,
 } from "lucide-react";
 
 import Container from "../ui/Container";
 import Logo from "./Logo";
 
 import { navigation } from "@/app/data/navigation";
+
+const Newsletter = dynamic(() => import("@/app/components/home/Newsletter"), { ssr: false });
 
 const services = [
   "Website Development",
@@ -172,7 +176,18 @@ export default function Footer() {
             >
               Terms of Service
             </Link>
+            <Link
+              href="/feed.xml"
+              className="inline-flex items-center gap-1.5 text-slate-500 transition-colors duration-200 hover:text-green-400"
+              aria-label="RSS feed"
+            >
+              <Rss size={14} /> RSS
+            </Link>
           </div>
+        </div>
+
+        <div className="pb-10">
+          <Newsletter compact />
         </div>
       </Container>
     </footer>
