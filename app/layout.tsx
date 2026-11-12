@@ -15,50 +15,65 @@ import MobileStickyCTA from "./components/layout/MobileStickyCTA";
 import ContactDrawer from "./components/layout/ContactDrawer";
 import Confetti from "./components/ui/Confetti";
 import LoadingScreen from "./components/ui/LoadingScreen";
+import JsonLd from "./components/seo/JsonLd";
 import { ThemeProvider } from "./components/layout/ThemeProvider";
+import { site } from "./data/site-meta";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://geekyacedigitalhub.com"),
-  title: {
-    default: "GeekyAce Digital Hub | Full-Stack Developer",
-    template: "%s | GeekyAce Digital Hub",
-  },
-  description:
-    "GeekyAce Digital Hub builds full-stack web applications, Shopify systems, AI products, automation platforms, and modern digital experiences.",
-  keywords: [
-    "full stack developer",
-    "Next.js developer",
-    "React developer",
-    "Shopify developer",
-    "AI development",
-    "SaaS development",
-    "web application development",
-    "GeekyAce Digital Hub",
-  ],
+  metadataBase: new URL(site.url),
+  title: { default: site.title, template: site.titleTemplate },
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  category: "technology",
+  keywords: site.keywords,
   alternates: {
     canonical: "/",
+    languages: { "en-NG": "/", "en-US": "/" },
     types: {
       "application/rss+xml": [{ url: "/feed.xml", title: "GeekyAce Insights RSS" }],
     },
   },
   openGraph: {
-    title: "GeekyAce Digital Hub | Full-Stack Developer",
-    description:
-      "Full-stack web development, Shopify engineering, AI products, and business automation.",
-    url: "https://geekyacedigitalhub.com",
-    siteName: "GeekyAce Digital Hub",
+    title: site.title,
+    description: site.description,
+    url: site.url,
+    siteName: site.name,
     type: "website",
+    locale: "en_NG",
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: site.name }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "GeekyAce Digital Hub | Full-Stack Developer",
-    description:
-      "Full-stack web development, Shopify engineering, AI products, and automation systems.",
+    title: site.title,
+    description: site.description,
+    creator: "@geekyacehub",
+    images: ["/opengraph-image.png"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/logo.png",
+    shortcut: "/favicon.ico",
+  },
+  verification: {
+    // Replace with real values from Google / Bing / Yandex search consoles when available.
+    // google: "YOUR_GOOGLE_VERIFICATION_TOKEN",
+    // bing: "YOUR_BING_TOKEN",
+  },
+  formatDetection: { email: false, address: false, telephone: false },
 };
 
 export default function RootLayout({
@@ -70,16 +85,18 @@ export default function RootLayout({
     <html lang="en" className="antialiased" suppressHydrationWarning>
       <ThemeProvider>
         <body className="relative min-h-screen overflow-x-hidden">
+          <JsonLd site={site} />
+
           {/* Scroll-timed ambient color wash */}
           <ScrollAmbient />
 
           {/* Global UI chrome */}
-        <LoadingScreen />
-        <ScrollProgress />
-        <Noise />
-        <ScrollSpy />
-        <SideDots />
-        <Confetti />
+          <LoadingScreen />
+          <ScrollProgress />
+          <Noise />
+          <ScrollSpy />
+          <SideDots />
+          <Confetti />
 
           <Header />
           <main className="relative">{children}</main>

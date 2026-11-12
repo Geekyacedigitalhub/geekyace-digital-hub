@@ -7,8 +7,10 @@ import Container from "@/app/components/ui/Container";
 import ReadingProgress from "@/app/components/ui/ReadingProgress";
 import PostBody from "@/app/components/ui/PostBody";
 import PostTOC from "@/app/components/ui/PostTOC";
+import ArticleJsonLd from "@/app/components/seo/ArticleJsonLd";
 import { marked } from "marked";
 import { Metadata } from "next";
+import { site } from "@/app/data/site-meta";
 
 marked.setOptions({ gfm: true, breaks: false });
 
@@ -33,6 +35,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="pt-28 sm:pt-36">
+      <ArticleJsonLd
+        title={post.title}
+        description={post.excerpt}
+        url={`${site.url}/blog/${post.slug}`}
+        images={post.cover ? [`${site.url}${post.cover}`] : [`${site.url}/opengraph-image.png`]}
+        datePublished={new Date(post.date).toISOString()}
+        authorName={site.name}
+      />
       <ReadingProgress />
       <Container>
         <div className="relative grid gap-10 xl:grid-cols-[1fr_240px]">
